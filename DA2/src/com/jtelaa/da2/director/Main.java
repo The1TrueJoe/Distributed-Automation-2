@@ -6,7 +6,7 @@ import com.jtelaa.da2.director.util.cli.BaseCLI;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Welcome to Distributed Automation 2");
+        System.out.println("Welcome to the Distributed Automation 2 Director Server");
 
         
     }

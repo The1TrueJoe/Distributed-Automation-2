@@ -7,10 +7,18 @@ import com.jtelaa.da2.director.util.cli.clis.Misc;
 
 /**
  *  Basic CLI for the program
- *  @author Joe
+ *  @author Joseph
  */
 
-public class CLI {
+public class CLI extends Thread {
+
+    private Server tx;
+    private Client rx;
+
+    public void run() {
+        tx = new Server(Ports.CMD.getPort());
+        rx = new Client(tx.getClientAddress(), Ports.RESPONSE.getPort());
+    }
 
     public static void startCLI(String command, DataOutputStream out) {
         command = command.split("/")[1];
