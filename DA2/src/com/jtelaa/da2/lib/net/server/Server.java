@@ -2,6 +2,7 @@ package com.jtelaa.da2.lib.net.server;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -20,6 +21,8 @@ public class Server {
     /* Server */
 
     private int port;
+
+    private InetAddress clientAddress;
 
     private Socket serverSocket;
     private ServerSocket server;
@@ -40,8 +43,10 @@ public class Server {
         try {
             server = new ServerSocket(port);
             log += "Awaiting Connection....\n";
+            
             serverSocket = server.accept();
-            log += serverSocket + " Connected!\n";
+            clientAddress = serverSocket.getInetAddress();
+            log += serverSocket + " Connected! to " + clientAddress.getHostAddress() + "\n";
 
             inputStream = serverSocket.getInputStream();
             in = new DataInputStream(inputStream);
@@ -90,6 +95,9 @@ public class Server {
 
         }
     }
+
+    public String getClientAddress() { return clientAddress.getHostAddress(); }
+    public String getClientName() { return clientAddress.getHostName(); }
 
     public Socket getSocket() { return serverSocket; }
     public ServerSocket getServerSocket() { return server; }
