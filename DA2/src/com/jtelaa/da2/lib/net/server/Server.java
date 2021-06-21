@@ -19,20 +19,22 @@ public class Server {
 
     /* Server */
 
-    Socket serverSocket;
-    ServerSocket server;
+    private int port;
 
-    InputStream inputStream;
-    DataInputStream in;
+    private Socket serverSocket;
+    private ServerSocket server;
+
+    private InputStream inputStream;
+    private DataInputStream in;
+
+    public Server(int port) { this.port = port; }
 
     /**
      * Starts the server <p>
      * Close when finished
-     * 
-     * @param port The port to open
      */
 
-    public void startServer(int port) {
+    public void startServer() {
         log = "";
 
         try {
@@ -70,6 +72,23 @@ public class Server {
         }
 
         return message;
+    }
+
+    /**
+     * Closes the client and output streams
+     */
+
+    public void closeServer() {
+        try {    
+            serverSocket.close();
+            socket.close();
+            in.close();
+            log += "Closed";
+
+        } catch (Exception e) {
+            log += "Failed: \n" + e.getStackTrace();
+
+        }
     }
 
     public Socket getSocket() { return serverSocket; }
