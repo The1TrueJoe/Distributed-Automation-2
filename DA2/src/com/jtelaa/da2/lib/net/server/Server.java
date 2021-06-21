@@ -2,6 +2,7 @@ package com.jtelaa.da2.lib.net.server;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -19,27 +20,33 @@ public class Server {
 
     /* Server */
 
-    Socket serverSocket;
-    ServerSocket server;
+    private int port;
 
-    InputStream inputStream;
-    DataInputStream in;
+    private InetAddress clientAddress;
+
+    private Socket serverSocket;
+    private ServerSocket server;
+
+    private InputStream inputStream;
+    private DataInputStream in;
+
+    public Server(int port) { this.port = port; }
 
     /**
      * Starts the server <p>
      * Close when finished
-     * 
-     * @param port The port to open
      */
 
-    public void startServer(int port) {
+    public void startServer() {
         log = "";
 
         try {
             server = new ServerSocket(port);
             log += "Awaiting Connection....\n";
+            
             serverSocket = server.accept();
-            log += serverSocket + " Connected!\n";
+            clientAddress = serverSocket.getInetAddress();
+            log += serverSocket + " Connected! to " + clientAddress.getHostAddress() + "\n";
 
             inputStream = serverSocket.getInputStream();
             in = new DataInputStream(inputStream);
@@ -71,6 +78,26 @@ public class Server {
 
         return message;
     }
+
+    /**
+     * Closes the client and output streams
+     */
+
+    public void closeServer() {
+        try {    
+            serverSocket.close();
+            socket.close();
+            in.close();
+            log += "Closed";
+
+        } catch (Exception e) {
+            log += "Failed: \n" + e.getStackTrace();
+
+        }
+    }
+
+    public String getClientAddress() { return clientAddress.getHostAddress(); }
+    public String getClientName() { return clientAddress.getHostName(); }
 
     public Socket getSocket() { return serverSocket; }
     public ServerSocket getServerSocket() { return server; }

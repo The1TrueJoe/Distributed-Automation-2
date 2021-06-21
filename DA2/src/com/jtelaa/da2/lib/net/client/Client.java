@@ -18,10 +18,15 @@ public class Client {
     
     /* Client */
 
-    Socket clientSocket;
+    private String server_ip;
+    private int port;
+
+    private Socket clientSocket;
     
-    OutputStream outputStream;
-    DataOutputStream out;
+    private OutputStream outputStream;
+    private DataOutputStream out;
+
+    public Client(String server_ip, int port) { this.server_ip = server_ip; this.port = port; }
 
     /**
      * Starts a server client <p>
@@ -31,7 +36,7 @@ public class Client {
      * @param port Port number to connect to @see com.jtelaa.da2.lib.net.Ports
      */
 
-    public void startClient(String server_ip, int port) {
+    public void startClient() {
         log = "";
         
         try {
