@@ -15,6 +15,12 @@ public class Config {
     /** Checks config if the app will output to the log */
     public static boolean runLogVerbose() { return false; }
 
-    /** Checks config for the sys ID */
-    public static String getID() { return "bot"; }
+    /** Gets director IP from config */
+    public static String getDirectorIP() { return null; }
+
+    /** Gets director IP from config */
+    public static String getQueryGenIP() { return null; }
+
+
+    
 }
