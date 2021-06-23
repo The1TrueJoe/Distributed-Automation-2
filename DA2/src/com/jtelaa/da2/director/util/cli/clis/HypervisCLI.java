@@ -10,6 +10,12 @@ public class HypervisCLI extends CLIType {
         return null;
     }
 
+    @Override
+    public String terminal(String command) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 
     
 }

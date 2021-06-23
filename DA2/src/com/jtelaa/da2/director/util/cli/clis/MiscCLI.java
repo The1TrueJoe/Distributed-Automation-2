@@ -2,7 +2,7 @@ package com.jtelaa.da2.director.util.cli.clis;
 
 import com.jtelaa.da2.director.util.cli.CLIType;
 
-public class DirecCLI extends CLIType {
+public class MiscCLI extends CLIType {
 
     @Override
     public String startCLI(String command) {
@@ -15,7 +15,6 @@ public class DirecCLI extends CLIType {
         // TODO Auto-generated method stub
         return null;
     }
-
-
+    
     
 }

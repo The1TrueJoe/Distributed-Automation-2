@@ -9,6 +9,12 @@ public class SchedCLI extends CLIType {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public String terminal(String command) {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
 
 }
