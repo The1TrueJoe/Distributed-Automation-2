@@ -6,17 +6,16 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.jtelaa.da2.lib.log.Log;
+
 /**
  * Server client for recieving messages
  * 
- * @author Joseph
  * @since 1.0
+ * @author Joseph
  */
 
 public class Server {
-
-    private String log;
-    public String getLog() { return log; }
 
     /* Server */
 
@@ -37,22 +36,24 @@ public class Server {
      * Close when finished
      */
 
-    public void startServer() {
-        log = "";
-
+    public boolean startServer() {
         try {
             server = new ServerSocket(port);
-            log += "Awaiting Connection....\n";
+            Log.sendMessage("Awaiting Connection....\n");
             
             serverSocket = server.accept();
             clientAddress = serverSocket.getInetAddress();
-            log += serverSocket + " Connected! to " + clientAddress.getHostAddress() + "\n";
+            Log.sendMessage(serverSocket + " Connected! to " + clientAddress.getHostAddress() + "\n");
 
             inputStream = serverSocket.getInputStream();
             in = new DataInputStream(inputStream);
 
+            return true;
+
         } catch (Exception e) {
-            log += "Failed: \n" + e.getStackTrace();
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+
+            return false;
 
         }
     }
@@ -68,10 +69,10 @@ public class Server {
         
         try {
             message = in.readUTF();
-            log += "Received: " + message;
+            Log.sendMessage("Received: " + message);
             
         } catch (Exception e) {
-            log += "Failed: \n" + e.getStackTrace();
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
             message = "";
 
         }
@@ -83,18 +84,24 @@ public class Server {
      * Closes the client and output streams
      */
 
-    public void closeServer() {
+    public boolean closeServer() {
         try {    
             serverSocket.close();
             server.close();
             in.close();
-            log += "Closed";
+            Log.sendMessage("Closed");
+
+            return true;
 
         } catch (Exception e) {
-            log += "Failed: \n" + e.getStackTrace();
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+
+            return false;
 
         }
     }
+
+    public int getPort() { return port; }
 
     public String getClientAddress() { return clientAddress.getHostAddress(); }
     public String getClientName() { return clientAddress.getHostName(); }
