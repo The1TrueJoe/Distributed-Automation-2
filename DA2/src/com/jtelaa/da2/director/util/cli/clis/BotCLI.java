@@ -1,11 +1,15 @@
 package com.jtelaa.da2.director.util.cli.clis;
 
-import java.io.DataOutputStream;
+import com.jtelaa.da2.director.util.cli.CLIType;
 
-public class BotCLI {
+public class BotCLI extends CLIType {
 
-    public static void startCLI(String command, DataOutputStream out) {
-        
+    @Override
+    public String startCLI(String command) {
+        // TODO Auto-generated method stub
+        return null;
     }
+
+    
     
 }

@@ -1,12 +1,14 @@
 package com.jtelaa.da2.director.util.cli.clis;
 
-import java.io.DataOutputStream;
+import com.jtelaa.da2.director.util.cli.CLIType;
 
-public class Misc {
-    
-    public static void simpleHelp(String command, DataOutputStream out) {
+public class Misc extends CLIType {
 
-        
-
+    @Override
+    public String startCLI(String command) {
+        // TODO Auto-generated method stub
+        return null;
     }
+    
+    
 }
