@@ -59,7 +59,7 @@ public class InetAddressValidator implements Serializable {
     private static final InetAddressValidator VALIDATOR = new InetAddressValidator();
 
     /** IPv4 RegexValidator */
-    private final RegexValidator ipv4Validator = new RegexValidator(IPV4_REGEX);
+    private static final RegexValidator ipv4Validator = new RegexValidator(IPV4_REGEX);
 
     /**
      * Returns the singleton instance of this validator.
@@ -74,7 +74,7 @@ public class InetAddressValidator implements Serializable {
      * @param inetAddress the string to validate
      * @return true if the string validates as an IP address
      */
-    public boolean isValid(String inetAddress) {
+    public static boolean isValid(String inetAddress) {
         return isValidInet4Address(inetAddress) || isValidInet6Address(inetAddress);
     }
 
@@ -83,7 +83,7 @@ public class InetAddressValidator implements Serializable {
      * @param inet4Address the IPv4 address to validate
      * @return true if the argument contains a valid IPv4 address
      */
-    public boolean isValidInet4Address(String inet4Address) {
+    public static boolean isValidInet4Address(String inet4Address) {
         // verify that address conforms to generic IPv4 format
         String[] groups = ipv4Validator.match(inet4Address);
 
@@ -125,7 +125,7 @@ public class InetAddressValidator implements Serializable {
      * 
      * @since 1.4.1
      */
-    public boolean isValidInet6Address(String inet6Address) {
+    public static boolean isValidInet6Address(String inet6Address) {
         String[] parts;
         // remove prefix size. This will appear after the zone id (if any)
         parts = inet6Address.split("/", -1);
