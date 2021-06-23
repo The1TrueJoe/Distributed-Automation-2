@@ -23,7 +23,7 @@ public class Main {
             "NOTE: As of current, please type your commands whole.\n\n"
         );      
 
-        Scanner keyboard = new Scanner(System.in());
+        Scanner keyboard = new Scanner(System.in);
         String server_ip = "", command, keyboard_response;
 
         while (!InetAddressValidator.isValidInet4Address(server_ip)) {
@@ -34,7 +34,7 @@ public class Main {
 
         System.out.println("Are you using the default CMD port of " + Ports.CMD.getPort() + "(y or n)");
         keyboard_response = keyboard.next();
-        int CMD_Port;
+        int CMD_Port = Ports.CMD.getPort();
 
         if (keyboard_response.equalsIgnoreCase("n") || keyboard_response.equalsIgnoreCase("no")) {
             do {
@@ -42,15 +42,11 @@ public class Main {
                 keyboard_response = keyboard.next();
 
             } while (!Misc.isNumeric(keyboard_response));
-
-        } else {
-            CMD_Port = Ports.CMD.getPort();
-
-        } 
+        }
 
         System.out.println("Are you using the default Response port of " + Ports.CMD.getPort() + "(y or n)");
         keyboard_response = keyboard.next();
-        int RESPONSE_Port;
+        int RESPONSE_Port = Ports.RESPONSE.getPort();
 
         if (keyboard_response.equalsIgnoreCase("n") || keyboard_response.equalsIgnoreCase("no")) {
             do {
@@ -58,11 +54,7 @@ public class Main {
                 keyboard_response = keyboard.next();
 
             } while (!Misc.isNumeric(keyboard_response));
-
-        } else {
-            RESPONSE_Port = Ports.RESPONSE.getPort();
-
-        } 
+        }
 
         director_tx = new Client(server_ip, CMD_Port);
         director_tx.startClient();
@@ -71,25 +63,24 @@ public class Main {
         director_rx.startServer();
 
 
-        while(keyboard_response.compareToIgnoreCase("exit")) {
+        while(keyboard_response.compareToIgnoreCase("exit") != 0) {
             System.out.println(director_rx.getMessage());
             keyboard_response = keyboard.next();
 
-            if (keyboard_response.compareToIgnoreCase("exit")) { 
+            if (keyboard_response.compareToIgnoreCase("exit") != 0) { 
                 director_tx.closeClient();
                 director_rx.closeServer();
+                
                 break;
-
             }
 
-            if (keyboard_response.compareToIgnoreCase("gui")) { 
+            if (keyboard_response.compareToIgnoreCase("gui") != 0) { 
                 director_tx.closeClient();
                 director_rx.closeServer();
                 
                 GUI.beginGUI();
                 
                 break;
-
             }
 
             director_tx.sendMessage(keyboard_response);
