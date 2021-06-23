@@ -4,6 +4,9 @@ import java.io.DataOutputStream;
 
 import com.jtelaa.da2.director.util.cli.clis.DirecCLI;
 import com.jtelaa.da2.director.util.cli.clis.Misc;
+import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.client.Client;
+import com.jtelaa.da2.lib.net.server.Server;
 
 /**
  *  Basic CLI for the program
