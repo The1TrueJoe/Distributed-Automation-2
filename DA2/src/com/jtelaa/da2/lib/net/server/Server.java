@@ -86,7 +86,7 @@ public class Server {
     public void closeServer() {
         try {    
             serverSocket.close();
-            socket.close();
+            server.close();
             in.close();
             log += "Closed";
 
