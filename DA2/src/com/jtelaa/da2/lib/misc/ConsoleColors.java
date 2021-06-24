@@ -1,3 +1,5 @@
+package com.jtelaa.da2.lib.misc;
+
 public class ConsoleColors {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset

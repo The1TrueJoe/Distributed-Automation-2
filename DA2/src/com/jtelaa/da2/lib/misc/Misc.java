@@ -1,3 +1,5 @@
+package com.jtelaa.da2.lib.misc;
+
 public class Misc {
 
     public static boolean isNumeric(String value) {

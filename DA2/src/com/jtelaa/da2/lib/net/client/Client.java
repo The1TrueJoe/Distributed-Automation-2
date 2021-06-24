@@ -2,19 +2,22 @@ package com.jtelaa.da2.lib.net.client;
 
 import java.io.DataOutputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
+
+import com.jtelaa.da2.lib.log.Log;
+
+import org.apache.commons.validator.routines.InetAddressValidator;
 
 /**
  * Network client for sending messages
  * 
- * @author Joseph
  * @since 1.0
+ * @author Joseph
  */
 
 public class Client {
-
-    private String log;
-    public String getLog() { return log; }
     
     /* Client */
 
@@ -26,7 +29,20 @@ public class Client {
     private OutputStream outputStream;
     private DataOutputStream out;
 
-    public Client(String server_ip, int port) { this.server_ip = server_ip; this.port = port; }
+    public Client(String server_ip, int port) { 
+        if (!InetAddressValidator.isValid(server_ip)) {
+            try {
+                server_ip = InetAddress.getLocalHost().toString();
+            } catch (UnknownHostException e) {
+                Log.sendMessage(e.getMessage());
+                server_ip = "127.0.0.1";
+
+            }
+        }
+        
+        this.server_ip = server_ip; 
+        this.port = port; 
+    }
 
     /**
      * Starts a server client <p>
@@ -36,23 +52,22 @@ public class Client {
      * @param port Port number to connect to @see com.jtelaa.da2.lib.net.Ports
      */
 
-    public void startClient() {
-        log = "";
-        
+    public boolean startClient() {
         try {
             clientSocket = new Socket(server_ip, port);
-            log += "Connected to " + server_ip + ":" + port + "\n";
+            Log.sendMessage("Connected to " + server_ip + ":" + port + "\n");
         
             outputStream = clientSocket.getOutputStream();
             out = new DataOutputStream(outputStream);
-            log += "Ready";
+            Log.sendMessage("Ready");
+
+            return true;
 
         } catch (Exception e) {
-            log += "Failed: \n" + e.getStackTrace();
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
 
+            return false;
         }
-
-    
     }
 
     /**
@@ -61,15 +76,19 @@ public class Client {
      * @param message The message to send
      */
 
-    public void sendMessage(String message) {
+    public boolean sendMessage(String message) {
         try {
+            Log.sendMessage("Sending: " + message + " to: " + server_ip + ":" + port + "\n");
             out.writeUTF(message);
             out.flush();
-            log += "Sending: " + message + " to: " + clientSocket + "\n";
+            Log.sendMessage("Done");
+
+            return true;
 
         } catch (Exception e) {
-            log += "Failed: \n" + e.getStackTrace();
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
 
+            return false;
         }
     }
     
@@ -77,17 +96,24 @@ public class Client {
      * Closes the client and output streams
      */
 
-    public void closeClient() {
+    public boolean closeClient() {
         try {    
             out.close();
             clientSocket.close();
-            log += "Closed";
+            Log.sendMessage("Closed");
+
+            return true;
 
         } catch (Exception e) {
-            log += "Failed: \n" + e.getStackTrace();
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+
+            return false;
 
         }
     }
+
+    public int getPort() { return port; }
+    public String getServerIP() { return server_ip; }
 
     public Socket getSocket() { return clientSocket; }
     public OutputStream getOutputStream() { return outputStream; }
