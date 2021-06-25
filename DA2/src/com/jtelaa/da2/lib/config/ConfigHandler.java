@@ -10,6 +10,6 @@ public class ConfigHandler {
 
     }
 
-    public JSONObject getConfig() { return null; }
+    public static JSONObject getConfig() { return null; }
 
 }
