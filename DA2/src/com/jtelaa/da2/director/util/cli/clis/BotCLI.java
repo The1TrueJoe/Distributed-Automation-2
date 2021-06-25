@@ -7,6 +7,8 @@ import com.jtelaa.da2.lib.misc.Misc;
 
 public class BotCLI extends CLIType {
 
+    public static String BOT_ENABLE_MESSAGE = "Wake Up Bot!";
+
     @Override
     public String startCLI(String command) {
         String id = command.split(" ")[2];

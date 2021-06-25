@@ -11,14 +11,13 @@ import org.json.JSONObject;
 
 public class Bot {
 
-    
-
     private static int id;
 
     private String ip_address;
 
     private boolean app_verbose;
     private boolean log_verbose;
+    private boolean has_heartbeat;
 
     private String director_ip;
     private String query_ip;
@@ -56,5 +55,7 @@ public class Bot {
     public String getHearbeatIP() { return heartbeat_ip; }
 
     public String getLogIP() { return log_ip; }
+
+    public boolean hasHeartBeat() { return has_heartbeat; }
     
 }

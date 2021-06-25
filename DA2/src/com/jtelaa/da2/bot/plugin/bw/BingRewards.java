@@ -44,8 +44,7 @@ public class BingRewards extends Thread {
         startSearch();
 
         // Shutdown
-        Log.sendMessage("Shutting Down");
-        ComputerControl.shutdown();
+        Log.sendMessage("Shutting Down Plugin");
 
     }
 
@@ -81,7 +80,7 @@ public class BingRewards extends Thread {
         Query query;
 
         for (; current_count < max; current_count++) {
-            query = Query.requestQuery(query_ip, Ports.QUERY_REQUEST, Ports.QUERY_RECEIVE);
+            query = Query.requestQuery(query_ip, Ports.QUERY_REQUEST.getPort(), Ports.QUERY_RECEIVE.getPort());
             
             openBing(query);
 

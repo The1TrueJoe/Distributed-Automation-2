@@ -88,7 +88,7 @@ public class Log {
      */
 
     public static boolean sendLogMessage(String message) {
-        if (!log_established && !sender.isAlive()) { return false; }
+        if (!log_established || !sender.isAlive()) { return false; }
         logging_queue.add(message);
         return true;
 

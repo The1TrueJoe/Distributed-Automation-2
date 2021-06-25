@@ -29,7 +29,7 @@ public class Heartbeat extends Thread {
     }
 
     private boolean run = true;
-    public synchronized void stopSender() { run = false; }
+    public synchronized void stopHeart() { run = false; }
 
 
 }

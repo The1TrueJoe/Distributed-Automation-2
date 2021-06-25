@@ -1,7 +1,10 @@
 package com.jtelaa.da2.director.util.cli;
 
+import com.jtelaa.da2.director.util.cli.clis.BotCLI;
 import com.jtelaa.da2.director.util.cli.clis.DirecCLI;
+import com.jtelaa.da2.director.util.cli.clis.HypervisCLI;
 import com.jtelaa.da2.director.util.cli.clis.MiscCLI;
+import com.jtelaa.da2.director.util.cli.clis.SchedCLI;
 import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.client.Client;
 import com.jtelaa.da2.lib.net.server.Server;
@@ -36,20 +39,20 @@ public class CLI extends Thread {
     public String terminal(String command) {
         command = command.split(" ")[1];
 
-        if (command.equalsIgnoreCase("help") || command.equalsIgnoreCase("-h") ||command.equalsIgnoreCase("-?")) {
+        if (Cases.help(command)) {
             return new MiscCLI().startCLI(command);
 
-        } else if (command.equalsIgnoreCase("director") || command.equalsIgnoreCase("direc")) {
+        } else if (Cases.director(command)) {
             return new DirecCLI().startCLI(command);
 
-        } else if (command.equalsIgnoreCase("hypervisor") || command.equalsIgnoreCase("hyp")) {
-            return new DirecCLI().startCLI(command);
+        } else if (Cases.hypervisor(command)) {
+            return new HypervisCLI().startCLI(command);
             
-        } else if (command.equalsIgnoreCase("scheduler") || command.equalsIgnoreCase("sched")) {
-            return new DirecCLI().startCLI(command);
+        } else if (Cases.scheduler(command)) {
+            return new SchedCLI().startCLI(command);
             
-        } else if (command.equalsIgnoreCase("bot") || command.equalsIgnoreCase("bt")) {
-            return new DirecCLI().startCLI(command);
+        } else if (Cases.bot(command)) {
+            return new BotCLI().startCLI(command);
             
         }
 
