@@ -45,7 +45,7 @@ import org.apache.commons.validator.util.ValidatorUtils;
  * @version $Revision$
  * @see org.apache.commons.validator.Form
  */
-// TODO mutable non-private fields
+// 
 public class Field implements Cloneable, Serializable {
 
     private static final long serialVersionUID = -8502647722530192185L;
@@ -329,7 +329,7 @@ public class Field implements Cloneable, Serializable {
      * @param arg Validation message's argument.
      */
     public void addArg(Arg arg) {
-        // TODO this first if check can go away after arg0, etc. are removed from dtd
+        // 
         if (arg == null || arg.getKey() == null || arg.getKey().length() == 0) {
             return;
         }
@@ -833,7 +833,7 @@ public class Field implements Cloneable, Serializable {
 
     /**
      * Calls all of the validators that this validator depends on.
-     * TODO ValidatorAction should know how to run its own dependencies.
+     * 
      * @param va Run dependent validators for this action.
      * @param results
      * @param actions

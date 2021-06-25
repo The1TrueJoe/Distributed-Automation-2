@@ -192,7 +192,7 @@ public class ISSNValidator implements Serializable {
         input = result.toString();
         try {
             //CHECKSTYLE:OFF: MagicNumber
-            String issnBase = input.substring(3,10); // TODO: how to derive these
+            String issnBase = input.substring(3,10); // 
             //CHECKSTYLE:ON: MagicNumber
             String checkDigit = ISSNCheckDigit.ISSN_CHECK_DIGIT.calculate(issnBase);
             String issn = issnBase + checkDigit;

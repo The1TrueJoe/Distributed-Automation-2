@@ -35,7 +35,7 @@ import java.io.Serializable;
  *
  * @version $Revision$
  */
-//TODO mutable non-private fields
+//
 public class Arg implements Cloneable, Serializable {
 
     private static final long serialVersionUID = -8922606779669839294L;

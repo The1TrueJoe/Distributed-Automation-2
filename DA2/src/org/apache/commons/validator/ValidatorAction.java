@@ -365,7 +365,7 @@ public class ValidatorAction implements Serializable {
      * fully qualified package and script name, separated by periods, to be
      * loaded from the class loader that created this instance.
      *
-     * TODO if the path begins with a '/' the path will be intepreted as
+     * 
      * absolute, and remain unchanged.  If this fails then it will attempt to
      * treat the path as a file path.  It is assumed the script ends with a
      * '.js'.
@@ -420,7 +420,7 @@ public class ValidatorAction implements Serializable {
         }
 
         StringBuilder buffer = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is)); // TODO encoding
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is)); // 
         try {
             String line = null;
             while ((line = reader.readLine()) != null) {
@@ -519,7 +519,7 @@ public class ValidatorAction implements Serializable {
      */
     boolean executeValidationMethod(
         Field field,
-        // TODO What is this the correct value type?
+        // 
         // both ValidatorAction and Validator are added as parameters
         Map<String, Object> params,
         ValidatorResults results,
@@ -574,7 +574,7 @@ public class ValidatorAction implements Serializable {
                 return false;
             }
 
-            // TODO This catch block remains for backward compatibility.  Remove
+            // 
             // this for Validator 2.0 when exception scheme changes.
         } catch (Exception e) {
             if (e instanceof ValidatorException) {

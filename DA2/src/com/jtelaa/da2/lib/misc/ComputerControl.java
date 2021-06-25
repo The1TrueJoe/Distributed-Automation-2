@@ -12,6 +12,8 @@ public class ComputerControl {
 
 	private static Robot pc;
 
+	public static String getOS() { return System.getProperty("os.name"); }
+
     /**
      * Runs a CMD Command
      */
@@ -62,4 +64,8 @@ public class ComputerControl {
             pc.keyRelease(key);
         }
     }
+
+	/** Tells the local machine to shutdown */
+	public static void shutdown() { sendCommand("shutdown"); }
+	
 }

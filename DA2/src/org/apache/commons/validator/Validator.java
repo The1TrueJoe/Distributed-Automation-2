@@ -28,7 +28,7 @@ import java.util.Map;
  *
  * @version $Revision$
  */
-// TODO mutable fields should be made private and accessed via suitable methods only
+// 
 public class Validator implements Serializable {
 
     private static final long serialVersionUID = -7119418755208731611L;

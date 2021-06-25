@@ -28,7 +28,7 @@ import java.util.Iterator;
  *
  * @version $Revision$
  */
-//TODO mutable non-private fields
+//
 public class ValidatorResult implements Serializable {
 
     private static final long serialVersionUID = -3713364681647250531L;
@@ -41,7 +41,7 @@ public class ValidatorResult implements Serializable {
 
     /**
      * <code>Field</code> being validated.
-     * TODO This variable is not used.  Need to investigate removing it.
+     * 
      */
     protected Field field = null;
 
