@@ -51,7 +51,7 @@ public class ClientUDP {
      * @param port Port number to connect to @see com.jtelaa.da2.lib.net.Ports
      */
 
-    public boolean startServer() {
+    public boolean startClient() {
         try {
             buffer = null;
             socket = new DatagramSocket();
