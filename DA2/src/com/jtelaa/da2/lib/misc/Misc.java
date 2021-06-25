@@ -14,4 +14,13 @@ public class Misc {
         }
     }
     
+    public static boolean notBlank(String text) {
+        if (text != null && !text.equals("") && !text.equals(" ")) {
+            return true;
+
+        } else {
+            return false;
+            
+        }
+    }
 }
