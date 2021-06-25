@@ -1,4 +1,10 @@
-package com.jtelaa.da2.lib.misc;
+package com.jtelaa.da2.lib.console;
+
+/**
+ * Contains escape codes for text colors
+ * 
+ * @since 2
+ */
 
 public class ConsoleColors {
     // Reset
