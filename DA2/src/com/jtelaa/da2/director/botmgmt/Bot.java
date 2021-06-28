@@ -23,6 +23,7 @@ public class Bot {
     private String query_ip;
     private String heartbeat_ip;
     private String log_ip;
+    private String ptmgr_ip;
 
     /**  TODO Add Constructors */
     public Bot() {
@@ -48,14 +49,18 @@ public class Bot {
     /** Gets director IP from config */
     public String getQueryGenIP() { return query_ip; }
 
-    public int getID() { return id; }
-
-    public String getIP() { return ip_address; }
-
     public String getHearbeatIP() { return heartbeat_ip; }
 
     public String getLogIP() { return log_ip; }
 
+    public String getPointMgrIP() { return ptmgr_ip; }
+    
+    public String getIP() { return ip_address; }
+
+    public int getID() { return id; }
+
     public boolean hasHeartBeat() { return has_heartbeat; }
+
+    
     
 }

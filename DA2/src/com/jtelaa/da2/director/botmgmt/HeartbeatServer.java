@@ -6,4 +6,7 @@ public class HeartbeatServer extends Thread {
         
     }
 
+    private boolean run = true;
+    public synchronized void stopSender() { run = false; }
+
 }
