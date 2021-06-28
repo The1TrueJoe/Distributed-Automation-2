@@ -1,4 +1,4 @@
-package com.jtelaa.da2.lib.misc;
+package com.jtelaa.da2.lib.control;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,12 +17,12 @@ public class ComputerControl {
     /**
      * Runs a CMD Command
      */
-    public static String sendCommand(String command) {
+    public static String sendCommand(Command command) {
 		Log.sendMessage("Sending command: " + command);
 
 		try {
 			// Creates process
-			ProcessBuilder builder = new ProcessBuilder(command);
+			ProcessBuilder builder = new ProcessBuilder(command.command());
 		
 			// Redirect errorStream
 			builder.redirectErrorStream(true);
@@ -41,7 +41,7 @@ public class ComputerControl {
 
         	}
 
-			return line;
+			if (command.isHeadless()) { return line; } else { return ""; }
 
 		} catch (IOException e) { 
 			return e.getMessage();
@@ -66,6 +66,6 @@ public class ComputerControl {
     }
 
 	/** Tells the local machine to shutdown */
-	public static void shutdown() { sendCommand("shutdown"); }
+	public static void shutdown() { sendCommand(new Command("shutdown")); }
 	
 }
