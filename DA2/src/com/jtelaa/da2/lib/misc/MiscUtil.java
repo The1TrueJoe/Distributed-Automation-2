@@ -1,5 +1,7 @@
 package com.jtelaa.da2.lib.misc;
 
+import java.util.Random;
+
 import com.jtelaa.da2.lib.log.Log;
 
 public class MiscUtil {
@@ -26,9 +28,13 @@ public class MiscUtil {
         }
     }
 
-    public static void waitasec() {
+    public static void waitasec() { waitamoment(1000); }
+
+    public static void waitasec(double frac) { waitamoment(1000*frac); }
+
+    public static void waitamoment(double time) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep((long) time);
 
         } catch (InterruptedException e) {
             Log.sendMessage(e.getMessage());
@@ -36,13 +42,15 @@ public class MiscUtil {
         }
     }
 
-    public static void waitasec(double frac) {
-        try {
-            Thread.sleep((long)(1000*frac));
+    public static void randWait(double limit, double tolerance) {
+        Random rand = new Random();
+        double wait = 1000;
 
-        } catch (InterruptedException e) {
-            Log.sendMessage(e.getMessage());
-            
-        }
+        do {
+            wait = rand.nextInt((int) (limit + (limit * tolerance)));
+
+        } while (wait != (limit - (limit * tolerance)));
+
+        waitamoment(wait);
     }
 }
