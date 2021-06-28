@@ -3,8 +3,6 @@ package com.jtelaa.da2.lib.control;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
 
-import org.apache.commons.validator.routines.InetAddressValidator;
-
 /**
  * Outlines the required parameter for a command
  * 
@@ -70,8 +68,8 @@ public class Command {
     public boolean isValid() { 
         return (
             MiscUtil.notBlank(command) 
-            && InetAddressValidator.isValid(dest_ip)
-            && InetAddressValidator.isValid(org_ip)
+            && NetTools.isValid(dest_ip)
+            && NetTools.isValid(org_ip)
         ); 
     }
 

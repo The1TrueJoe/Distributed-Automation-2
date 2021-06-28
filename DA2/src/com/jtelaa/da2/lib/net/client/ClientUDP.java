@@ -7,8 +7,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import com.jtelaa.da2.lib.log.Log;
-
-import org.apache.commons.validator.routines.InetAddressValidator;
+import com.jtelaa.da2.lib.net.NetTools;
 
 /**
  * Network client for sending UDP messages
@@ -29,7 +28,7 @@ public class ClientUDP {
     private DatagramSocket socket;
 
     public ClientUDP(String server_ip, int port) { 
-        if (!InetAddressValidator.isValid(server_ip)) {
+        if (!NetTools.isValid(server_ip)) {
             try {
                 server_ip = InetAddress.getLocalHost().toString();
             } catch (UnknownHostException e) {

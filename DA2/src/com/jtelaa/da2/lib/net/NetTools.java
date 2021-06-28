@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.URL;
 
+import org.apache.commons.validator.routines.InetAddressValidator;
+
 public class NetTools {
     
     public static String getLocalIP() {
@@ -30,5 +32,10 @@ public class NetTools {
         }
     }
 
-    
+    public static boolean isValid(String address) {
+        InetAddressValidator valid = new InetAddressValidator();
+        return valid.isValid(address);
+        
+    }
+
 }

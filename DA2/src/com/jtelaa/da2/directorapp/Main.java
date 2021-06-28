@@ -2,8 +2,7 @@ package com.jtelaa.da2.directorapp;
 
 import java.util.Scanner;
 
-import org.apache.commons.validator.routines.InetAddressValidator;
-
+import com.jtelaa.da2.lib.net.NetTools;
 import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.misc.MiscUtil;
@@ -38,7 +37,7 @@ public class Main {
         Scanner keyboard = new Scanner(System.in);
         String server_ip = "", keyboard_response;
 
-        while (!InetAddressValidator.isValidInet4Address(server_ip)) {
+        while (!NetTools.isValid(server_ip)) {
             System.out.println("Enter IP address of the Director Server:");
             server_ip = keyboard.next();
 
