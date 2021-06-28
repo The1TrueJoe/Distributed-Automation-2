@@ -22,10 +22,10 @@ public class Log {
     /** The logging verbostiy */
     public static boolean log_verbose;
 
-    public static ClientUDP logging_client;
+    public volatile static ClientUDP logging_client;
     public static boolean log_established = false;
 
-    public static Queue<String> logging_queue;
+    public volatile static Queue<String> logging_queue;
     private static LogSender sender;
 
     /**

@@ -3,14 +3,15 @@ package com.jtelaa.da2.bot.main;
 import com.jtelaa.da2.bot.plugin.bw.BingRewards;
 import com.jtelaa.da2.bot.util.Heartbeat;
 import com.jtelaa.da2.director.botmgmt.Bot;
+import com.jtelaa.da2.director.botmgmt.BotMgmt;
 import com.jtelaa.da2.director.util.cli.Cases;
-import com.jtelaa.da2.director.util.cli.clis.BotCLI;
 import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.control.Command;
+import com.jtelaa.da2.lib.control.QueuedCommandReceiver;
+import com.jtelaa.da2.lib.control.QueuedResponseSender;
+import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
-import com.jtelaa.da2.lib.misc.ComputerControl;
-import com.jtelaa.da2.lib.net.Ports;
-import com.jtelaa.da2.lib.net.client.Client;
-import com.jtelaa.da2.lib.net.server.Server;
+import com.jtelaa.da2.lib.misc.MiscUtil;
 
 public class Main {
 
@@ -18,8 +19,8 @@ public class Main {
 
     private static Heartbeat beat;
 
-    private static Server cmd_rx;
-    private static Client cmd_tx;
+    private static QueuedCommandReceiver cmd_rx;
+    private static QueuedResponseSender cmd_tx;
 
     public static void main(String[] args) {
 
@@ -30,19 +31,17 @@ public class Main {
         Log.sendMessage("Welcome to the DA2 Bot Client! I am bot " + me.getID());
         if (me.hasHeartBeat()) { beat = new Heartbeat(); } 
         
-        cmd_rx = new Server(Ports.RESPONSE.getPort());
-        cmd_tx = new Client(me.getDirectorIP(), Ports.RESPONSE.getPort());
+        cmd_tx.start();
+        cmd_rx.start();
 
-        cmd_rx.startServer();
-        cmd_tx.startClient();
-
-        String response = "", command ="";
+        Command response, command;
         boolean cli_enabled = false;
 
         while(!cli_enabled) {
             response = cmd_rx.getMessage();
+            command = response;
 
-            if (response.equals(BotCLI.BOT_ENABLE_MESSAGE)) {
+            if (command.command().equals(BotMgmt.BOT_ENABLE_MESSAGE)) {
                 cli_enabled = true;
 
             }
@@ -58,8 +57,8 @@ public class Main {
                 } else if (Cases.shutdown(command)) {
                     Log.sendLogMessage("Goodbye!");
 
-                    cmd_rx.closeServer();
-                    cmd_tx.closeClient();
+                    cmd_rx.stopReceiver();
+                    cmd_tx.stopSender();
                     beat.stopHeart();
                     Log.closeLog();
 
@@ -67,13 +66,13 @@ public class Main {
                 
                 } else if (Cases.command(command)) {
                     String tmp = "";
-                    String[] tmps = response.split(" ");
+                    Command[] tmps = response.split(" ");
 
                     for (int i = 1; i < tmp.length(); i++) {
                         tmp += tmps[i] + " ";
                     }
 
-                    cmd_tx.sendMessage(ComputerControl.sendCommand(tmp));
+                    cmd_tx.add(command.origin(), ComputerControl.sendCommand(new Command(tmp)));
                 
                 } else if (Cases.rewards_plugin(command)) {
                     new BingRewards();
@@ -82,11 +81,8 @@ public class Main {
                 }
             }
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                Log.sendMessage(e.getMessage());
-            }
+            MiscUtil.waitasec();
+            
         }
     }
 }
