@@ -1,6 +1,6 @@
 package com.jtelaa.da2.querygen.util;
 
-import com.jtelaa.da2.lib.misc.Misc;
+import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
@@ -42,7 +42,7 @@ public class Query {
         ServerUDP get = new ServerUDP(receive);
         get.startServer();
         
-        while (!Misc.notBlank(response)) {
+        while (!MiscUtil.notBlank(response)) {
             response = get.getMessage();
 
         }

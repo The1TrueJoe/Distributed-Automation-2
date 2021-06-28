@@ -6,8 +6,9 @@ import java.util.Random;
 import javax.sound.sampled.Port;
 
 import com.jtelaa.da2.bot.main.Main;
+import com.jtelaa.da2.lib.control.Command;
+import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
-import com.jtelaa.da2.lib.misc.ComputerControl;
 import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.querygen.util.Query;
 
@@ -20,7 +21,7 @@ import com.jtelaa.da2.querygen.util.Query;
 
 public class BingRewards extends Thread {
 
-    public final String BING_URL = "bing.com/search?1=";
+    public final String BING_URL = "bing.com/search?q=";
 
     private int executed_pc_searches;
     private int executed_mobile_searches;
@@ -112,7 +113,7 @@ public class BingRewards extends Thread {
     public void openBing(Query query) { openChrome(BING_URL + query.getQuery());}
 
     /** Opens chrome to the specified URL */
-    public void openChrome(String args) { ComputerControl.sendCommand("chrome.exe " + args); }
+    public void openChrome(String args) { ComputerControl.sendCommand(new Command("chrome.exe " + args)); }
 
     /** Sets chrome to mobile mode */
     public void enterMobile() { chromeInspect(); chromeMobile(); }

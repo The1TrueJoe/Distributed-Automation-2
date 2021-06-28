@@ -10,6 +10,7 @@ public class Files {
 
     public static String readInternalFile(String path) {
         try {
+            @SuppressWarnings ({"all"})
             InputStream inputStream = ClassLoader.getSystemClassLoader().getSystemResourceAsStream(path);
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
 

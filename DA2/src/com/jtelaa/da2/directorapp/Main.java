@@ -6,7 +6,7 @@ import org.apache.commons.validator.routines.InetAddressValidator;
 
 import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
-import com.jtelaa.da2.lib.misc.Misc;
+import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.Client;
 import com.jtelaa.da2.lib.net.server.Server;
 import com.jtelaa.da2.directorapp.gui.GUI;
@@ -53,7 +53,7 @@ public class Main {
                 System.out.println("Enter new port: ");
                 keyboard_response = keyboard.next();
 
-            } while (!Misc.isNumeric(keyboard_response));
+            } while (!MiscUtil.isNumeric(keyboard_response));
         }
 
         System.out.println("Are you using the default Response port of " + Ports.CMD.getPort() + "(y or n)");
@@ -65,7 +65,7 @@ public class Main {
                 System.out.println("Enter new port: ");
                 keyboard_response = keyboard.next();
 
-            } while (!Misc.isNumeric(keyboard_response));
+            } while (!MiscUtil.isNumeric(keyboard_response));
         }
 
         director_tx = new Client(server_ip, CMD_Port);

@@ -1,6 +1,8 @@
 package com.jtelaa.da2.lib.misc;
 
-public class Misc {
+import com.jtelaa.da2.lib.log.Log;
+
+public class MiscUtil {
 
     public static boolean isNumeric(String value) {
         if (value == null || value.equals("")) { return false; }
@@ -20,6 +22,26 @@ public class Misc {
 
         } else {
             return false;
+            
+        }
+    }
+
+    public static void waitasec() {
+        try {
+            Thread.sleep(1000);
+
+        } catch (InterruptedException e) {
+            Log.sendMessage(e.getMessage());
+            
+        }
+    }
+
+    public static void waitasec(double frac) {
+        try {
+            Thread.sleep((long)(1000*frac));
+
+        } catch (InterruptedException e) {
+            Log.sendMessage(e.getMessage());
             
         }
     }

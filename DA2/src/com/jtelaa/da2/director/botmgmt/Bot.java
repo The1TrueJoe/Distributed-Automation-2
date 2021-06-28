@@ -48,7 +48,7 @@ public class Bot {
     /** Gets director IP from config */
     public String getQueryGenIP() { return query_ip; }
 
-    public int getID() { return 0; }
+    public int getID() { return id; }
 
     public String getIP() { return ip_address; }
 

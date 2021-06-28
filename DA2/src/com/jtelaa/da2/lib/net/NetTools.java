@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.URL;
 
-public class Tool {
+public class NetTools {
     
     public static String getLocalIP() {
         try {
