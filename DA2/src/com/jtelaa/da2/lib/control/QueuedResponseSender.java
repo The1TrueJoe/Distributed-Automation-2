@@ -7,7 +7,7 @@ import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
 import com.jtelaa.da2.lib.net.Ports;
-import com.jtelaa.da2.lib.net.client.Client;
+import com.jtelaa.da2.lib.net.client.ClientUDP;
 
 /**
  * Sends responses in batches <p>
@@ -21,7 +21,7 @@ public class QueuedResponseSender extends Thread {
     private volatile static Queue<String> response_queue;
     private volatile static Queue<String> response_server_queue;
 
-    private Client cmd_tx;
+    private ClientUDP cmd_tx;
 
     public synchronized void add(String response_ip, String response) {
         if (MiscUtil.notBlank(response)) {
@@ -52,7 +52,7 @@ public class QueuedResponseSender extends Thread {
             
         }
 
-        cmd_tx = new Client(server, Ports.RESPONSE.getPort());
+        cmd_tx = new ClientUDP(server, Ports.RESPONSE.getPort());
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(message);

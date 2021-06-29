@@ -4,7 +4,7 @@ import java.util.Queue;
 
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.Ports;
-import com.jtelaa.da2.lib.net.server.Server;
+import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
  * Receives command responses
@@ -17,13 +17,13 @@ public class QueuedResponseReceiver extends Thread {
 
     private volatile static Queue<String> response_queue;
 
-    private Server cmd_rx;
+    private ServerUDP cmd_rx;
 
     public synchronized String getLatest() { return response_queue.poll(); }
     public synchronized String getMessage() { return response_queue.poll(); }
 
     public void run() {
-        cmd_rx = new Server(Ports.RESPONSE.getPort());
+        cmd_rx = new ServerUDP(Ports.RESPONSE.getPort());
 
         if (cmd_rx.startServer()) {
             while (run) {

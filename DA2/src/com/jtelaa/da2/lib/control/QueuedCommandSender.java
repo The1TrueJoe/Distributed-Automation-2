@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.jtelaa.da2.lib.net.Ports;
-import com.jtelaa.da2.lib.net.client.Client;
+import com.jtelaa.da2.lib.net.client.ClientUDP;
 
 /**
  * Sends commands in batches <p>
@@ -18,7 +18,7 @@ public class QueuedCommandSender extends Thread {
     
     private volatile static Queue<Command> command_queue;
 
-    private Client cmd_tx;
+    private ClientUDP cmd_tx;
 
     public synchronized void add(Command command) {
         if (command.isValid()) { 
@@ -46,7 +46,7 @@ public class QueuedCommandSender extends Thread {
         String message = command_to_send.command();
         String server = command_to_send.destination();
 
-        cmd_tx = new Client(server, Ports.CMD.getPort());
+        cmd_tx = new ClientUDP(server, Ports.CMD.getPort());
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(message);
