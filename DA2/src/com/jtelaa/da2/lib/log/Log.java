@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.jtelaa.da2.bot.main.Main;
+import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 
@@ -17,29 +18,29 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
 public class Log {
 
     /** The vebosity of the local application output */
-    public static boolean app_verbose;
+    public volatile static boolean app_verbose;
 
     /** The logging verbostiy */
-    public static boolean log_verbose;
+    public volatile static boolean log_verbose;
 
     public volatile static ClientUDP logging_client;
-    public static boolean log_established = false;
+    public volatile static boolean log_established = false;
 
     public volatile static Queue<String> logging_queue;
-    private static LogSender sender;
+    private volatile static LogSender sender;
 
     /**
      * Load the config from the configuration file <p>
      * <b> Make sure to load config file first!! </b>
      */
 
-    public static void loadConfig() {
-        app_verbose = Main.me.runAppVerbose();
-        log_verbose = Main.me.runLogVerbose();
+    public synchronized static void loadConfig() {
+        app_verbose = ConfigHandler.runAppVerbose();
+        log_verbose = ConfigHandler.runLogVerbose();
 
     }
 
-    public static void openClient(String logging_server_ip) {
+    public synchronized static void openClient(String logging_server_ip) {
         if (!log_verbose) { return; } // Stop if log is not verbose
 
         // Start logging client
@@ -61,7 +62,7 @@ public class Log {
      * @param message Message to send
      */
 
-    public static void sendMessage(String message) {
+    public synchronized static void sendMessage(String message) {
         if (app_verbose) { sendSysMessage(message); }   // System message
         if (log_verbose) { sendLogMessage(message); }   // Logging message
 
@@ -73,7 +74,7 @@ public class Log {
      * @param message Message to send
      */
 
-    public static boolean sendSysMessage(String message) {
+    public synchronized static boolean sendSysMessage(String message) {
         System.out.println(message);
         return true;
 
@@ -87,7 +88,7 @@ public class Log {
      * @param message Message to send
      */
 
-    public static boolean sendLogMessage(String message) {
+    public synchronized static boolean sendLogMessage(String message) {
         if (!log_established || !sender.isAlive()) { return false; }
         logging_queue.add(message);
         return true;
@@ -96,7 +97,7 @@ public class Log {
 
     /** Closes the logging client */
 
-    public static void closeLog() { 
+    public synchronized static void closeLog() { 
         logging_client.closeClient(); 
         sender.stopSender();
     
