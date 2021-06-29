@@ -1,6 +1,9 @@
 package com.jtelaa.da2.querygen;
 
+import java.util.Random;
+
 import com.jtelaa.da2.lib.misc.MiscUtil;
+import com.jtelaa.da2.querygen.searches.SearchHandler;
 import com.jtelaa.da2.querygen.util.Query;
 
 /**
@@ -18,9 +21,24 @@ public class QueryGenerator extends Thread {
     public volatile static int MAX_QUERY_QUEUE_SIZE = 10000;
 
     public void run() {
+        Random rand = new Random();
+        int rng;
+
         while(run) {
             if (QueryServer.readyForQuery()) {
-                QueryServer.addQuery(generate());
+                rng = rand.nextInt(100);
+
+                if (rng <= 50) {
+                    QueryServer.addQuery(generate());
+
+                } else {
+                    Query[] queries = generate(rand.nextInt(rand.nextInt(rng)));
+                    
+                    for (Query query : queries) {
+                        QueryServer.addQuery(query);
+
+                    }
+                }
 
             } else {
                 MiscUtil.waitasec();
@@ -33,7 +51,12 @@ public class QueryGenerator extends Thread {
     public synchronized void stopGen() { run = false; }
 
     private Query generate() {
-        return new Query("test");
+        return SearchHandler.getRandomSearch();
+    }
+
+    private Query[] generate(int count) {
+        return SearchHandler.loadSearches(count);
+
     }
     
 }
