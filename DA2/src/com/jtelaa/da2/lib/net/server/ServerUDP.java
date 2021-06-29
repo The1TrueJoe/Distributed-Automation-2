@@ -3,6 +3,7 @@ package com.jtelaa.da2.lib.net.server;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 
 import com.jtelaa.da2.lib.log.Log;
@@ -12,6 +13,8 @@ public class ServerUDP {
     private int port;
 
     private byte[] recieve_buffer;
+    
+    private InetAddress clientAddress;
 
     private DatagramSocket socket;
 
@@ -52,8 +55,9 @@ public class ServerUDP {
             DatagramPacket packet = new DatagramPacket(recieve_buffer, recieve_buffer.length);
             socket.receive(packet);
             message = convertMessage(recieve_buffer);
+            clientAddress = socket.getInetAddress();
 
-            Log.sendMessage("Received: " + message);
+            Log.sendMessage("Received: " + message + " From: " + getClientAddress());
 
         } catch (IOException e) {
             Log.sendMessage("Failed: \n" + e.getStackTrace());
@@ -109,5 +113,9 @@ public class ServerUDP {
     public int getPort() { return port; }
 
     public DatagramSocket getSocket() { return socket; }
+
+    public InetAddress getClient() { return clientAddress; }
+    public String getClientAddress() { return clientAddress.getHostAddress(); }
+    public String getClientName() { return clientAddress.getHostName(); }
     
 }

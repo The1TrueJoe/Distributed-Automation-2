@@ -103,6 +103,7 @@ public class Server {
 
     public int getPort() { return port; }
 
+    public InetAddress getClient() { return clientAddress; }
     public String getClientAddress() { return clientAddress.getHostAddress(); }
     public String getClientName() { return clientAddress.getHostName(); }
 
