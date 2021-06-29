@@ -7,7 +7,11 @@ import com.jtelaa.da2.bot.main.Main;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
+import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.client.ClientUDP;
+import com.jtelaa.da2.lib.net.server.Server;
+import com.jtelaa.da2.querygen.RequestServer;
 import com.jtelaa.da2.querygen.util.Query;
 
 /**
@@ -67,18 +71,15 @@ public class SearchSystem {
         Query query;
 
         for (; current_count < max; current_count++) {
-            query = Query.requestQuery(query_ip, Ports.QUERY_REQUEST.getPort(), Ports.QUERY_RECEIVE.getPort());
+            query = requestQuery(query_ip, Ports.QUERY_REQUEST.getPort(), Ports.QUERY_RECEIVE.getPort());
             
             openBing(query);
+            MiscUtil.waitamoment(rand.nextInt(900000));
+            closeTab();
 
-            try {
-                Thread.sleep(rand.nextInt(900000));
-
-            } catch (Exception e) {
-                Log.sendMessage(e.getMessage());
-
-            }
         }
+
+        closeWindow();
 
         return current_count;
     }
@@ -92,6 +93,66 @@ public class SearchSystem {
 
         max_pc_searches = rand.nextInt(25);
         max_mobile_searches = rand.nextInt(25);
+
+    }
+
+    /**
+     * Sends a request for a query
+     * 
+     * @return The search query
+     */
+
+    public static Query requestQuery() {
+        return requestQuery(Main.me.getQueryGenIP(), Ports.QUERY_REQUEST.getPort(), Ports.QUERY_RECEIVE.getPort());
+    }
+
+    /**
+     * Sends a request for a query
+     * 
+     * @return The search query
+     */
+
+    public static Query requestQuery(String ip) {
+        return requestQuery(ip, Ports.QUERY_REQUEST.getPort(), Ports.QUERY_RECEIVE.getPort());
+    }
+
+    /**
+     * Sends a request for a query
+     * 
+     * @return The search query
+     */
+
+    public static Query requestQuery(String ip, int request, int receive) {
+        String response = "";
+        sendRequest(ip, request);
+
+        Server get = new Server(receive);
+        get.startServer();
+        
+        while (!MiscUtil.notBlank(response)) {
+            response = get.getMessage();
+
+            MiscUtil.waitamoment(100);
+
+        }
+
+        get.closeServer();
+        return new Query(response, false);
+
+    }
+
+    /**
+     * Sends out a request for a search query
+     * 
+     * @param ip IP address to access
+     * @param request Port for sending requests
+     */
+
+    private static void sendRequest(String ip, int request) {
+        ClientUDP send = new ClientUDP(ip, request);
+        send.startClient();
+        send.sendMessage(RequestServer.QUERY_REQUEST_MESSAGE);
+        send.closeClient();
 
     }
 
@@ -112,5 +173,11 @@ public class SearchSystem {
     
     /** Puts chrome into mobile mode from inspect */
     private static void chromeMobile()  { ComputerControl.pressKey(new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_M}); }
+
+    /** Closes the current tab in chrome */
+    public static void closeTab() { ComputerControl.pressKey(new int[] { KeyEvent.VK_CONTROL, KeyEvent.VK_W}); }
+
+    /** Closes the current tab in chrome */
+    public static void closeWindow() { ComputerControl.pressKey(new int[] { KeyEvent.VK_ALT, KeyEvent.VK_SHIFT, KeyEvent.VK_W}); }
 
 }
