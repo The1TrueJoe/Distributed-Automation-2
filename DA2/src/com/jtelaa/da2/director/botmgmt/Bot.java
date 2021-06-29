@@ -29,6 +29,11 @@ public class Bot {
     public Bot() {
         
     }
+
+    public Bot(String ip) {
+        ip_address = ip;
+        
+    }
     
     public Bot(JSONObject bot_config) {
         

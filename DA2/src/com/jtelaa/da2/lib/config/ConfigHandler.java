@@ -12,4 +12,12 @@ public class ConfigHandler {
 
     public static JSONObject getConfig() { return null; }
 
+    public static boolean runAppVerbose() {
+        return false;
+    }
+
+    public static boolean runLogVerbose() {
+        return false;
+    }
+
 }
