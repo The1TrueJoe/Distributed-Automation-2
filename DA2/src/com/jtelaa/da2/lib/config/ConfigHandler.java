@@ -20,4 +20,10 @@ public class ConfigHandler {
         return false;
     }
 
+    /** Gets director IP from config */
+    public static String getDirectorIP() { return null; }
+
+    /** Gets director IP from config */
+    public static String getQueryGenIP() { return null; }
+
 }

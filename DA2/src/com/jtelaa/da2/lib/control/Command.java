@@ -1,5 +1,7 @@
 package com.jtelaa.da2.lib.control;
 
+import java.io.Serializable;
+
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
 
@@ -10,7 +12,14 @@ import com.jtelaa.da2.lib.net.NetTools;
  * @author Joseph
  */
 
-public class Command {
+public class Command implements Serializable {
+
+    // Command Structure
+    public static final int USER = 0;
+    public static final int SYSTEM = 1;
+    public static final int CMD_Start = 2;
+
+    private Command[] split;
     
     private String command;
     private String dest_ip;
@@ -25,6 +34,8 @@ public class Command {
         org_ip = NetTools.getLocalIP();
         isHeadless = true;
 
+        split = split("");
+
     }
 
     public Command(String command, String dest_ip) {
@@ -34,6 +45,8 @@ public class Command {
         org_ip = NetTools.getLocalIP();
         isHeadless = true;
 
+        split = split("");
+
     }
 
     public Command(String command, String dest_ip, boolean isHeadless) {
@@ -42,6 +55,8 @@ public class Command {
         this.isHeadless = isHeadless;
 
         org_ip = NetTools.getLocalIP();
+
+        split = split("");
 
     }
 
@@ -53,6 +68,8 @@ public class Command {
         org_ip = NetTools.getLocalIP();
         isHeadless = true;
 
+        split = split("");
+
     }
 
     public Command(String command, String dest_ip, String org_ip, boolean isHeadless) {
@@ -63,7 +80,15 @@ public class Command {
 
         org_ip = NetTools.getLocalIP();
 
+        split = split("");
+
     }
+
+    /**
+     * Checks if the command is valid
+     * 
+     * @return Command validitiy
+     */
 
     public boolean isValid() { 
         return (
@@ -73,17 +98,33 @@ public class Command {
         ); 
     }
 
+    /**
+     * Splits the command down into an array of core modifiers
+     * 
+     * @return array of individual commands
+     */
+
     public Command[] split(String regex) { 
         String[] tmps = command.split(regex);
         Command[] cmds = new Command[tmps.length]; 
 
         for (int i = 0; i < tmps.length; i++) {
-            cmds[i] = new Command(dest_ip, tmps[i]);
+            cmds[i] = new Command(tmps[i], dest_ip, org_ip, isHeadless);
             
         }
 
         return cmds;
 
+    }
+
+    /**
+     * Gets the command modifier
+     * 
+     * @return modifier
+     */
+
+    public Command getModifier(int index) {
+        return split[index];
     }
 
     public String command() { return command; }
