@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.ArrayList;
 
 import com.jtelaa.da2.bot.plugin.bw.util.SearchSystem;
-import com.jtelaa.da2.lib.misc.Files;
+import com.jtelaa.da2.lib.files.Files;
 import com.jtelaa.da2.querygen.util.Query;
 
 public class SearchHandler {
@@ -67,7 +67,7 @@ public class SearchHandler {
 
         }
 
-        return Files.listInternalFile(PATH + name);
+        return Files.listLinesInternalFile(PATH + name);
     }
     
 }

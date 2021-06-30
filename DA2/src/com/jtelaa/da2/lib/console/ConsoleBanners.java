@@ -1,6 +1,6 @@
 package com.jtelaa.da2.lib.console;
 
-import com.jtelaa.da2.lib.misc.Files;
+import com.jtelaa.da2.lib.files.Files;
 
 /**
  * Prints out the banners into the console

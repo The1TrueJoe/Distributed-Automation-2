@@ -1,4 +1,4 @@
-package com.jtelaa.da2.querygen;
+package com.jtelaa.da2.querygen.processes;
 
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.net.Ports;

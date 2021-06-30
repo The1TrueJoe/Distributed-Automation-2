@@ -1,9 +1,9 @@
-package com.jtelaa.da2.director.util.cli.clis;
+package com.jtelaa.da2.hypervisor_interface.util;
 
-import com.jtelaa.da2.director.util.cli.CLIType;
+import com.jtelaa.da2.director.cli.CLIType;
 import com.jtelaa.da2.lib.control.Command;
 
-public class SchedCLI extends CLIType {
+public class CLI extends CLIType {
 
     @Override
     public String startCLI(Command command) {
@@ -17,5 +17,4 @@ public class SchedCLI extends CLIType {
         return null;
     }
     
-
 }

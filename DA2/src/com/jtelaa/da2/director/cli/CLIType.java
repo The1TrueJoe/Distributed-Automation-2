@@ -1,4 +1,4 @@
-package com.jtelaa.da2.director.util.cli;
+package com.jtelaa.da2.director.cli;
 
 import com.jtelaa.da2.lib.control.Command;
 

@@ -1,4 +1,4 @@
-package com.jtelaa.da2.querygen;
+package com.jtelaa.da2.querygen.processes;
 
 import java.util.Random;
 

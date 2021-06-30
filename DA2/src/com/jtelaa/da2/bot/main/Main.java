@@ -4,7 +4,7 @@ import com.jtelaa.da2.bot.plugin.bw.BingRewards;
 import com.jtelaa.da2.bot.util.Heartbeat;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.director.botmgmt.BotMgmt;
-import com.jtelaa.da2.director.util.cli.Cases;
+import com.jtelaa.da2.director.cli.Cases;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.QueuedCommandReceiver;

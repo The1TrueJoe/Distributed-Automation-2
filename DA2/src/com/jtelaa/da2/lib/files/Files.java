@@ -1,4 +1,4 @@
-package com.jtelaa.da2.lib.misc;
+package com.jtelaa.da2.lib.files;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -7,10 +7,17 @@ import java.util.ArrayList;
 
 import com.jtelaa.da2.lib.log.Log;
 
+/**
+ * Utilities class for handling files
+ * 
+ * @since 2
+ * @author Joseph
+ */
+
 public class Files {
 
     public static String readInternalFile(String path) {
-        ArrayList<String> list = listInternalFile(path);
+        ArrayList<String> list = listLinesInternalFile(path);
         String out = "";
 
         for (String item : list) {
@@ -22,7 +29,7 @@ public class Files {
 
     }
 
-    public static ArrayList<String> listInternalFile(String path) {
+    public static ArrayList<String> listLinesInternalFile(String path) {
         ArrayList<String> list = new ArrayList<String>();
         
         try {
@@ -43,6 +50,17 @@ public class Files {
         }
 
         return list;
+    }
+
+    public static void writeLinesInternalFile(String[] lines, String path) {
+        try {
+            
+
+
+        } catch (Exception e) {
+            Log.sendMessage(e.getMessage());
+            
+        }
     }
 
 }

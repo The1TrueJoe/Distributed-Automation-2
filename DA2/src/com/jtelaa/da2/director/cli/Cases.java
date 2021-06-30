@@ -1,4 +1,4 @@
-package com.jtelaa.da2.director.util.cli;
+package com.jtelaa.da2.director.cli;
 
 import com.jtelaa.da2.lib.control.Command;
 
@@ -62,6 +62,14 @@ public class Cases {
 
     public static boolean scheduler(Command command) {
         if (command.command().equalsIgnoreCase("scheduler") || command.command().equalsIgnoreCase("sched")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean querygen(Command command) {
+        if (command.command().equalsIgnoreCase("querygen") || command.command().equalsIgnoreCase("gen") || command.command().equalsIgnoreCase("qry")) {
             return true;
         } else {
             return false;

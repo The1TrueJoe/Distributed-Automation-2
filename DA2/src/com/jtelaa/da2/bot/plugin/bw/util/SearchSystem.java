@@ -11,7 +11,7 @@ import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 import com.jtelaa.da2.lib.net.server.Server;
-import com.jtelaa.da2.querygen.RequestServer;
+import com.jtelaa.da2.querygen.processes.RequestServer;
 import com.jtelaa.da2.querygen.util.Query;
 
 /**

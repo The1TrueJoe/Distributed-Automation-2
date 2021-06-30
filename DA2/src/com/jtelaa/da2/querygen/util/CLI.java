@@ -1,9 +1,9 @@
-package com.jtelaa.da2.director.util.cli.clis;
+package com.jtelaa.da2.querygen.util;
 
-import com.jtelaa.da2.director.util.cli.CLIType;
+import com.jtelaa.da2.director.cli.CLIType;
 import com.jtelaa.da2.lib.control.Command;
 
-public class HypervisCLI extends CLIType {
+public class CLI extends CLIType {
 
     @Override
     public String startCLI(Command command) {
@@ -16,7 +16,5 @@ public class HypervisCLI extends CLIType {
         // TODO Auto-generated method stub
         return null;
     }
-
-
     
 }
