@@ -45,10 +45,6 @@ public class CLI extends Thread {
             
             
         }
-
-
-        return "";
-
     }
 
     /** Accessible CMD Sender/Receiver */

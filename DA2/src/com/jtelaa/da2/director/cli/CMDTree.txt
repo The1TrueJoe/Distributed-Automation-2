@@ -28,3 +28,8 @@
 |----scheduler
 |----querygen
 |----help
+|----sys
+|    |----add
+|    |    |----{user} {password}
+|    |----remove
+|    |    |----{user}
