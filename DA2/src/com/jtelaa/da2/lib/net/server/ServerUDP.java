@@ -8,6 +8,8 @@ import java.net.SocketException;
 
 import com.jtelaa.da2.lib.log.Log;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 public class ServerUDP {
 
     private int port;
@@ -46,7 +48,6 @@ public class ServerUDP {
      * @return The message from the client
      */
 
-
     public String getMessage() {
         recieve_buffer = new byte[65535];
         String message;
@@ -66,6 +67,33 @@ public class ServerUDP {
         }
 
          return message;
+    }
+
+    /**
+     * Receives the object from a client
+     * 
+     * @return The object from the client
+     */
+
+    public Object getObject() {
+        recieve_buffer = new byte[65535];
+        Object object;
+        
+        try {
+            DatagramPacket packet = new DatagramPacket(recieve_buffer, recieve_buffer.length);
+            socket.receive(packet);
+            object = SerializationUtils.deserialize(recieve_buffer);
+            clientAddress = socket.getInetAddress();
+
+            Log.sendMessage("Received UDP Object: " + object + " From: " + getClientAddress());
+
+        } catch (IOException e) {
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            object = new String("");
+
+        }
+
+         return object;
     }
 
     /**

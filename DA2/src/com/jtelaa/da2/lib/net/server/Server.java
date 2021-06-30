@@ -2,6 +2,7 @@ package com.jtelaa.da2.lib.net.server;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -28,6 +29,7 @@ public class Server {
 
     private InputStream inputStream;
     private DataInputStream in;
+    private ObjectInputStream in_obj;
 
     public Server(int port) { this.port = port; }
 
@@ -47,6 +49,7 @@ public class Server {
 
             inputStream = serverSocket.getInputStream();
             in = new DataInputStream(inputStream);
+            in_obj = new ObjectInputStream(inputStream);
 
             return true;
 
@@ -69,7 +72,7 @@ public class Server {
         
         try {
             message = in.readUTF();
-            Log.sendMessage("Received: " + message);
+            Log.sendMessage("Received: " + message + " From: " + getClientAddress());
             
         } catch (Exception e) {
             Log.sendMessage("Failed: \n" + e.getStackTrace());
@@ -81,6 +84,28 @@ public class Server {
     }
 
     /**
+     * Receives the object from a client
+     * 
+     * @return The object from the client
+     */
+
+    public Object getObject() {
+        Object object;
+        
+        try {
+            object = in_obj.readObject();
+            Log.sendMessage("Received Object: " + object + " From: " + getClientAddress());
+            
+        } catch (Exception e) {
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            object = new String("");
+
+        }
+
+        return object;
+    }
+
+    /**
      * Closes the client and output streams
      */
 
@@ -89,6 +114,7 @@ public class Server {
             serverSocket.close();
             server.close();
             in.close();
+            in_obj.close();
             Log.sendMessage("Closed");
 
             return true;
@@ -111,5 +137,5 @@ public class Server {
     public ServerSocket getServerSocket() { return server; }
     public InputStream getInputStream() { return inputStream; }
     public DataInputStream getDataInputStream() { return in; }
-    
+    public ObjectInputStream getObjectInputStream() { return in_obj; }
 }

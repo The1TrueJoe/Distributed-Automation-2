@@ -1,5 +1,7 @@
 package com.jtelaa.da2.director.botmgmt;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
 /**
@@ -9,7 +11,7 @@ import org.json.JSONObject;
  * @author Joseph
  */
 
-public class Bot {
+public class Bot implements Serializable {
 
     private static int id;
 

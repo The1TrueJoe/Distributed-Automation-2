@@ -1,6 +1,7 @@
 package com.jtelaa.da2.lib.net.client;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -8,6 +9,8 @@ import java.net.UnknownHostException;
 
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.net.NetTools;
+
+import org.apache.commons.lang3.SerializationUtils;
 
 /**
  * Network client for sending UDP messages
@@ -73,7 +76,7 @@ public class ClientUDP {
 
     public boolean sendMessage(String message) {
         try {
-            Log.sendMessage("Sending: " + message + " to: " + server_ip + ":" + port + "\n");
+            Log.sendMessage("Sending UDP: " + message + " to: " + server_ip + ":" + port + "\n");
             buffer = message.getBytes();
             socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
             Log.sendMessage("Done");
@@ -85,6 +88,29 @@ public class ClientUDP {
 
             return false;
         }
+    }
+
+    /**
+     * Sends a object
+     * 
+     * @param object Object to send
+     */
+
+    public boolean sendObject(Serializable object) {
+        try {
+            Log.sendMessage("Sending UDP Object: " + object + " to: " + server_ip + ":" + port + "\n");
+            buffer = SerializationUtils.serialize(object);
+            socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
+            Log.sendMessage("Done");
+
+            return true;
+        
+        } catch (Exception e) {
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+
+            return false;
+        }
+
     }
 
     /**
