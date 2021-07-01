@@ -9,6 +9,7 @@ import java.net.SocketException;
 import com.jtelaa.da2.lib.log.Log;
 
 import org.apache.commons.lang3.SerializationUtils;
+import org.junit.Test;
 
 public class ServerUDP {
 
@@ -135,6 +136,20 @@ public class ServerUDP {
 
             return false;
 
+        }
+    }
+
+    @Test
+    public static void test() {
+        ServerUDP server = new ServerUDP(9999);
+        String message = "";
+
+        server.startServer();
+
+        while (true) {
+            if (message != null) {
+                System.out.println(server.getMessage());
+            }
         }
     }
 

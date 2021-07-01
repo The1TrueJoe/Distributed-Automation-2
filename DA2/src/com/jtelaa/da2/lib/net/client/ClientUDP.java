@@ -11,6 +11,7 @@ import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.net.NetTools;
 
 import org.apache.commons.lang3.SerializationUtils;
+import org.junit.Test;
 
 /**
  * Network client for sending UDP messages
@@ -130,6 +131,20 @@ public class ClientUDP {
             return false;
 
         }
+    }
+
+    @Test
+    public static void test() {
+        ClientUDP client = new ClientUDP("127.0.0.1", 9999);
+        int i = 0;
+
+        client.startClient();
+        
+        while (true) {
+            client.sendMessage("Test " + i);
+            i++;
+        }
+        
     }
 
     public int getPort() { return port; }
