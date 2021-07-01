@@ -8,7 +8,6 @@ import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 import com.jtelaa.da2.lib.net.server.Server;
 import com.jtelaa.da2.querygen.processes.RequestServer;
@@ -71,7 +70,7 @@ public class SearchSystem {
         Query query;
 
         for (; current_count < max; current_count++) {
-            query = requestQuery(query_ip, Ports.QUERY_REQUEST.getPort(), Ports.QUERY_RECEIVE.getPort());
+            query = requestQuery(query_ip, BWPorts.QUERY_REQUEST.getPort(), BWPorts.QUERY_RECEIVE.getPort());
             
             openBing(query);
             MiscUtil.waitamoment(rand.nextInt(900000));
@@ -103,7 +102,7 @@ public class SearchSystem {
      */
 
     public static Query requestQuery() {
-        return requestQuery(Main.me.getQueryGenIP(), Ports.QUERY_REQUEST.getPort(), Ports.QUERY_RECEIVE.getPort());
+        return requestQuery(query_ip, BWPorts.QUERY_REQUEST.getPort(), BWPorts.QUERY_RECEIVE.getPort());
     }
 
     /**
@@ -113,7 +112,7 @@ public class SearchSystem {
      */
 
     public static Query requestQuery(String ip) {
-        return requestQuery(ip, Ports.QUERY_REQUEST.getPort(), Ports.QUERY_RECEIVE.getPort());
+        return requestQuery(ip, BWPorts.QUERY_REQUEST.getPort(), BWPorts.QUERY_RECEIVE.getPort());
     }
 
     /**

@@ -23,10 +23,11 @@ public class Main {
     private static QueuedResponseSender cmd_tx;
 
     public static void main(String[] args) {
+        String config_file_location = "";
 
-        me = new Bot(ConfigHandler.getConfig());
-        Log.loadConfig();
-        Log.openClient(me.getLogIP());
+        me = new Bot(new ConfigHandler(config_file_location));
+        Log.loadConfig(me.getConfig());
+        Log.openClient(me.getConfig().getLogIP());
 
         Log.sendMessage("Welcome to the DA2 Bot Client! I am bot " + me.getID());
         if (me.hasHeartBeat()) { beat = new Heartbeat(); } 

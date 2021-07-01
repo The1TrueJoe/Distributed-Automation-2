@@ -4,6 +4,10 @@ public class AccountAnnouncementListener extends Thread {
 
     public void run() {
 
+
+        while(run) {
+            
+        }
     }
 
     private boolean run = true;

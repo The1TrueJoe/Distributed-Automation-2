@@ -4,6 +4,10 @@ public class PointAnnouncementListener extends Thread {
 
     public void run() {
         
+
+        while(run) {
+            
+        }
     }
 
     private boolean run = true;

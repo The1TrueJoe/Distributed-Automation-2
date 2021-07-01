@@ -3,11 +3,11 @@ package com.jtelaa.da2.querygen.processes;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.client.Client;
 import com.jtelaa.da2.querygen.util.Query;
 
@@ -98,7 +98,7 @@ public class QueryServer extends Thread {
         Query query_to_send = query_queue.poll();
         Bot bot_to_serve = bot_queue.poll();
 
-        cmd_tx = new Client(bot_to_serve.getIP(), Ports.QUERY_RECEIVE.getPort());
+        cmd_tx = new Client(bot_to_serve.getIP(), BWPorts.QUERY_RECEIVE.getPort());
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(query_to_send.getQuery());

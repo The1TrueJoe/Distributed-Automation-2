@@ -5,9 +5,7 @@ public enum Ports {
     HEARTBEAT(8679),
     CMD(8699),
     RESPONSE(8701),
-    LOG(8775),
-    QUERY_REQUEST(9998),
-    QUERY_RECEIVE(9999);
+    LOG(8775);
 
     private final int port;
 
