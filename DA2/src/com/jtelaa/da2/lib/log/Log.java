@@ -3,7 +3,6 @@ package com.jtelaa.da2.lib.log;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.jtelaa.da2.bot.main.Main;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
@@ -34,9 +33,9 @@ public class Log {
      * <b> Make sure to load config file first!! </b>
      */
 
-    public synchronized static void loadConfig() {
-        app_verbose = ConfigHandler.runAppVerbose();
-        log_verbose = ConfigHandler.runLogVerbose();
+    public synchronized static void loadConfig(ConfigHandler config) {
+        app_verbose = config.runAppVerbose();
+        log_verbose = config.runLogVerbose();
 
     }
 

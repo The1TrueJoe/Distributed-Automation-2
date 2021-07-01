@@ -1,5 +1,6 @@
 package com.jtelaa.da2.querygen;
 
+import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.control.QueuedCommandReceiver;
 import com.jtelaa.da2.lib.control.QueuedResponseSender;
 import com.jtelaa.da2.lib.log.Log;
@@ -8,10 +9,14 @@ import com.jtelaa.da2.querygen.processes.QueryServer;
 import com.jtelaa.da2.querygen.processes.RequestServer;
 
 public class Main {
+    
+    public static ConfigHandler my_config;
 
     public static void main(String[] args) {
+        my_config = new ConfigHandler(); // TODO load config
+
         // Start Logging
-        Log.loadConfig();
+        Log.loadConfig(my_config);
         Log.openClient("logging_server_ip");
 
         // Request server setup

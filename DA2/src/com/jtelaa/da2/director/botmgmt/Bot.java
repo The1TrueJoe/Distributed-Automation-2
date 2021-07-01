@@ -2,7 +2,7 @@ package com.jtelaa.da2.director.botmgmt;
 
 import java.io.Serializable;
 
-import org.json.JSONObject;
+import com.jtelaa.da2.lib.config.ConfigHandler;
 
 /**
  * Bot object for storing data
@@ -13,61 +13,45 @@ import org.json.JSONObject;
 
 public class Bot implements Serializable {
 
-    private static int id;
+    private int id;
+    private String ip;
 
-    private String ip_address;
-
-    private boolean app_verbose;
-    private boolean log_verbose;
-    private boolean has_heartbeat;
-
-    private String director_ip;
-    private String query_ip;
-    private String heartbeat_ip;
-    private String log_ip;
-    private String ptmgr_ip;
-
-    /**  TODO Add Constructors */
-    public Bot() {
-        
-    }
+    private ConfigHandler config;
 
     public Bot(String ip) {
-        ip_address = ip;
-        
+        this.config = new ConfigHandler();
+        ip = config.getIP();
+        id = config.getID();
+
     }
-    
-    public Bot(JSONObject bot_config) {
-        
+
+    public Bot(String ip, int id) {
+        this.config = new ConfigHandler();
+
+        this.ip = ip;
+        config.setIP(ip);
+
+        this.id = id;
+        config.setID(id);
+
     }
-    
 
-    public JSONObject botParser() { return null; }
+    public Bot(ConfigHandler config) {
+        this.config = config;
+        ip = config.getIP();
+        id = config.getID();
 
-    /** Checks config if the app will output to the local terminal */
-    public boolean runAppVerbose() { return app_verbose; }
+    }
 
-    /** Checks config if the app will output to the log */
-    public boolean runLogVerbose() { return log_verbose; }
-
-    /** Gets director IP from config */
-    public String getDirectorIP() { return director_ip; }
-
-    /** Gets director IP from config */
-    public String getQueryGenIP() { return query_ip; }
-
-    public String getHearbeatIP() { return heartbeat_ip; }
-
-    public String getLogIP() { return log_ip; }
-
-    public String getPointMgrIP() { return ptmgr_ip; }
-    
-    public String getIP() { return ip_address; }
-
+    public String getIP() { return ip; }
     public int getID() { return id; }
 
-    public boolean hasHeartBeat() { return has_heartbeat; }
+    public ConfigHandler getConfig() { return config; }
 
+    public boolean hasHeartBeat() { return config.getProperty("has_heartbeat", "true").equalsIgnoreCase("true"); }
+    public String getHearbeatIP() { return config.getProperty("has_heartbeat", " "); }
     
-    
+    public String getQueryGenIP() { return config.getProperty("qgen_ip", ""); }
+    public String getPointMgrIP() { return config.getProperty("ptmgr_ip", ""); }
+
 }
