@@ -1,14 +1,15 @@
 package com.jtelaa.da2.lib.net.client;
 
 import java.io.DataOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 import com.jtelaa.da2.lib.log.Log;
-
-import org.apache.commons.validator.routines.InetAddressValidator;
+import com.jtelaa.da2.lib.net.NetTools;
 
 /**
  * Network client for sending messages
@@ -28,9 +29,10 @@ public class Client {
     
     private OutputStream outputStream;
     private DataOutputStream out;
+    private ObjectOutputStream out_obj;
 
     public Client(String server_ip, int port) { 
-        if (!InetAddressValidator.isValid(server_ip)) {
+        if (!NetTools.isValid(server_ip)) {
             try {
                 server_ip = InetAddress.getLocalHost().toString();
             } catch (UnknownHostException e) {
@@ -59,6 +61,7 @@ public class Client {
         
             outputStream = clientSocket.getOutputStream();
             out = new DataOutputStream(outputStream);
+            out_obj = new ObjectOutputStream(outputStream);
             Log.sendMessage("Ready");
 
             return true;
@@ -91,6 +94,28 @@ public class Client {
             return false;
         }
     }
+
+    /**
+     * Sends object
+     * 
+     * @param object Object to send
+     */
+
+    public boolean sendObject(Serializable object) {
+        try {
+            Log.sendMessage("Sending Object: " + object + " to: " + server_ip + ":" + port + "\n");
+            out_obj.writeObject(object);
+            out_obj.flush();
+            Log.sendMessage("Done");
+
+            return true;
+
+        } catch (Exception e) {
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+
+            return false;
+        }
+    }
     
     /**
      * Closes the client and output streams
@@ -99,6 +124,7 @@ public class Client {
     public boolean closeClient() {
         try {    
             out.close();
+            out_obj.close();
             clientSocket.close();
             Log.sendMessage("Closed");
 
@@ -118,5 +144,6 @@ public class Client {
     public Socket getSocket() { return clientSocket; }
     public OutputStream getOutputStream() { return outputStream; }
     public DataOutputStream getDataOutputStream() { return out; }
+    public ObjectOutputStream getObjectOutputStream() { return out_obj; }
 
 }

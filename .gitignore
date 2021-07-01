@@ -24,7 +24,6 @@ sshj.jar
 
 # VSCode
 .metals/
-.vscode/
 
 /bin/
 build

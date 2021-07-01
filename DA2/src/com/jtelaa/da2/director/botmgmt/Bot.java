@@ -1,6 +1,8 @@
 package com.jtelaa.da2.director.botmgmt;
 
-import org.json.JSONObject;
+import java.io.Serializable;
+
+import com.jtelaa.da2.lib.config.ConfigHandler;
 
 /**
  * Bot object for storing data
@@ -9,18 +11,47 @@ import org.json.JSONObject;
  * @author Joseph
  */
 
-public class Bot {
+public class Bot implements Serializable {
 
-    private static int id;
+    private int id;
+    private String ip;
 
-    private static String ip_address;
+    private ConfigHandler config;
 
-    public int getID() { return id; }
-    
-    public String getIP() { return ip_address; }
+    public Bot(String ip) {
+        this.config = new ConfigHandler();
+        ip = config.getIP();
+        id = config.getID();
 
-    public static JSONObject botParser() { 
-        return null;
     }
+
+    public Bot(String ip, int id) {
+        this.config = new ConfigHandler();
+
+        this.ip = ip;
+        config.setIP(ip);
+
+        this.id = id;
+        config.setID(id);
+
+    }
+
+    public Bot(ConfigHandler config) {
+        this.config = config;
+        ip = config.getIP();
+        id = config.getID();
+
+    }
+
+    public String getIP() { return ip; }
+    public int getID() { return id; }
+
+    public ConfigHandler getConfig() { return config; }
+
+    public boolean hasHeartBeat() { return config.getProperty("has_heartbeat", "true").equalsIgnoreCase("true"); }
+    public String getHearbeatIP() { return config.getProperty("has_heartbeat", " "); }
     
+    public String getQueryGenIP() { return config.getProperty("qgen_ip", ""); }
+    public String getPointMgrIP() { return config.getProperty("ptmgr_ip", ""); }
+
 }

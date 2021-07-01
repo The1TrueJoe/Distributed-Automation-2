@@ -1,14 +1,17 @@
 package com.jtelaa.da2.lib.net.client;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import com.jtelaa.da2.lib.log.Log;
+import com.jtelaa.da2.lib.net.NetTools;
 
-import org.apache.commons.validator.routines.InetAddressValidator;
+import org.apache.commons.lang3.SerializationUtils;
+import org.junit.Test;
 
 /**
  * Network client for sending UDP messages
@@ -29,7 +32,7 @@ public class ClientUDP {
     private DatagramSocket socket;
 
     public ClientUDP(String server_ip, int port) { 
-        if (!InetAddressValidator.isValid(server_ip)) {
+        if (!NetTools.isValid(server_ip)) {
             try {
                 server_ip = InetAddress.getLocalHost().toString();
             } catch (UnknownHostException e) {
@@ -51,7 +54,7 @@ public class ClientUDP {
      * @param port Port number to connect to @see com.jtelaa.da2.lib.net.Ports
      */
 
-    public boolean startServer() {
+    public boolean startClient() {
         try {
             buffer = null;
             socket = new DatagramSocket();
@@ -74,7 +77,7 @@ public class ClientUDP {
 
     public boolean sendMessage(String message) {
         try {
-            Log.sendMessage("Sending: " + message + " to: " + server_ip + ":" + port + "\n");
+            Log.sendMessage("Sending UDP: " + message + " to: " + server_ip + ":" + port + "\n");
             buffer = message.getBytes();
             socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
             Log.sendMessage("Done");
@@ -86,6 +89,29 @@ public class ClientUDP {
 
             return false;
         }
+    }
+
+    /**
+     * Sends a object
+     * 
+     * @param object Object to send
+     */
+
+    public boolean sendObject(Serializable object) {
+        try {
+            Log.sendMessage("Sending UDP Object: " + object + " to: " + server_ip + ":" + port + "\n");
+            buffer = SerializationUtils.serialize(object);
+            socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
+            Log.sendMessage("Done");
+
+            return true;
+        
+        } catch (Exception e) {
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+
+            return false;
+        }
+
     }
 
     /**
@@ -105,6 +131,20 @@ public class ClientUDP {
             return false;
 
         }
+    }
+
+    @Test
+    public static void test() {
+        ClientUDP client = new ClientUDP("127.0.0.1", 9999);
+        int i = 0;
+
+        client.startClient();
+        
+        while (true) {
+            client.sendMessage("Test " + i);
+            i++;
+        }
+        
     }
 
     public int getPort() { return port; }
