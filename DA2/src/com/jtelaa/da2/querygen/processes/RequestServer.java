@@ -1,7 +1,7 @@
 package com.jtelaa.da2.querygen.processes;
 
+import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
-import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
@@ -20,7 +20,7 @@ public class RequestServer extends Thread {
     public static final String QUERY_REQUEST_MESSAGE = "Gimme da Query!";
 
     public void run() {
-        ServerUDP server = new ServerUDP(Ports.QUERY_REQUEST.getPort());
+        ServerUDP server = new ServerUDP(BWPorts.QUERY_REQUEST.getPort());
         
         if (server.startServer()) {
             while (run) {

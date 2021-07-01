@@ -1,4 +1,4 @@
-package com.jtelaa.da2.querygen.util;
+package com.jtelaa.da2.bot.util;
 
 import com.jtelaa.da2.director.cli.CLIType;
 import com.jtelaa.da2.lib.control.Command;

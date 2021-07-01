@@ -7,7 +7,6 @@ import com.jtelaa.da2.lib.control.QueuedCommandReceiver;
 import com.jtelaa.da2.lib.control.QueuedCommandSender;
 import com.jtelaa.da2.lib.control.QueuedResponseReceiver;
 import com.jtelaa.da2.lib.control.QueuedResponseSender;
-import com.jtelaa.da2.lib.misc.MiscUtil;
 
 /**
  *  Basic CLI for the program
