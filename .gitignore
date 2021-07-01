@@ -1,14 +1,29 @@
-# ignore visual studio code project files
-.vscode
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
 
-# ignore eclipse project files
+# Eclipe
 .project
 .classpath
+.settings/
 
-# ignore Intellij Idea project files
-.idea
-*.iml
-/target/
+# Output dirs
+out/
+target/
+classes/
+bin/
+build/
+docs/
+.gradle/
+sshj.jar
+
+# MacOS X
+.DS_Store
+
+# VSCode
+.metals/
 
 /bin/
 build

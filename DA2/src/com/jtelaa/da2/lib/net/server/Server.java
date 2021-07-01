@@ -2,21 +2,21 @@ package com.jtelaa.da2.lib.net.server;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.jtelaa.da2.lib.log.Log;
+
 /**
  * Server client for recieving messages
  * 
- * @author Joseph
  * @since 1.0
+ * @author Joseph
  */
 
 public class Server {
-
-    private String log;
-    public String getLog() { return log; }
 
     /* Server */
 
@@ -29,6 +29,7 @@ public class Server {
 
     private InputStream inputStream;
     private DataInputStream in;
+    private ObjectInputStream in_obj;
 
     public Server(int port) { this.port = port; }
 
@@ -37,22 +38,25 @@ public class Server {
      * Close when finished
      */
 
-    public void startServer() {
-        log = "";
-
+    public boolean startServer() {
         try {
             server = new ServerSocket(port);
-            log += "Awaiting Connection....\n";
+            Log.sendMessage("Awaiting Connection....\n");
             
             serverSocket = server.accept();
             clientAddress = serverSocket.getInetAddress();
-            log += serverSocket + " Connected! to " + clientAddress.getHostAddress() + "\n";
+            Log.sendMessage(serverSocket + " Connected! to " + clientAddress.getHostAddress() + "\n");
 
             inputStream = serverSocket.getInputStream();
             in = new DataInputStream(inputStream);
+            in_obj = new ObjectInputStream(inputStream);
+
+            return true;
 
         } catch (Exception e) {
-            log += "Failed: \n" + e.getStackTrace();
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+
+            return false;
 
         }
     }
@@ -68,10 +72,10 @@ public class Server {
         
         try {
             message = in.readUTF();
-            log += "Received: " + message;
+            Log.sendMessage("Received: " + message + " From: " + getClientAddress());
             
         } catch (Exception e) {
-            log += "Failed: \n" + e.getStackTrace();
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
             message = "";
 
         }
@@ -80,22 +84,52 @@ public class Server {
     }
 
     /**
+     * Receives the object from a client
+     * 
+     * @return The object from the client
+     */
+
+    public Object getObject() {
+        Object object;
+        
+        try {
+            object = in_obj.readObject();
+            Log.sendMessage("Received Object: " + object + " From: " + getClientAddress());
+            
+        } catch (Exception e) {
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            object = new String("");
+
+        }
+
+        return object;
+    }
+
+    /**
      * Closes the client and output streams
      */
 
-    public void closeServer() {
+    public boolean closeServer() {
         try {    
             serverSocket.close();
-            socket.close();
+            server.close();
             in.close();
-            log += "Closed";
+            in_obj.close();
+            Log.sendMessage("Closed");
+
+            return true;
 
         } catch (Exception e) {
-            log += "Failed: \n" + e.getStackTrace();
+            Log.sendMessage("Failed: \n" + e.getStackTrace());
+
+            return false;
 
         }
     }
 
+    public int getPort() { return port; }
+
+    public InetAddress getClient() { return clientAddress; }
     public String getClientAddress() { return clientAddress.getHostAddress(); }
     public String getClientName() { return clientAddress.getHostName(); }
 
@@ -103,5 +137,5 @@ public class Server {
     public ServerSocket getServerSocket() { return server; }
     public InputStream getInputStream() { return inputStream; }
     public DataInputStream getDataInputStream() { return in; }
-    
+    public ObjectInputStream getObjectInputStream() { return in_obj; }
 }

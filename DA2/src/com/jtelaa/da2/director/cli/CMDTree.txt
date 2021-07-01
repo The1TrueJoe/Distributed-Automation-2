@@ -1,0 +1,35 @@
+{user}
+|----director
+|    |----bot (see bot below)
+|    |----quit - stops everything
+|    |----cmd
+|    |    |----{command} - Local system command
+|----hypervisor
+|    |    {hypervisor-id}
+|    |    |----on - Turns device on
+|    |    |----off - Turns device off
+|    |    |----{VM-ID} 
+|    |    |    |----on - Turns on VM
+|    |    |    |----off - Manually turns of vm
+|    |    |----cmd
+|    |    |    |----{commmand} - Local system command
+|----bot
+|    |----{bot-id}
+|    |    |----on  - Turns the bot on
+|    |    |----off - Powers the bot off
+|    |    |----cmd
+|    |    |    |----{command} - Passes commands to system
+|    |    |    plugin
+|    |    |    |----{plugin-name}
+|    |    |    |    |----start - Starts the plugin
+|    |    |    |    |----quit - Stops the plugin
+|    |    |    |    |----manual 
+|    |    |    |    |    |----{command} - Manual control of the plugin  
+|----scheduler
+|----querygen
+|----help
+|----sys
+|    |----add
+|    |    |----{user} {password}
+|    |----remove
+|    |    |----{user}
