@@ -19,6 +19,8 @@ import com.jtelaa.da2.redemption_manager.util.Card;
  * @since 2
  */
 
+ // TODO comment
+
 public class AcctInfo {
 
     public static final String REWARDS_ADDRESS = "https://account.microsoft.com/rewards/";
@@ -38,6 +40,10 @@ public class AcctInfo {
         me = new Account(BingRewards.config.getProperty("email"), BingRewards.config.getProperty("password"));
 
     }
+
+    /**
+     * Announces the account info
+     */
 
     public static void announceAccount() {
         me.newPoints(getPointCount());
@@ -81,10 +87,26 @@ public class AcctInfo {
 
     }
 
+    /**
+     * Sets up the account on the local machine
+     * 
+     * <p> (Account info is already specified)
+     */
+
     public static void setupAccount() {
 
         // TODO add account setup
 
+    }
+
+    public static void requestAccount() {
+
+        // TODO add account request
+
+        Account account = new Account(null, null, 0);
+
+        BingRewards.config.setProperty("email", account.getUsername());
+        BingRewards.config.setProperty("password", account.getPassword());
     }
 
     /**

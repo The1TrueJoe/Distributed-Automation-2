@@ -12,6 +12,8 @@ import com.jtelaa.da2.lib.log.Log;
  * @author Joseph
  */
 
+// TODO comment
+
 public class BingRewards extends Thread {
 
     public static ConfigHandler config;
@@ -24,6 +26,7 @@ public class BingRewards extends Thread {
 
         // Announce Account
         if (config.isTrue("first_setup", "true")) {
+            AcctInfo.requestAccount();
             AcctInfo.setupAccount();
         
         } 
