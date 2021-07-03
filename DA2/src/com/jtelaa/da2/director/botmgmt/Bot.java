@@ -11,6 +11,8 @@ import com.jtelaa.da2.lib.config.ConfigHandler;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class Bot implements Serializable {
 
     private int id;

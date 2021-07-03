@@ -2,6 +2,8 @@ package com.jtelaa.da2.director.botmgmt;
 
 import java.util.ArrayList;
 
+// TDOD comment
+
 public class HeartbeatServer extends Thread {
 
     private volatile static ArrayList<Bot> active_bots;

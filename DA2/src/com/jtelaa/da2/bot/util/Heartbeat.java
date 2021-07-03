@@ -11,6 +11,8 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class Heartbeat extends Thread {
 
     public static int HEARTBEAT_INTERVAL = 60000;

@@ -1,5 +1,12 @@
 package com.jtelaa.da2.redemption_manager.util;
 
+/**
+ * ENUM That stores card IDs
+ * 
+ * @since 1
+ * @author Joseph
+ */
+
 public enum Card {
 
     AMAZON("000800000000"),
@@ -29,7 +36,6 @@ public enum Card {
     UNICEF("000500000310"),
     GAMERSOUT("000500001170"),
     REDCROSS("000500001285");
-    
 
     private final char[] url;
 

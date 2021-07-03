@@ -18,6 +18,8 @@ import com.jtelaa.da2.lib.net.NetTools;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class Client {
     
     /* Client */

@@ -14,6 +14,8 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class QueuedCommandSender extends Thread {
     
     private volatile static Queue<Command> command_queue;
@@ -32,17 +34,22 @@ public class QueuedCommandSender extends Thread {
 
     public void run() {
         command_queue = new LinkedList<>();
+        Command command;
 
         while (run) {
-            sendMessage();
+            command = command_queue.poll();
+
+            if (command != null && command.isValid()) {
+                sendMessage(command);
+                
+            }
         }
     }
 
     private boolean run = true;
     public synchronized void stopSender() { run = false; }
 
-    private void sendMessage() {
-        Command command_to_send = command_queue.poll();
+    private void sendMessage(Command command_to_send) {
         String message = command_to_send.command();
         String server = command_to_send.destination();
 

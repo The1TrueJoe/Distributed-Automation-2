@@ -14,6 +14,8 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class Log {
 
     /** The vebosity of the local application output */

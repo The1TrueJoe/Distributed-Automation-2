@@ -21,6 +21,8 @@ import com.jtelaa.da2.querygen.util.Query;
  * @see com.jtelaa.da2.querygen.QueryGenerator.java
  */
 
+ // TODO comment
+
 public class QueryServer extends Thread {
 
     private volatile static Queue<Query> query_queue;

@@ -6,6 +6,8 @@ import com.jtelaa.da2.lib.crypto.EncryptionUtils;
 import com.jtelaa.da2.lib.crypto.SystemCrypto;
 import com.jtelaa.da2.lib.log.Log;
 
+// TODO comment
+
 public class User implements Serializable {
 
     //default serialVersion id

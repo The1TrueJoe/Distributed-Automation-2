@@ -15,6 +15,8 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
  * @see com.jtelaa.da2.querygen.QueryGenerator.java
  */
 
+ // TODO comment
+
 public class RequestServer extends Thread {
 
     public static final String QUERY_REQUEST_MESSAGE = "Gimme da Query!";

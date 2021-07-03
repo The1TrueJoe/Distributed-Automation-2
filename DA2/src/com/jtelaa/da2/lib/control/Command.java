@@ -2,7 +2,7 @@ package com.jtelaa.da2.lib.control;
 
 import java.io.Serializable;
 
-import com.jtelaa.da2.director.cli.Cases;
+import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
 
@@ -12,6 +12,8 @@ import com.jtelaa.da2.lib.net.NetTools;
  * @since 2
  * @author Joseph
  */
+
+ // TODO comment
 
 public class Command implements Serializable {
 

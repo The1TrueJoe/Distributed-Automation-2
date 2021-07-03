@@ -9,6 +9,8 @@ import com.jtelaa.da2.bot.main.Main;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class LogSender extends Thread {
 
     public void run() {

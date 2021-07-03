@@ -7,6 +7,8 @@ import com.jtelaa.da2.bot.plugin.bw.util.SearchSystem;
 import com.jtelaa.da2.lib.files.Files;
 import com.jtelaa.da2.querygen.util.Query;
 
+// TODO comment
+
 public class SearchHandler {
 
     public static void main(String[] args) {

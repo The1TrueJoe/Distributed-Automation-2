@@ -14,6 +14,8 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class QueuedCommandReceiver extends Thread {
 
     private volatile static Queue<Command> command_queue;

@@ -20,6 +20,8 @@ import com.jtelaa.da2.querygen.util.Query;
  * @author Joseph
  */
 
+// TODO comment
+
 public class SearchSystem {
 
     private static int executed_pc_searches;

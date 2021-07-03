@@ -16,6 +16,8 @@ import com.jtelaa.da2.querygen.util.Query;
  * @see com.jtelaa.da2.querygen.RequestServer.java
  */
 
+ // TODO comment
+
 public class QueryGenerator extends Thread {
 
     public volatile static int MAX_QUERY_QUEUE_SIZE = 10000;

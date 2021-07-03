@@ -4,7 +4,7 @@ import com.jtelaa.da2.bot.plugin.bw.BingRewards;
 import com.jtelaa.da2.bot.util.Heartbeat;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.director.botmgmt.BotMgmt;
-import com.jtelaa.da2.director.cli.Cases;
+import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.QueuedCommandReceiver;
@@ -12,6 +12,9 @@ import com.jtelaa.da2.lib.control.QueuedResponseSender;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
+
+// TODO comment
+// TODO update to current
 
 public class Main {
 

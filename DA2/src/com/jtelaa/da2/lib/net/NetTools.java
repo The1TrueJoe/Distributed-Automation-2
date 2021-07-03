@@ -7,6 +7,8 @@ import java.net.URL;
 
 import org.apache.commons.validator.routines.InetAddressValidator;
 
+// TODO comment
+
 public class NetTools {
     
     public static String getLocalIP() {
