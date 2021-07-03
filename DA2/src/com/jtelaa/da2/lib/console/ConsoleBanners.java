@@ -28,5 +28,58 @@ public class ConsoleBanners {
      * @return The banner
      */
 
-    public static String mainBanner(String color) { return color + Files.readInternalFile(BANNER_PATH + "MainBanner.txt") + ConsoleColors.RESET; }
+    public static String mainBanner(String color) { return color + mainBanner() + ConsoleColors.RESET; }
+
+    /**
+     * Prints the director banner
+     * 
+     * @return The banner
+     */
+
+    public static String directorBanner() { return Files.readInternalFile(BANNER_PATH + "Director.txt"); }
+
+    /**
+     * Prints the director banner
+     * 
+     * @param color @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * @return The banner
+     */
+
+    public static String directorBanner(String color) { return color + directorBanner() + ConsoleColors.RESET; }
+
+    /**
+     * Prints the bot banner
+     * 
+     * @return The banner
+     */
+
+    public static String botBanner() { return Files.readInternalFile(BANNER_PATH + "Bot.txt"); }
+
+    /**
+     * Prints the bot banner
+     * 
+     * @param color @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * @return The banner
+     */
+
+    public static String botBanner(String color) { return color + mainBanner() + ConsoleColors.RESET; }
+
+    /**
+     * Prints the hypervisor banner
+     * 
+     * @return The banner
+     */
+
+    public static String hypervisorBanner() { return Files.readInternalFile(BANNER_PATH + "Hypervisor.txt"); }
+
+    /**
+     * Prints the hypervisor banner
+     * 
+     * @param color @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * @return The banner
+     */
+
+    public static String hypervisorBanner(String color) { return color + hypervisorBanner() + ConsoleColors.RESET; }
+
+
 }
