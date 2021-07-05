@@ -40,7 +40,7 @@ public class SearchHandler {
     private synchronized static ArrayList<String> pickList() {
         Random rand = new Random();
 
-        final String PATH = "com/jtelaa/da2/querygen/searches/";
+        final String PATH = "com/jtelaa/da2/querygen/searches/searchdata/";
         String name;
 
         switch (rand.nextInt(15)) {
