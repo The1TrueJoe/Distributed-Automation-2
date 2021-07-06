@@ -3,14 +3,13 @@ package com.jtelaa.da2.bot.plugin.bw.util;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-import com.jtelaa.da2.bot.main.Main;
+import com.jtelaa.da2.bot.plugin.bw.BingRewards;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 import com.jtelaa.da2.lib.net.server.Server;
-import com.jtelaa.da2.querygen.processes.RequestServer;
 import com.jtelaa.da2.querygen.util.Query;
 
 /**
@@ -40,7 +39,7 @@ public class SearchSystem {
 
     public static void startSearch() {
         // Load IP
-        query_ip = Main.me.getQueryGenIP();
+        query_ip = BingRewards.config.getProperty("qry_gen_ip");
 
         // Calc Max Searches
         populateSearchMax();
@@ -152,7 +151,7 @@ public class SearchSystem {
     private static void sendRequest(String ip, int request) {
         ClientUDP send = new ClientUDP(ip, request);
         send.startClient();
-        send.sendMessage(RequestServer.QUERY_REQUEST_MESSAGE);
+        send.sendMessage(BWMessages.QUERY_REQUEST_MESSAGE.getMessage());
         send.closeClient();
 
     }

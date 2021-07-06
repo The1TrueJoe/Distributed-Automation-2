@@ -1,5 +1,6 @@
 package com.jtelaa.da2.querygen.processes;
 
+import com.jtelaa.da2.bot.plugin.bw.util.BWMessages;
 import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
@@ -17,9 +18,7 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 
  // TODO comment
 
-public class RequestServer extends Thread {
-
-    public static final String QUERY_REQUEST_MESSAGE = "Gimme da Query!";
+public class RequestClient extends Thread {
 
     public void run() {
         ServerUDP server = new ServerUDP(BWPorts.QUERY_REQUEST.getPort());
@@ -28,7 +27,7 @@ public class RequestServer extends Thread {
             while (run) {
                 String response = server.getMessage();
 
-                if (response.equals(QUERY_REQUEST_MESSAGE)) {
+                if (response.equals(BWMessages.QUERY_REQUEST_MESSAGE.getMessage())) {
                     QueryServer.addBot(new Bot(server.getClientAddress()));
                 
                 }

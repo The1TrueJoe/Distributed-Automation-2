@@ -3,6 +3,7 @@ package com.jtelaa.da2.bot.plugin.bw;
 import com.jtelaa.da2.bot.plugin.bw.util.AcctInfo;
 import com.jtelaa.da2.bot.plugin.bw.util.SearchSystem;
 import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.log.Log;
 
 /**
@@ -22,6 +23,7 @@ public class BingRewards extends Thread {
         config = new ConfigHandler(); // TODO add path
 
         // Startup
+        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/da2/bot/plugin/bw/misc/Rewards.txt"));
         Log.sendMessage("Bing Rewards Plugin Enabled");
 
         // Announce Account

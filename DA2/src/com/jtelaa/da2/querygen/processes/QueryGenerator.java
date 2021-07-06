@@ -13,7 +13,7 @@ import com.jtelaa.da2.querygen.util.Query;
  * @author Josepj
  * 
  * @see com.jtelaa.da2.querygen.QueryServer.java
- * @see com.jtelaa.da2.querygen.RequestServer.java
+ * @see com.jtelaa.da2.redemption_manager.processes.RequestClient.java
  */
 
  // TODO comment

@@ -8,7 +8,7 @@ import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.client.Client;
+import com.jtelaa.da2.lib.net.client.ClientUDP;
 import com.jtelaa.da2.querygen.util.Query;
 
 /**
@@ -17,7 +17,7 @@ import com.jtelaa.da2.querygen.util.Query;
  * @since 2
  * @author Joseph
  * 
- * @see com.jtelaa.da2.querygen.RequestServer.java
+ * @see com.jtelaa.da2.redemption_manager.processes.RequestClient.java
  * @see com.jtelaa.da2.querygen.QueryGenerator.java
  */
 
@@ -28,7 +28,7 @@ public class QueryServer extends Thread {
     private volatile static Queue<Query> query_queue;
     private volatile static Queue<Bot> bot_queue;
 
-    private Client cmd_tx;
+    private ClientUDP cmd_tx;
 
     /**
      * Adds a query into the queue <p>
@@ -100,7 +100,7 @@ public class QueryServer extends Thread {
         Query query_to_send = query_queue.poll();
         Bot bot_to_serve = bot_queue.poll();
 
-        cmd_tx = new Client(bot_to_serve.getIP(), BWPorts.QUERY_RECEIVE.getPort());
+        cmd_tx = new ClientUDP(bot_to_serve.getIP(), BWPorts.QUERY_RECEIVE.getPort());
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(query_to_send.getQuery());
