@@ -3,9 +3,10 @@ package com.jtelaa.da2.bot.main;
 import com.jtelaa.da2.bot.plugin.bw.BingRewards;
 import com.jtelaa.da2.bot.util.Heartbeat;
 import com.jtelaa.da2.director.botmgmt.Bot;
-import com.jtelaa.da2.director.botmgmt.BotMgmt;
+import com.jtelaa.da2.director.util.MgmtMessages;
 import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.QueuedCommandReceiver;
 import com.jtelaa.da2.lib.control.QueuedResponseSender;
@@ -32,6 +33,7 @@ public class Main {
         Log.loadConfig(me.getConfig());
         Log.openClient(me.getConfig().getLogIP());
 
+        Log.sendSysMessage(ConsoleBanners.botBanner());
         Log.sendMessage("Welcome to the DA2 Bot Client! I am bot " + me.getID());
         if (me.hasHeartBeat()) { beat = new Heartbeat(); } 
         
@@ -45,7 +47,8 @@ public class Main {
             response = cmd_rx.getMessage();
             command = response;
 
-            if (command.command().equals(BotMgmt.BOT_ENABLE_MESSAGE)) {
+            if (command.command().equals(MgmtMessages.BOT_ENABLE_MESSAGE.getMessage())) {
+                Log.sendMessage("Enabling CLI");
                 cli_enabled = true;
 
             }
@@ -80,7 +83,6 @@ public class Main {
                 
                 } else if (Cases.rewards_plugin(command)) {
                     new BingRewards();
-                    ComputerControl.shutdown();
                     
                 }
             }

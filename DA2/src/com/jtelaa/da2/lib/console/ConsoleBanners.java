@@ -81,5 +81,22 @@ public class ConsoleBanners {
 
     public static String hypervisorBanner(String color) { return color + hypervisorBanner() + ConsoleColors.RESET; }
 
+    /**
+     * Prints the hypervisor banner
+     * 
+     * @return The banner
+     */
+
+    public static String otherBanner(String path) { return Files.readInternalFile(path); }
+
+    /**
+     * Prints the hypervisor banner
+     * 
+     * @param color @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * @return The banner
+     */
+
+    public static String otherBanner(String path, String color) { return color + otherBanner(path) + ConsoleColors.RESET; }
+
 
 }
