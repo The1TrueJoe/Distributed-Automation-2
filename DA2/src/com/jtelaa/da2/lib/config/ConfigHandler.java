@@ -3,6 +3,9 @@ package com.jtelaa.da2.lib.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
 import com.jtelaa.da2.lib.log.Log;
@@ -21,21 +24,57 @@ public class ConfigHandler {
 
     private Properties config;
 
+    /**
+     * 
+     */
+
     public ConfigHandler() {
         config = new Properties();
 
     }
+
+    /**
+     * 
+     * @param properties
+     */
 
     public ConfigHandler(Properties properties) {
         config = properties;
 
     }
 
+    /**
+     * 
+     * @param path
+     */
+
     public ConfigHandler(String path) {
         config = new Properties();
         importConfig(path);
 
     }
+
+    /**
+     * 
+     * @param path
+     * @param internal
+     */
+
+    public ConfigHandler(String path, boolean internal) {
+        config = new Properties();
+
+        if (internal) {
+            importInternalConfig(path);
+
+        } else {
+            importConfig(path);
+
+        }
+    }
+
+    /**
+     * 
+     */
 
     public ConfigHandler(File config_file) {
         config = new Properties();
@@ -64,6 +103,27 @@ public class ConfigHandler {
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
         
+            config.load(fileInputStream);
+
+        } catch (Exception e) {
+            Log.sendMessage(e.getMessage());
+
+        }
+    }
+
+    /**
+     * Imports the internal properties file & creates a temp file
+     * 
+     * @param path File path
+     */
+
+    public void importInternalConfig(String path) {
+        try {
+            ClassLoader classLoader = this.getClass().getClassLoader();
+            Path temp = Files.createTempFile("tmp-", ".properties");
+            Files.copy(classLoader.getResourceAsStream(path), temp, StandardCopyOption.REPLACE_EXISTING);
+            FileInputStream fileInputStream = new FileInputStream(temp.toFile());
+
             config.load(fileInputStream);
 
         } catch (Exception e) {
