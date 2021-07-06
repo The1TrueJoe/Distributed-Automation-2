@@ -1,4 +1,4 @@
-package com.jtelaa.da2.lib.user;
+package com.jtelaa.da2.lib.user.local;
 
 import java.io.Serializable;
 

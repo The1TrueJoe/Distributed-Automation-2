@@ -1,4 +1,4 @@
-package com.jtelaa.da2.lib.user;
+package com.jtelaa.da2.lib.user.local;
 
 import java.util.ArrayList;
 
@@ -102,7 +102,7 @@ public class UserHandler {
     public static void main(String[] args) {
         UserHandler userHandler = new UserHandler();
         userHandler.addUser(new User("root", "password", true));
-        userHandler.exportusr("src/com/jtelaa/da2/lib/user/RootUser.txt");
+        userHandler.exportusr("src/com/jtelaa/da2/lib/user/local/RootUser.txt");
 
     }
     
