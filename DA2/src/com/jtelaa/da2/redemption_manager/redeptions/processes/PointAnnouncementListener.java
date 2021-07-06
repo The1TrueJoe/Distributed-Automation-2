@@ -1,7 +1,7 @@
-package com.jtelaa.da2.redemption_manager.coms;
+package com.jtelaa.da2.redemption_manager.redeptions.processes;
 // TODO comment
 
-public class AccountAnnouncementListener extends Thread {
+public class PointAnnouncementListener extends Thread {
 
     public void run() {
         // TODO add setup
