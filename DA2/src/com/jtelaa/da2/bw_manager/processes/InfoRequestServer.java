@@ -1,4 +1,4 @@
-package com.jtelaa.da2.redemption_manager.processes;
+package com.jtelaa.da2.bw_manager.processes;
 
 import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
@@ -13,7 +13,7 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
  * @author Joseph
  * 
  * @see com.jtelaa.da2.bot.plugin.bw.util.BWMessages
- * @see com.jtelaa.da2.redemption_manager.processes.InfoResponseClient
+ * @see com.jtelaa.da2.bw_manager.processes.InfoResponseClient
  */
 
  // TODO comment

@@ -1,4 +1,4 @@
-package com.jtelaa.da2.redemption_manager.accounts;
+package com.jtelaa.da2.bw_manager.accounts;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;

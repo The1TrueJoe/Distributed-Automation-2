@@ -1,4 +1,4 @@
-package com.jtelaa.da2.redemption_manager.accounts;
+package com.jtelaa.da2.bw_manager.accounts;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import com.jtelaa.da2.lib.files.Files;
  * @since 2
  * @author Joseph
  * 
- * @see com.jtelaa.da2.redemption_manager.accounts.Account
+ * @see com.jtelaa.da2.bw_manager.accounts.Account
  */
 
 // TODO Comment

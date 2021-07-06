@@ -1,4 +1,4 @@
-package com.jtelaa.da2.redemption_manager.processes;
+package com.jtelaa.da2.bw_manager.processes;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -6,6 +6,7 @@ import java.util.Queue;
 
 import com.jtelaa.da2.bot.plugin.bw.util.BWMessages;
 import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
+import com.jtelaa.da2.bw_manager.accounts.Accounts;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.files.ObjectUtils;
@@ -13,7 +14,6 @@ import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
-import com.jtelaa.da2.redemption_manager.accounts.Accounts;
 
 // TODO Comment
 

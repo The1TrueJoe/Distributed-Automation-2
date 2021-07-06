@@ -1,4 +1,4 @@
-package com.jtelaa.da2.redemption_manager.redeptions.processes;
+package com.jtelaa.da2.bw_manager.redemptions.processes;
 // TODO comment
 
 public class PointAnnouncementListener extends Thread {

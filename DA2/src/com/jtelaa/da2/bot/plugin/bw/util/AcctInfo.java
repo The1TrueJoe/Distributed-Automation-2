@@ -8,12 +8,12 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.jtelaa.da2.bot.plugin.bw.BingRewards;
+import com.jtelaa.da2.bw_manager.accounts.Account;
+import com.jtelaa.da2.bw_manager.util.Card;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
-import com.jtelaa.da2.redemption_manager.accounts.Account;
-import com.jtelaa.da2.redemption_manager.util.Card;
 
 /**
  * Allows for the auto-redemption of points

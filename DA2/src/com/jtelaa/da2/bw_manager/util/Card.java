@@ -1,4 +1,4 @@
-package com.jtelaa.da2.redemption_manager.util;
+package com.jtelaa.da2.bw_manager.util;
 
 /**
  * ENUM That stores card IDs
