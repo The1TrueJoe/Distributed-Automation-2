@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 public class HeartbeatServer extends Thread {
 
-    private volatile static ArrayList<Bot> active_bots;
+    private volatile ArrayList<Bot> active_bots;
+
+    public ArrayList<Bot> getActiveBots() { return active_bots; }
     
-    public synchronized static boolean isAlive(Bot bot) {
+    public synchronized boolean isAlive(Bot bot) {
         for (Bot bot_to_check : active_bots) {
             if (bot.getID() == bot_to_check.getID()) {
                 return true;

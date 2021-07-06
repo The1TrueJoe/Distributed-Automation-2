@@ -4,7 +4,7 @@ import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.querygen.processes.QueryGenerator;
 import com.jtelaa.da2.querygen.processes.QueryServer;
-import com.jtelaa.da2.querygen.processes.RequestServer;
+import com.jtelaa.da2.querygen.processes.RequestClient;
 
 // TODO Comment
 
@@ -20,7 +20,7 @@ public class Main {
         Log.openClient("logging_server_ip");
 
         // Request server setup
-        RequestServer req_srv = new RequestServer();
+        RequestClient req_srv = new RequestClient();
         Log.sendMessage("Starting request server");
         req_srv.start();
         

@@ -3,6 +3,7 @@ package com.jtelaa.da2.lib.control;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.jtelaa.da2.lib.net.NetTools;
 import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 
@@ -23,7 +24,7 @@ public class QueuedCommandSender extends Thread {
     private ClientUDP cmd_tx;
 
     public synchronized void add(Command command) {
-        if (command.isValid()) { 
+        if (command.isValid() && NetTools.isAlive(command.destination())) { 
             command_queue.add(command);
         }
     }

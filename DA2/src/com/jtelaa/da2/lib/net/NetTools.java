@@ -1,9 +1,12 @@
 package com.jtelaa.da2.lib.net;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.URL;
+
+import com.jtelaa.da2.lib.log.Log;
 
 import org.apache.commons.validator.routines.InetAddressValidator;
 
@@ -16,7 +19,8 @@ public class NetTools {
             return InetAddress.getLocalHost().toString();
 
         } catch (Exception e) {
-            return e.getMessage();
+            Log.sendMessage(e.getMessage());
+            return "127.0.0.1";
 
         }
     }
@@ -29,7 +33,8 @@ public class NetTools {
             return in.readLine();
 
         } catch (Exception e) {
-            return e.getMessage();
+            Log.sendMessage(e.getMessage());
+            return getLocalIP();
 
         }
     }
@@ -37,6 +42,21 @@ public class NetTools {
     public static boolean isValid(String address) {
         InetAddressValidator valid = new InetAddressValidator();
         return valid.isValid(address);
+        
+    }
+
+    public static boolean isAlive(String ip) {
+        try {
+            if (isValid(ip)) {
+                return InetAddress.getByName(ip).isReachable(100);
+
+            }
+        } catch (IOException e) {
+            Log.sendMessage(e.getMessage());
+
+        }
+
+        return false;
         
     }
 
