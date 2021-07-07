@@ -1,4 +1,4 @@
-package com.jtelaa.da2.bot.plugin.bw.util;
+package com.jtelaa.da2.bot.plugin.bw.sys;
 
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -8,6 +8,8 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.jtelaa.da2.bot.plugin.bw.BingRewards;
+import com.jtelaa.da2.bot.plugin.bw.util.BWMessages;
+import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
 import com.jtelaa.da2.bw_manager.accounts.Account;
 import com.jtelaa.da2.bw_manager.util.Card;
 import com.jtelaa.da2.lib.log.Log;
@@ -24,10 +26,6 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
  // TODO comment
 
 public class AcctInfo {
-
-    public static final String REWARDS_ADDRESS = "https://account.microsoft.com/rewards/";
-    public static final String REWARDS_CARD_ADDRESS = REWARDS_ADDRESS + "redeem/";
-    public static final String REDEMPTION_CHECKOUT_ADDRESS = REWARDS_CARD_ADDRESS + "checkout?productId=";
 
     public static final String OUTLOOK_EMAIL_ADDRESS = "https://outlook.live.com/mail/0/inbox";
 
@@ -177,6 +175,10 @@ public class AcctInfo {
 
         return "";
 
+    }
+
+    public String getGiftCardCode() {
+        return "";
     }
     
 }

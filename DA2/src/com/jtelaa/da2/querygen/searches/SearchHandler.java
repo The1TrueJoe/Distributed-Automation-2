@@ -3,7 +3,7 @@ package com.jtelaa.da2.querygen.searches;
 import java.util.Random;
 import java.util.ArrayList;
 
-import com.jtelaa.da2.bot.plugin.bw.util.SearchSystem;
+import com.jtelaa.da2.bot.plugin.bw.sys.SearchSystem;
 import com.jtelaa.da2.lib.files.Files;
 import com.jtelaa.da2.querygen.util.Query;
 

@@ -3,11 +3,11 @@ package com.jtelaa.da2.lib.control;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.jtelaa.da2.director.botmgmt.MgmtMessages;
 import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.files.Files;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-
 /**
  * Outlines the required parameter for a command
  * 
@@ -20,12 +20,32 @@ import com.jtelaa.da2.lib.net.NetTools;
 public class Command implements Serializable {
 
     // Command Structure
+    /** Index of the user key in the command */
     public static final int USER = 0;
-    public static final int SYSTEM = 1;
-    public static final int COMMAND = 2;
-    public static final int ARG = 3;
-    public static final int ARG2 = 4;
-    public static final int ARG3 = 5;
+
+    /** Index of the command key in the command (For the local CLI) */
+    public static final int LOCAL_COMMAND = 1;
+    /** Index of the system control tag in the command (For the external mgmt) */
+    public static final int CONTROL_ID = 1;
+
+    /** Index of the command key in the command (For the external mgmt) */
+    public static final int SYSTEM_COMMAND = 2;
+    /** Index of the argument key in the command (For the local CLI) */
+    public static final int LOCAL_ARG1 = 2;
+    
+    /** Index of the argument key in the command (For the external mgmt) */
+    public static final int ARG_1 = 3;
+    /** Index of the argument key in the command (For the local CLI) */
+    public static final int LOCAL_ARG2 = 3;
+
+    /** Index of the argument key in the command (For the external mgmt) */
+    public static final int ARG_2 = 4;
+    /** Index of the argument key in the command (For the local CLI) */
+    public static final int LOCAL_ARG3 = 4;
+
+    /** Index of the argument key in the command (For the external mgmt) */
+    public static final int ARG_3 = 5;
+    
 
     private Command[] split;
     
@@ -138,6 +158,39 @@ public class Command implements Serializable {
     }
 
     /**
+     * 
+     * @param message
+     * @return
+     */
+
+    public boolean equals(MgmtMessages message) {
+        return equals(message.getMessage());
+
+    }
+
+    /**
+     * 
+     * @param other_command
+     * @return
+     */
+
+    public boolean equals(Command other_command) {
+        return equals(other_command.command());
+
+    }
+
+    /**
+     * 
+     * @param command
+     * @return
+     */
+
+    public boolean equals(String command) {
+        return this.command.equalsIgnoreCase(command);
+
+    }
+
+    /**
      * Checks if the command is valid
      * 
      * @return Command validitiy
@@ -168,6 +221,65 @@ public class Command implements Serializable {
 
         return cmds;
 
+    }
+
+    /**
+     * Basically substring for command
+     * <p> Gets the arguments between indexes
+     * 
+     * @param begin_index Starting index (inclusive)
+     * 
+     * @return Command array
+     */
+
+    public Command[] getSubCommands(int begin_index) { return getSubCommands(begin_index, command.split(" ").length); }
+
+    /**
+     * Basically substring for command
+     * <p> Gets the arguments between indexes
+     * 
+     * @param begin_index Starting index (inclusive)
+     * @param regex Regex
+     * 
+     * @return Command array
+     */
+    
+    public Command[] getSubCommands(int begin_index, String regex) { return getSubCommands(begin_index, command.split(regex).length, regex); }
+
+    /**
+     * Basically substring for command
+     * <p> Gets the arguments between indexes
+     * 
+     * @param begin_index Starting index (inclusive)
+     * @param end_index Ending index (excusive)
+     * 
+     * @return Command array
+     */
+
+    public Command[] getSubCommands(int begin_index, int end_index) { return getSubCommands(begin_index, end_index, " "); }
+
+    /**
+     * Basically substring for command
+     * <p> Gets the arguments between indexes
+     * 
+     * @param begin_index Starting index (inclusive)
+     * @param end_index Ending index (excusive)
+     * @param regex Regex
+     * 
+     * @return Command array
+     */
+
+    public Command[] getSubCommands(int begin_index, int end_index, String regex) {
+        Command[] commands = split(regex);
+        ArrayList<Command> sub_commands = new ArrayList<Command>();
+
+        for (int i = 0; i < commands.length; i++) {
+            if (i >= begin_index && i < end_index) {
+                sub_commands.add(commands[i]);
+            }
+        }
+
+        return (Command[]) sub_commands.toArray();
     }
 
     /**
@@ -303,6 +415,24 @@ public class Command implements Serializable {
      * @return
      */
     public boolean isHeadless() { return isHeadless; }
+
+    /**
+     * Converts an array of commands into an array of strings
+     * 
+     * @param commands Command array
+     * 
+     * @return Array of commands
+     */
+
+    public static String[] toString(Command[] commands) {
+        String[] str = new String[commands.length];
+
+        for (int i = 0; i < str.length; i++) {
+            str[i] = commands[i].command();
+        }
+
+        return str;
+    }
 
     public String toString() { return "[{From: " + org_ip + ", To: " + dest_ip + "} -> " + command + "]"; }
 

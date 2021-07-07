@@ -120,9 +120,10 @@ public class ConfigHandler {
     public void importInternalConfig(String path) {
         try {
             ClassLoader classLoader = this.getClass().getClassLoader();
-            Path temp = Files.createTempFile("tmp-", ".properties");
-            Files.copy(classLoader.getResourceAsStream(path), temp, StandardCopyOption.REPLACE_EXISTING);
-            FileInputStream fileInputStream = new FileInputStream(temp.toFile());
+            File new_properties = new File("config.properties");
+            Path local_config = new_properties.toPath();
+            Files.copy(classLoader.getResourceAsStream(path), local_config, StandardCopyOption.COPY_ATTRIBUTES);
+            FileInputStream fileInputStream = new FileInputStream(local_config.toFile());
 
             config.load(fileInputStream);
 
