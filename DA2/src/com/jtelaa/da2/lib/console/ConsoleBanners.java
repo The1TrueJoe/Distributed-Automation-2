@@ -14,6 +14,14 @@ public class ConsoleBanners {
     private static final String BANNER_PATH = "com/jtelaa/da2/lib/console/banners/";
 
     /**
+     * Test prints banners
+     */
+    public static void main(String[] args) {
+        System.out.println(mainBanner(ConsoleColors.YELLOW_BOLD_BRIGHT));
+        System.out.println(directorBanner(ConsoleColors.GREEN_BOLD_BRIGHT));
+    }
+
+    /**
      * Prints the main banner
      * 
      * @return The banner
