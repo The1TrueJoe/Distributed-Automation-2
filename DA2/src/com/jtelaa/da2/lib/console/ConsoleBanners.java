@@ -24,11 +24,14 @@ public class ConsoleBanners {
     /**
      * Prints the main banner
      * 
-     * @param color @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * @param color 
+     * 
+     * @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * 
      * @return The banner
      */
 
-    public static String mainBanner(String color) { return color + mainBanner() + ConsoleColors.RESET; }
+    public static String mainBanner(ConsoleColors color) { return color.getColor() + mainBanner() + ConsoleColors.RESET.getEscape(); }
 
     /**
      * Prints the director banner
@@ -41,11 +44,14 @@ public class ConsoleBanners {
     /**
      * Prints the director banner
      * 
-     * @param color @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * @param color 
+     * 
+     * @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * 
      * @return The banner
      */
 
-    public static String directorBanner(String color) { return color + directorBanner() + ConsoleColors.RESET; }
+    public static String directorBanner(ConsoleColors color) { return color.getColor() + directorBanner() + ConsoleColors.RESET.getEscape(); }
 
     /**
      * Prints the bot banner
@@ -58,11 +64,14 @@ public class ConsoleBanners {
     /**
      * Prints the bot banner
      * 
-     * @param color @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * @param color 
+     * 
+     * @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * 
      * @return The banner
      */
 
-    public static String botBanner(String color) { return color + mainBanner() + ConsoleColors.RESET; }
+    public static String botBanner(ConsoleColors color) { return color.getColor() + mainBanner() + ConsoleColors.RESET.getEscape(); }
 
     /**
      * Prints the hypervisor banner
@@ -75,11 +84,14 @@ public class ConsoleBanners {
     /**
      * Prints the hypervisor banner
      * 
-     * @param color @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * @param color 
+     * 
+     * @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * 
      * @return The banner
      */
 
-    public static String hypervisorBanner(String color) { return color + hypervisorBanner() + ConsoleColors.RESET; }
+    public static String hypervisorBanner(ConsoleColors color) { return color.getColor() + hypervisorBanner() + ConsoleColors.RESET.getEscape(); }
 
     /**
      * Prints the hypervisor banner
@@ -92,11 +104,14 @@ public class ConsoleBanners {
     /**
      * Prints the hypervisor banner
      * 
-     * @param color @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * @param color 
+     * 
+     * @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * 
      * @return The banner
      */
 
-    public static String otherBanner(String path, String color) { return color + otherBanner(path) + ConsoleColors.RESET; }
+    public static String otherBanner(String path, ConsoleColors color) { return color.getColor() + otherBanner(path) + ConsoleColors.RESET.getEscape(); }
 
 
 }
