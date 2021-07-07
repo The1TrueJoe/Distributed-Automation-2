@@ -231,19 +231,14 @@ public enum Card {
 
     private int calculatePointCost(String unit, int value) {
         switch (unit) {
-            case "USD":
-                return value * 1050;
-            case "EAT":
-                return value * 1300;
-            case "ROBUX":
-                return value * 15;
-            case "HULU":
-                return value * 1120;
-            case "DONO":
-                return value * 1000;
-            default:
-                return value;
+            case "USD" -> value *= 1050;
+            case "EAT" -> value *= 1300;
+            case "ROBUX" -> value *= 15;
+            case "HULU" -> value *= 1120;
+            case "DONO" -> value *= 1000;
         }
+
+        return value;
 
     }
     
