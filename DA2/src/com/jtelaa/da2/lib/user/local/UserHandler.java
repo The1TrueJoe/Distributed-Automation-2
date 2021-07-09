@@ -2,7 +2,7 @@ package com.jtelaa.da2.lib.user.local;
 
 import java.util.ArrayList;
 
-import com.jtelaa.da2.lib.files.Files;
+import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.lib.files.ObjectUtils;
 import com.jtelaa.da2.lib.log.Log;
 
@@ -54,7 +54,7 @@ public class UserHandler {
      */
 
     public void exportusr(String file_path) {
-        Files.writeObjectToFile(users.toArray(), file_path);
+        FileUtil.writeObjectToFile(users.toArray(), file_path);
     }
 
     /**
@@ -64,7 +64,7 @@ public class UserHandler {
      */
 
     public void importusr(String path) {
-        importusr(Files.listLinesFile(path));
+        importusr(FileUtil.listLinesFile(path));
     }
 
     /**
@@ -74,7 +74,7 @@ public class UserHandler {
      */
 
     public void importInternalusr(String path) {
-        importusr(Files.listLinesInternalFile(path));
+        importusr(FileUtil.listLinesInternalFile(path));
     }
 
     /**

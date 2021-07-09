@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
-import com.jtelaa.da2.lib.files.Files;
+import com.jtelaa.da2.lib.files.FileUtil;
 
 /**
  * Class that stores the utilities needed for random account creation
@@ -152,7 +152,7 @@ public class Accounts {
         if (year > 2018) { year = 2018; }
         if (year < 2000) { year = 2000; }
 
-        ArrayList<String> lines = Files.listLinesInternalFile(NAME_PATH + year + "Names.txt");
+        ArrayList<String> lines = FileUtil.listLinesInternalFile(NAME_PATH + year + "Names.txt");
         return (lines.get(rng.nextInt(lines.size())));
 
     }
@@ -164,7 +164,7 @@ public class Accounts {
      */
 
     public static String getRandomLastName() {
-        ArrayList<String> lines = Files.listLinesInternalFile(NAME_PATH + "LastNames.txt");
+        ArrayList<String> lines = FileUtil.listLinesInternalFile(NAME_PATH + "LastNames.txt");
         return (lines.get(rng.nextInt(lines.size())));
         
     }

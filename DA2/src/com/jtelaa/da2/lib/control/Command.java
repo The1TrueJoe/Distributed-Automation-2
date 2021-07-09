@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import com.jtelaa.da2.director.botmgmt.MgmtMessages;
 import com.jtelaa.da2.lib.cli.Cases;
-import com.jtelaa.da2.lib.files.Files;
+import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
 /**
@@ -374,10 +374,10 @@ public class Command implements Serializable {
         ArrayList<String> lines;
 
         if (internal) {
-            lines = Files.listLinesInternalFile(path);
+            lines = FileUtil.listLinesInternalFile(path);
 
         } else {
-            lines = Files.listLinesFile(path);
+            lines = FileUtil.listLinesFile(path);
             
         }
 

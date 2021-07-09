@@ -1,6 +1,6 @@
 package com.jtelaa.da2.lib.console;
 
-import com.jtelaa.da2.lib.files.Files;
+import com.jtelaa.da2.lib.files.FileUtil;
 
 /**
  * Prints out the banners into the console
@@ -27,7 +27,7 @@ public class ConsoleBanners {
      * @return The banner
      */
 
-    public static String mainBanner() { return Files.readInternalFile(BANNER_PATH + "MainBanner.txt"); }
+    public static String mainBanner() { return FileUtil.readInternalFile(BANNER_PATH + "MainBanner.txt"); }
 
     /**
      * Prints the main banner
@@ -47,7 +47,7 @@ public class ConsoleBanners {
      * @return The banner
      */
 
-    public static String directorBanner() { return Files.readInternalFile(BANNER_PATH + "Director.txt"); }
+    public static String directorBanner() { return FileUtil.readInternalFile(BANNER_PATH + "Director.txt"); }
 
     /**
      * Prints the director banner
@@ -67,7 +67,7 @@ public class ConsoleBanners {
      * @return The banner
      */
 
-    public static String botBanner() { return Files.readInternalFile(BANNER_PATH + "Bot.txt"); }
+    public static String botBanner() { return FileUtil.readInternalFile(BANNER_PATH + "Bot.txt"); }
 
     /**
      * Prints the bot banner
@@ -87,7 +87,7 @@ public class ConsoleBanners {
      * @return The banner
      */
 
-    public static String hypervisorBanner() { return Files.readInternalFile(BANNER_PATH + "Hypervisor.txt"); }
+    public static String hypervisorBanner() { return FileUtil.readInternalFile(BANNER_PATH + "Hypervisor.txt"); }
 
     /**
      * Prints the hypervisor banner
@@ -107,7 +107,7 @@ public class ConsoleBanners {
      * @return The banner
      */
 
-    public static String otherBanner(String path) { return Files.readInternalFile(path); }
+    public static String otherBanner(String path) { return FileUtil.readInternalFile(path); }
 
     /**
      * Prints the hypervisor banner

@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.ArrayList;
 
 import com.jtelaa.da2.bot.plugin.bw.sys.SearchSystem;
-import com.jtelaa.da2.lib.files.Files;
+import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.querygen.util.Query;
 
 // TODO comment
@@ -69,7 +69,7 @@ public class SearchHandler {
 
         }
 
-        return Files.listLinesInternalFile(PATH + name);
+        return FileUtil.listLinesInternalFile(PATH + name);
     }
     
 }
