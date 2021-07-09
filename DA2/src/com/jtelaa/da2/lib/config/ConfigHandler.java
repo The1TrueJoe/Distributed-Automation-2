@@ -3,11 +3,9 @@ package com.jtelaa.da2.lib.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
+import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.net.NetTools;
 
@@ -18,7 +16,7 @@ import com.jtelaa.da2.lib.net.NetTools;
  * @author Joseph
  */
 
- // TDOD comment
+ // TODO comment
 
 public class ConfigHandler {
 
@@ -120,10 +118,8 @@ public class ConfigHandler {
     public void importInternalConfig(String path) {
         try {
             ClassLoader classLoader = this.getClass().getClassLoader();
-            File new_properties = new File("config.properties");
-            Path local_config = new_properties.toPath();
-            Files.copy(classLoader.getResourceAsStream(path), local_config, StandardCopyOption.COPY_ATTRIBUTES);
-            FileInputStream fileInputStream = new FileInputStream(local_config.toFile());
+            File file = FileUtil.duplicateInternalFile(classLoader, path, "config.properties");
+            FileInputStream fileInputStream = new FileInputStream(file);
 
             config.load(fileInputStream);
 
@@ -152,25 +148,34 @@ public class ConfigHandler {
         }
     }
 
-
+    /** */
     public Properties get() { return config; }
 
     // Set
+    /** */
     public void setProperty(String key, String value) { config.setProperty(key, value); }
 
     // Get
+    /** */
     public String getProperty(String key) { return config.getProperty(key); }
+    /** */
     public String getProperty(String key, String def) { return config.getProperty(key, def); }
 
+    /** */
     public boolean isTrue(String key) { return config.getProperty(key).equalsIgnoreCase("true"); }
+    /** */
     public boolean isTrue(String key, String def) { return config.getProperty(key, def).equalsIgnoreCase("true"); }
 
 
     // Logging Verbosity
+    /** */
     public boolean runAppVerbose() { return getProperty("app_verbose", "true").equalsIgnoreCase("true"); }
+    /** */
     public boolean runLogVerbose() { return getProperty("log_verbose", "false").equalsIgnoreCase("true"); }
     
+    /** */
     public void runAppVerbose(boolean verbose) { setProperty("app_verbose", verbose+""); }
+    /** */
     public void runLogVerbose(boolean verbose) { setProperty("log_verbose", verbose+""); }
 
     // Information
@@ -179,12 +184,18 @@ public class ConfigHandler {
 
     // TODO Add Default IP
     // IPs
+    /** */
     public String getIP() { return getProperty("ip", NetTools.getLocalIP()); }
+    /** */
     public String getExternalIP() { return getProperty("ip_ext", NetTools.getExternalIP()); }
+    /** */
     public String getDirectorIP() { return getProperty("director_ip", ""); }
+    /** */
     public String getLogIP() { return getProperty("log_ip", ""); }
 
+    /** */
     public void setIP() { setProperty("ip", NetTools.getLocalIP()); }
+    /** */
     public void setIP(String ip) { setProperty("ip", ip); }
 
 }

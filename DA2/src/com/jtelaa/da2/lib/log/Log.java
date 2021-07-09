@@ -70,6 +70,18 @@ public class Log {
     }
 
     /**
+     * Sends exception's message to the log and system console <p>
+     * This checks the verbosity of both
+     * 
+     * @param e Exception to send
+     */
+
+    public synchronized static void sendMessage(Exception e) {
+        sendMessage(e.getMessage());
+
+    }
+
+    /**
      * Sends system message no matter what the verbosity is
      * 
      * @param message Message to send

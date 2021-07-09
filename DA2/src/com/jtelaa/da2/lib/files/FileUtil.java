@@ -8,6 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 import com.jtelaa.da2.lib.log.Log;
@@ -21,7 +24,7 @@ import com.jtelaa.da2.lib.log.Log;
 
  // TODO comment
 
-public class Files {
+public class FileUtil {
 
     /**
      * Reads a file within the classpath
@@ -202,6 +205,36 @@ public class Files {
 
         return objects;
 
+    }
+
+    /**
+     * Duplicates an internal file for editing outside of the jar
+     * <p> Used to store default files within the jar and edit them outside
+     * 
+     * @param classLoader Class loader for the internal files
+     * 
+     * @param internal_file Internal file path
+     * @param external_file External file path
+     * 
+     * @return New external file
+     */
+
+    public synchronized static File duplicateInternalFile(ClassLoader classLoader, String internal_file, String external_file) {
+        try {
+
+            File new_file = new File(external_file);
+            Path new_file_path = new_file.toPath();
+        
+            Files.copy(classLoader.getResourceAsStream(internal_file), new_file_path, StandardCopyOption.COPY_ATTRIBUTES);
+        
+            return new_file_path.toFile();
+
+        } catch (Exception e) {
+            Log.sendMessage(e);
+            return null;
+
+        }
+        
     }
 
 }
