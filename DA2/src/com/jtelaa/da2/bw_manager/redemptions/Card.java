@@ -1,4 +1,4 @@
-package com.jtelaa.da2.bw_manager.util;
+package com.jtelaa.da2.bw_manager.redemptions;
 
 import java.util.ArrayList;
 import java.util.Random;
