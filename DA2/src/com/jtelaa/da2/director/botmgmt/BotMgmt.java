@@ -1,11 +1,12 @@
 package com.jtelaa.da2.director.botmgmt;
 
+import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.QueuedCommandSender;
 
-public class BotMgmt {
 
-    public static final String INVALID_ID_MESSAGE = "Invalid Bot ID";
-    public static final String BOT_ENABLE_MESSAGE = "Wake Up Bot!";
+// TODO comment
+
+public class BotMgmt {
 
     private static QueuedCommandSender cmd_send;
     private static HeartbeatServer hbeat_server;
@@ -19,14 +20,67 @@ public class BotMgmt {
         
     }
 
+    /**
+     * 
+     * @param bot_id
+     * @return
+     */
+
     public static Bot getBot(int bot_id) {
-        // TODO add ability to pull from database of bots
-        return new Bot("127.0.0.1", bot_id);
+        for (Bot bot : hbeat_server.getActiveBots()) {
+            if (bot_id == bot.getID()) {
+                return bot;
+
+            }
+        }
+
+        return null;
     }
 
-    public static void sendCommand(Bot bot, String command) {
-        if (cmd_send.isAlive()) {
-            cmd_send.add(bot.getIP(), command);
+    /**
+     * 
+     * @param command
+     */
+
+    public static void sendDistributedCommand(Command command) { sendDistributedCommand(new Command[] { command }); }
+
+    /**
+     * 
+     * @param commands
+     */
+    
+    public static void sendDistributedCommand(Command[] commands) {
+        for (Bot bot : hbeat_server.getActiveBots()) {
+            for (Command command : commands) {
+                sendCommand(command.changeDestination(bot.getIP()));
+
+            }
+        }
+    }
+
+    /**
+     * 
+     * @param bot
+     * @param command
+     */
+
+    public static void sendCommand(Bot bot, String command) { sendCommand(new Command(command, bot.getIP()));}
+
+    /**
+     * 
+     * @param command
+     */
+    
+    public static void sendCommand(Command command) { sendCommand(new Command[] { command }); }
+
+    /**
+     * 
+     * @param commands
+     */
+    
+    public static void sendCommand(Command[] commands) {
+        for (Command command : commands) {
+            cmd_send.add(command);
         }
     }
     

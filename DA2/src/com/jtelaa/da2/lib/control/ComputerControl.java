@@ -8,6 +8,8 @@ import com.jtelaa.da2.lib.log.Log;
 
 import java.awt.Robot;
 
+// TODO comment
+
 public class ComputerControl {
 
 	private static Robot pc;
@@ -16,9 +18,12 @@ public class ComputerControl {
 
     /**
      * Runs a CMD Command
+	 * 
+	 * @return Response
      */
+
     public static String sendCommand(Command command) {
-		Log.sendMessage("Sending command: " + command);
+		if (!command.isHeadless()) { Log.sendMessage("Running Command: " + command.command()); }
 
 		try {
 			// Creates process
@@ -40,8 +45,15 @@ public class ComputerControl {
         	    line += reader.readLine();
 
         	}
+			
+			if (!command.isHeadless()) { 
+				//Log.sendMessage(line);
+				return line; 
 
-			if (command.isHeadless()) { return line; } else { return ""; }
+			} else { 
+				return ""; 
+
+			}
 
 		} catch (IOException e) { 
 			return e.getMessage();

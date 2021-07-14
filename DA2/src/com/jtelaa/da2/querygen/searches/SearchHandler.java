@@ -3,9 +3,11 @@ package com.jtelaa.da2.querygen.searches;
 import java.util.Random;
 import java.util.ArrayList;
 
-import com.jtelaa.da2.bot.plugin.bw.util.SearchSystem;
-import com.jtelaa.da2.lib.files.Files;
+import com.jtelaa.da2.bot.plugin.bw.sys.SearchSystem;
+import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.querygen.util.Query;
+
+// TODO comment
 
 public class SearchHandler {
 
@@ -38,7 +40,7 @@ public class SearchHandler {
     private synchronized static ArrayList<String> pickList() {
         Random rand = new Random();
 
-        final String PATH = "com/jtelaa/da2/querygen/searches/";
+        final String PATH = "com/jtelaa/da2/querygen/searches/searchdata/";
         String name;
 
         switch (rand.nextInt(15)) {
@@ -67,7 +69,7 @@ public class SearchHandler {
 
         }
 
-        return Files.listLinesInternalFile(PATH + name);
+        return FileUtil.listLinesInternalFile(PATH + name);
     }
     
 }

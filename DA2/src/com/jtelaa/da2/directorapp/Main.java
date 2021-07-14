@@ -17,6 +17,9 @@ import com.jtelaa.da2.directorapp.gui.GUI;
  * @author Joseph
  */
 
+ // TDOD comment
+ // TDOD update to current 
+
 public class Main {
 
     public static Client director_tx;

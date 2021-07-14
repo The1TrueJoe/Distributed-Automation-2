@@ -25,6 +25,9 @@ sshj.jar
 # VSCode
 .metals/
 
+# VSCode Counter
+.VSCodeCounter/
+
 /bin/
 build
 .settings/

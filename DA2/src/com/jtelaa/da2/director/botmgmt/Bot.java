@@ -3,6 +3,7 @@ package com.jtelaa.da2.director.botmgmt;
 import java.io.Serializable;
 
 import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.net.NetTools;
 
 /**
  * Bot object for storing data
@@ -10,6 +11,8 @@ import com.jtelaa.da2.lib.config.ConfigHandler;
  * @since 1
  * @author Joseph
  */
+
+ // TODO comment
 
 public class Bot implements Serializable {
 
@@ -50,8 +53,7 @@ public class Bot implements Serializable {
 
     public boolean hasHeartBeat() { return config.getProperty("has_heartbeat", "true").equalsIgnoreCase("true"); }
     public String getHearbeatIP() { return config.getProperty("has_heartbeat", " "); }
-    
-    public String getQueryGenIP() { return config.getProperty("qgen_ip", ""); }
-    public String getPointMgrIP() { return config.getProperty("ptmgr_ip", ""); }
+
+    public boolean isReachable() { return NetTools.isAlive(ip); }
 
 }

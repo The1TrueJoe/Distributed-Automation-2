@@ -16,6 +16,8 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class QueuedResponseSender extends Thread {
     
     private volatile static Queue<String> response_queue;
@@ -24,7 +26,7 @@ public class QueuedResponseSender extends Thread {
     private ClientUDP cmd_tx;
 
     public synchronized void add(String response_ip, String response) {
-        if (MiscUtil.notBlank(response)) {
+        if (MiscUtil.notBlank(response) && NetTools.isAlive(response_ip)) {
             response_queue.add(response);
             response_server_queue.add(response_ip);
         }

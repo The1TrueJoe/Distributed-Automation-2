@@ -4,6 +4,8 @@ import java.util.Random;
 
 import com.jtelaa.da2.lib.log.Log;
 
+// TODO comment
+
 public class MiscUtil {
 
     public static boolean isNumeric(String value) {

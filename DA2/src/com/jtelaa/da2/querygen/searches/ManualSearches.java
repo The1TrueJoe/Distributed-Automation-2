@@ -1,12 +1,14 @@
 package com.jtelaa.da2.querygen.searches;
 
+/**
+ * @deprecated
+ */
+
+// TODO comment
+
 public class ManualSearches {
 
-    
-
-
-
-    
+    @Deprecated
     public volatile static String[] searches = {
         "youtube", "facebook", "twitter", "instagram",
         "snapchat", "wikipedia", "tumblr", "amazon", 

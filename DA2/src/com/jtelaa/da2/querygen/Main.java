@@ -1,26 +1,42 @@
 package com.jtelaa.da2.querygen;
 
 import com.jtelaa.da2.lib.config.ConfigHandler;
-import com.jtelaa.da2.lib.control.QueuedCommandReceiver;
-import com.jtelaa.da2.lib.control.QueuedResponseSender;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.querygen.processes.QueryGenerator;
 import com.jtelaa.da2.querygen.processes.QueryServer;
-import com.jtelaa.da2.querygen.processes.RequestServer;
+import com.jtelaa.da2.querygen.processes.RequestClient;
+
+// TODO Comment
 
 public class Main {
     
     public static ConfigHandler my_config;
 
     public static void main(String[] args) {
-        my_config = new ConfigHandler(); // TODO load config
+        // Default configuration file location
+        String config_file_location = "config.properties";
+
+        // Check for first time setup
+        boolean first_time = false;
+        for (String arg : args) {
+            if (arg.equalsIgnoreCase("setup")) {
+                config_file_location = "com/jtelaa/da2/bot/plugin/bw/config.properties";
+                my_config = new ConfigHandler(config_file_location, true);
+                first_time = true;
+                break;
+
+            }
+        }
+
+        // Load normally if not first time
+        if (!first_time) { my_config = new ConfigHandler(config_file_location, false); }
 
         // Start Logging
         Log.loadConfig(my_config);
         Log.openClient("logging_server_ip");
 
         // Request server setup
-        RequestServer req_srv = new RequestServer();
+        RequestClient req_srv = new RequestClient();
         Log.sendMessage("Starting request server");
         req_srv.start();
         
@@ -34,16 +50,7 @@ public class Main {
         Log.sendMessage("Starting query generator");
         qry_gen.start();
 
-        // CMD setup
-        QueuedCommandReceiver cmd_rx = new QueuedCommandReceiver();
-        QueuedResponseSender cmd_tx = new QueuedResponseSender();
-        cmd_rx.start();
-        cmd_tx.start();
-        Log.sendMessage("CMD Started");
-
         // TODO add CLI & Manual Intervention
-
-        
 
         Log.sendLogMessage("Done! Shutting down");
         Log.closeLog();

@@ -14,6 +14,8 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class Log {
 
     /** The vebosity of the local application output */
@@ -64,6 +66,18 @@ public class Log {
     public synchronized static void sendMessage(String message) {
         if (app_verbose) { sendSysMessage(message); }   // System message
         if (log_verbose) { sendLogMessage(message); }   // Logging message
+
+    }
+
+    /**
+     * Sends exception's message to the log and system console <p>
+     * This checks the verbosity of both
+     * 
+     * @param e Exception to send
+     */
+
+    public synchronized static void sendMessage(Exception e) {
+        sendMessage(e.getMessage());
 
     }
 

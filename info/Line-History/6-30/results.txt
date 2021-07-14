@@ -1,0 +1,119 @@
+Date : 2021-07-06 15:16:03
+Directory : /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2
+Total : 61 files,  2166 codes, 829 comments, 1124 blanks, all 4119 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| java     |         61 |      2,166 |        829 |      1,124 |      4,119 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                   | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                      |         61 |      2,166 |        829 |      1,124 |      4,119 |
+| bot                                                                                                                                    |          7 |        259 |        100 |        148 |        507 |
+| bot/main                                                                                                                               |          1 |         64 |          0 |         25 |         89 |
+| bot/plugin                                                                                                                             |          4 |        164 |         91 |        106 |        361 |
+| bot/plugin/bw                                                                                                                          |          4 |        164 |         91 |        106 |        361 |
+| bot/plugin/bw/util                                                                                                                     |          3 |        144 |         80 |         90 |        314 |
+| bot/util                                                                                                                               |          2 |         31 |          9 |         17 |         57 |
+| director                                                                                                                               |          9 |        215 |         21 |        106 |        342 |
+| director/botmgmt                                                                                                                       |          3 |         74 |          7 |         43 |        124 |
+| director/cli                                                                                                                           |          4 |        132 |         14 |         56 |        202 |
+| director/logserver                                                                                                                     |          1 |          3 |          0 |          3 |          6 |
+| directorapp                                                                                                                            |          2 |         70 |          8 |         33 |        111 |
+| directorapp/gui                                                                                                                        |          1 |          5 |          0 |          5 |         10 |
+| hypervisor_interface                                                                                                                   |          2 |         16 |          2 |          9 |         27 |
+| hypervisor_interface/util                                                                                                              |          1 |         13 |          2 |          6 |         21 |
+| lib                                                                                                                                    |         27 |      1,259 |        628 |        661 |      2,548 |
+| lib/config                                                                                                                             |          1 |         62 |         27 |         39 |        128 |
+| lib/console                                                                                                                            |          2 |         67 |         30 |         18 |        115 |
+| lib/control                                                                                                                            |          6 |        253 |         68 |        133 |        454 |
+| lib/crypto                                                                                                                             |          2 |        144 |        231 |         79 |        454 |
+| lib/files                                                                                                                              |          2 |        118 |         73 |         71 |        262 |
+| lib/log                                                                                                                                |          2 |         60 |         40 |         38 |        138 |
+| lib/misc                                                                                                                               |          1 |         38 |          0 |         19 |         57 |
+| lib/net                                                                                                                                |          8 |        442 |        116 |        218 |        776 |
+| lib/net/client                                                                                                                         |          2 |        173 |         54 |         79 |        306 |
+| lib/net/server                                                                                                                         |          2 |        170 |         47 |         90 |        307 |
+| lib/user                                                                                                                               |          3 |         75 |         43 |         46 |        164 |
+| querygen                                                                                                                               |          8 |        273 |         64 |        118 |        455 |
+| querygen/processes                                                                                                                     |          3 |        108 |         50 |         57 |        215 |
+| querygen/searches                                                                                                                      |          2 |         95 |          0 |         28 |        123 |
+| querygen/util                                                                                                                          |          2 |         35 |          8 |         18 |         61 |
+| redemption_manager                                                                                                                     |          5 |         71 |          6 |         46 |        123 |
+| redemption_manager/coms                                                                                                                |          2 |         18 |          0 |         16 |         34 |
+| redemption_manager/util                                                                                                                |          2 |         50 |          6 |         27 |         83 |
+| scheduler                                                                                                                              |          1 |          3 |          0 |          3 |          6 |
++----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                               | language | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/bot/main/Main.java                                       | java     |         64 |          0 |         25 |         89 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/bot/plugin/bw/BingRewards.java                           | java     |         20 |         11 |         16 |         47 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/bot/plugin/bw/util/AcctInfo.java                         | java     |         53 |         28 |         34 |        115 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/bot/plugin/bw/util/BWPorts.java                          | java     |         11 |          0 |          5 |         16 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/bot/plugin/bw/util/SearchSystem.java                     | java     |         80 |         52 |         51 |        183 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/bot/util/CLI.java                                        | java     |         13 |          2 |          6 |         21 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/bot/util/Heartbeat.java                                  | java     |         18 |          7 |         11 |         36 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/director/Main.java                                       | java     |          6 |          0 |          4 |         10 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/director/botmgmt/Bot.java                                | java     |         32 |          6 |         20 |         58 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/director/botmgmt/BotMgmt.java                            | java     |         22 |          1 |         11 |         34 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/director/botmgmt/HeartbeatServer.java                    | java     |         20 |          0 |         12 |         32 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/director/cli/BotCLI.java                                 | java     |         12 |          2 |          6 |         20 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/director/cli/CLI.java                                    | java     |         40 |          5 |         29 |         74 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/director/cli/CLIType.java                                | java     |          6 |          0 |          6 |         12 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/director/cli/Cases.java                                  | java     |         74 |          7 |         15 |         96 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/director/logserver/LogServer.java                        | java     |          3 |          0 |          3 |          6 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/directorapp/Main.java                                    | java     |         65 |          8 |         28 |        101 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/directorapp/gui/GUI.java                                 | java     |          5 |          0 |          5 |         10 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/hypervisor_interface/Main.java                           | java     |          3 |          0 |          3 |          6 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/hypervisor_interface/util/CLI.java                       | java     |         13 |          2 |          6 |         21 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/config/ConfigHandler.java                            | java     |         62 |         27 |         39 |        128 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/console/ConsoleBanners.java                          | java     |          7 |         17 |          8 |         32 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/console/ConsoleColors.java                           | java     |         60 |         13 |         10 |         83 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/control/Command.java                                 | java     |         93 |         28 |         48 |        169 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/control/ComputerControl.java                         | java     |         35 |         15 |         22 |         72 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/control/QueuedCommandReceiver.java                   | java     |         25 |          6 |         14 |         45 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/control/QueuedCommandSender.java                     | java     |         35 |          7 |         17 |         59 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/control/QueuedResponseReceiver.java                  | java     |         24 |          6 |         14 |         44 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/control/QueuedResponseSender.java                    | java     |         41 |          6 |         18 |         65 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/crypto/EncryptionUtils.java                          | java     |        104 |        205 |         57 |        366 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/crypto/SystemCrypto.java                             | java     |         40 |         26 |         22 |         88 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/files/Files.java                                     | java     |         94 |         54 |         57 |        205 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/files/ObjectUtils.java                               | java     |         24 |         19 |         14 |         57 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/log/Log.java                                         | java     |         43 |         34 |         28 |        105 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/log/LogSender.java                                   | java     |         17 |          6 |         10 |         33 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/misc/MiscUtil.java                                   | java     |         38 |          0 |         19 |         57 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/net/NetTools.java                                    | java     |         28 |          0 |         14 |         42 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/net/OneTimeConnection.java                           | java     |         49 |         15 |         23 |         87 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/net/Ports.java                                       | java     |         12 |          0 |          6 |         18 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/net/StateCodes.java                                  | java     |         10 |          0 |          6 |         16 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/net/client/Client.java                               | java     |         86 |         27 |         37 |        150 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/net/client/ClientUDP.java                            | java     |         87 |         27 |         42 |        156 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/net/server/Server.java                               | java     |         78 |         24 |         40 |        142 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/net/server/ServerUDP.java                            | java     |         92 |         23 |         50 |        165 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/user/Login.java                                      | java     |          3 |          0 |          3 |          6 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/user/User.java                                       | java     |         32 |          2 |         16 |         50 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/lib/user/UserHandler.java                                | java     |         40 |         41 |         27 |        108 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/querygen/Main.java                                       | java     |         35 |          6 |         15 |         56 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/querygen/processes/QueryGenerator.java                   | java     |         35 |          9 |         19 |         63 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/querygen/processes/QueryServer.java                      | java     |         53 |         31 |         27 |        111 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/querygen/processes/RequestServer.java                    | java     |         20 |         10 |         11 |         41 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/querygen/searches/ManualSearches.java                    | java     |         38 |          0 |         11 |         49 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/querygen/searches/SearchHandler.java                     | java     |         57 |          0 |         17 |         74 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/querygen/util/CLI.java                                   | java     |         13 |          2 |          6 |         21 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/querygen/util/Query.java                                 | java     |         22 |          6 |         12 |         40 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/redemption_manager/Main.java                             | java     |          3 |          0 |          3 |          6 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/redemption_manager/coms/AccountAnnouncementListener.java | java     |          9 |          0 |          8 |         17 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/redemption_manager/coms/PointAnnouncementListener.java   | java     |          9 |          0 |          8 |         17 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/redemption_manager/util/Account.java                     | java     |         21 |          6 |         13 |         40 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/redemption_manager/util/Card.java                        | java     |         29 |          0 |         14 |         43 |
+| /home/admin/joseph/Misc/Other/Distributed-Automation-2/DA2/src/com/jtelaa/da2/scheduler/Main.java                                      | java     |          3 |          0 |          3 |          6 |
+| Total                                                                                                                                  |          |      2,166 |        829 |      1,124 |      4,119 |
++----------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

@@ -1,5 +1,7 @@
 package com.jtelaa.da2.querygen.util;
 
+import java.io.Serializable;
+
 /**
  * Object for search queries
  * 
@@ -7,7 +9,7 @@ package com.jtelaa.da2.querygen.util;
  * @author Joseph
  */
 
-public class Query {
+public class Query implements Serializable {
     
     private String unformatted_query;
     private String formatted_query; 

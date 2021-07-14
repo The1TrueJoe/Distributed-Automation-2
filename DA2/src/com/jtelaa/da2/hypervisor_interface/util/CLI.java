@@ -1,14 +1,17 @@
 package com.jtelaa.da2.hypervisor_interface.util;
 
-import com.jtelaa.da2.director.cli.CLIType;
+import com.jtelaa.da2.lib.cli.LocalCLI;
 import com.jtelaa.da2.lib.control.Command;
 
-public class CLI extends CLIType {
+// TDOD comment
+// TODO fill out cli
+
+public class CLI extends LocalCLI {
 
     @Override
-    public String startCLI(Command command) {
+    public void run() {
         // TODO Auto-generated method stub
-        return null;
+        
     }
 
     @Override

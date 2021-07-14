@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
-import com.jtelaa.da2.lib.files.Files;
+import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.lib.files.ObjectUtils;
 import com.jtelaa.da2.lib.log.Log;
 
@@ -15,6 +15,8 @@ import com.jtelaa.da2.lib.log.Log;
  * @since 2
  * @author Joseph
  */
+
+ // TODO comment
 
 public class SystemCrypto {
 
@@ -29,7 +31,7 @@ public class SystemCrypto {
      */
 
     public synchronized static void exportCryp(String path) {
-        Files.writeObjectToFile(new Object[] {"Algorithm: ", algorithm, "Key: ", key, "IV: ", iv}, path);
+        FileUtil.writeObjectToFile(new Object[] {"Algorithm: ", algorithm, "Key: ", key, "IV: ", iv}, path);
     }
 
     /**
@@ -39,7 +41,7 @@ public class SystemCrypto {
      */
 
     public synchronized static void importCryp(String path) {
-        importCryp(Files.listLinesFile(path));
+        importCryp(FileUtil.listLinesFile(path));
     }
 
     /**
@@ -49,7 +51,7 @@ public class SystemCrypto {
      */
 
     public synchronized static void importInternalCryp(String path) {
-        importCryp(Files.listLinesInternalFile(path));
+        importCryp(FileUtil.listLinesInternalFile(path));
     }
 
      /**

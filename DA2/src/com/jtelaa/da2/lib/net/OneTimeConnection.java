@@ -8,8 +8,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * 
+ * @deprecated
  */
+
+ // TODO comment
 
 public class OneTimeConnection {
     

@@ -13,6 +13,8 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
  * @author Joseph
  */
 
+ // TODO comment
+
 public class QueuedResponseReceiver extends Thread {
 
     private volatile static Queue<String> response_queue;
