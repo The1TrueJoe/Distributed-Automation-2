@@ -49,9 +49,16 @@ public class QueryGenerator extends Thread {
         }
     }
 
+    /** Boolean to control the receiver */
     private boolean run = true;
-    public synchronized void stopGen() { run = false; }
 
+    /** Stops the command receiver */
+    public synchronized void stopReceiver() { run = false; }
+
+    /** Checks if the receier is ready */
+    public synchronized static boolean receiverReady() { return run; }
+    // TODO Implement
+    
     private Query generate() {
         return SearchHandler.getRandomSearch();
     }

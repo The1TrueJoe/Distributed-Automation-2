@@ -39,8 +39,15 @@ public class QueuedResponseReceiver extends Thread {
         }
     }
 
-    private boolean run = true;
-    public synchronized void stopReceiver() { run = false; }
+   /** Boolean to control the receiver */
+   private boolean run = true;
+
+   /** Stops the command receiver */
+   public synchronized void stopReceiver() { run = false; }
+
+   /** Checks if the receier is ready */
+   public synchronized static boolean receiverReady() { return run; }
+   // TODO Implement
 
     
 }

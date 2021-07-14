@@ -29,7 +29,14 @@ public class HeartbeatServer extends Thread {
         }
     }
 
+    /** Boolean to control the receiver */
     private boolean run = true;
-    public synchronized void stopSender() { run = false; }
+
+    /** Stops the command receiver */
+    public synchronized void stopReceiver() { run = false; }
+
+    /** Checks if the receier is ready */
+    public synchronized static boolean receiverReady() { return run; }
+    // TODO Implement
 
 }

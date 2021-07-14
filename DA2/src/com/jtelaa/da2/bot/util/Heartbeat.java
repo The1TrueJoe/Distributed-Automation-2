@@ -32,6 +32,7 @@ public class Heartbeat extends Thread {
 
     private boolean run = true;
     public synchronized void stopHeart() { run = false; }
+    public synchronized static boolean heartReady() { return run; }
 
 
 }
