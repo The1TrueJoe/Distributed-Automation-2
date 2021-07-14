@@ -274,7 +274,7 @@ public enum Card {
 
         // Looks for the first card that is similar
         for (Card e : values()) {
-            if (e.toString().contains(name)) {
+            if (e.toString().toLowerCase().contains(name.toLowerCase())) {
                 return e;
             }
         }
