@@ -1,5 +1,11 @@
 package com.jtelaa.da2.lib.mail;
 
+import java.util.Locale;
+
+import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper;
+import com.google.i18n.phonenumbers.PhoneNumber;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+
 /**
  * ENUM containing the gateway address for SMS
  */
@@ -93,7 +99,7 @@ public enum MessageGateways {
      * @return The carrier
      */
 
-    public static MessageGateways getGateway(String carrier) {
+    public static MessageGateways findCarrier(String carrier) {
         // Look for a carrier with the name given
         for (SMSGateways e : values()) {
             if (e.toString().equalsIgnoreCase(carrier)) {
@@ -116,9 +122,33 @@ public enum MessageGateways {
      * 
      */
 
+    public static MessageGateways getCarrier(PhoneNumber number) {
+        PhoneNumberToCarrierMapper mapper = PhoneNumberToCarrierMapper.getInstance();
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+
+        if (phoneNumberUtil.isPossibleNumber(number)) {
+            String carrier = findCarrier(mapper.getNameForNumber(number, Locale.US));
+            
+            if (carrier != null && carrier != " " && carrier != "") {
+                return carrier;
+
+            } 
+        } 
+        
+        return VERIZON;
+        
+    }
+
+    /**
+     * 
+     */
+
     public static MessageGateways getCarrier(String number) {
-        //TODO Setup
-        // use google phonenumbertocarriermapper
+        PhoneNumber phonenumber = new PhoneNumber();
+        phonenumber.setCountryCode(1).setNationalNumber(number);
+        
+        return getCarrier(phonenumber);
+        
     }
 
 }
