@@ -36,7 +36,7 @@ public class HeartbeatServer extends Thread {
     public synchronized void stopReceiver() { run = false; }
 
     /** Checks if the receier is ready */
-    public synchronized static boolean receiverReady() { return run; }
+    public synchronized boolean receiverReady() { return run; }
     // TODO Implement
 
 }

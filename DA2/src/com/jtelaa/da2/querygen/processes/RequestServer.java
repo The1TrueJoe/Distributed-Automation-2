@@ -1,7 +1,7 @@
 package com.jtelaa.da2.querygen.processes;
 
-import com.jtelaa.da2.bot.plugin.bw.util.BWMessages;
-import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
+import com.jtelaa.da2.bw_manager.util.BWMessages;
+import com.jtelaa.da2.bw_manager.util.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
@@ -18,7 +18,7 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 
  // TODO comment
 
-public class RequestClient extends Thread {
+public class RequestServer extends Thread {
 
     public void run() {
         ServerUDP server = new ServerUDP(BWPorts.QUERY_REQUEST.getPort());
@@ -39,10 +39,10 @@ public class RequestClient extends Thread {
     private boolean run = true;
 
     /** Stops the command receiver */
-    public synchronized void stopReceiver() { run = false; }
+    public synchronized void stopServer() { run = false; }
 
     /** Checks if the receier is ready */
-    public synchronized static boolean receiverReady() { return run; }
+    public synchronized boolean serverReady() { return run; }
     // TODO Implement
     
 }

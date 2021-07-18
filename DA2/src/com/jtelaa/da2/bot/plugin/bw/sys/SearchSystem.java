@@ -4,8 +4,8 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import com.jtelaa.da2.bot.plugin.bw.BingRewards;
-import com.jtelaa.da2.bot.plugin.bw.util.BWMessages;
-import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
+import com.jtelaa.da2.bw_manager.util.BWMessages;
+import com.jtelaa.da2.bw_manager.util.BWPorts;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;

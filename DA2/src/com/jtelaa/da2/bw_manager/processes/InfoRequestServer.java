@@ -1,6 +1,6 @@
 package com.jtelaa.da2.bw_manager.processes;
 
-import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
+import com.jtelaa.da2.bw_manager.util.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
@@ -41,7 +41,7 @@ public class InfoRequestServer extends Thread {
     public synchronized void stopReceiver() { run = false; }
 
     /** Checks if the receier is ready */
-    public synchronized static boolean receiverReady() { return run; }
+    public synchronized boolean receiverReady() { return run; }
     // TODO Implement
     
 }

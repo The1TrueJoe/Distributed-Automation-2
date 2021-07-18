@@ -1,4 +1,4 @@
-package com.jtelaa.da2.bot.plugin.bw.util;
+package com.jtelaa.da2.bw_manager.util;
 
 /***
  * 

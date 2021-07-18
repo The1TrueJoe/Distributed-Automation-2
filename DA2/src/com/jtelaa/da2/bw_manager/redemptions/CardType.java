@@ -231,11 +231,11 @@ public enum CardType {
 
     private int calculatePointCost(String unit, int value) {
         switch (unit) {
-            case "USD" -> value *= 1050;
-            case "EAT" -> value *= 1300;
-            case "ROBUX" -> value *= 15;
-            case "HULU" -> value *= 1120;
-            case "DONO" -> value *= 1000;
+            case "USD": value *= 1050; break;
+            case "EAT": value *= 1300; break;
+            case "ROBUX": value *= 15; break;
+            case "HULU": value *= 1120; break;
+            case "DONO": value *= 1000; break;
         }
 
         return value;
@@ -250,7 +250,7 @@ public enum CardType {
      * @return random card
      */
 
-    private CardType randomCardType(CardType[] cards) {
+    private static CardType randomCardType(CardType[] cards) {
         Random rand = new Random();
 
         return cards[rand.nextInt(cards.length-1)];
@@ -287,8 +287,8 @@ public enum CardType {
      * 
      */
 
-    public static CardType[] getRandomCardTypeWithType(String type) {
-        return randomCardType(getCardTypesByType(type))
+    public static CardType getRandomCardTypeWithType(String type) {
+        return randomCardType(getCardTypesByType(type));
 
     }
 

@@ -7,11 +7,12 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
 import com.jtelaa.da2.bot.plugin.bw.BingRewards;
-import com.jtelaa.da2.bot.plugin.bw.util.BWMessages;
-import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
+import com.jtelaa.da2.bw_manager.util.BWMessages;
+import com.jtelaa.da2.bw_manager.util.BWPorts;
 import com.jtelaa.da2.bw_manager.accounts.Account;
-import com.jtelaa.da2.bw_manager.util.Card;
+import com.jtelaa.da2.bw_manager.redemptions.CardType;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
@@ -166,7 +167,7 @@ public class AcctInfo {
      * @return orderid
      */
 
-    public String redeemGiftCard(Card card) {
+    public String redeemGiftCard(CardType card) {
         String url = card.getTag();
 
         // TODO add redemption system

@@ -45,10 +45,10 @@ public class QueuedResponseSender extends Thread {
     private boolean run = true;
 
     /** Stops the command receiver */
-    public synchronized void stopReceiver() { run = false; }
+    public synchronized void stopSender() { run = false; }
 
     /** Checks if the receier is ready */
-    public synchronized static boolean receiverReady() { return run; }
+    public synchronized boolean senderReady() { return run; }
     // TODO Implement
 
     private void sendMessage() {

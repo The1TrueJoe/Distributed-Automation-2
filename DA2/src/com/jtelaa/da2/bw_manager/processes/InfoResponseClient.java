@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.jtelaa.da2.bot.plugin.bw.util.BWMessages;
-import com.jtelaa.da2.bot.plugin.bw.util.BWPorts;
 import com.jtelaa.da2.bw_manager.accounts.Accounts;
+import com.jtelaa.da2.bw_manager.util.BWMessages;
+import com.jtelaa.da2.bw_manager.util.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.files.ObjectUtils;
@@ -56,7 +56,7 @@ public class InfoResponseClient extends Thread {
     public synchronized void stopReceiver() { run = false; }
 
     /** Checks if the receier is ready */
-    public synchronized static boolean receiverReady() { return run; }
+    public synchronized boolean receiverReady() { return run; }
     // TODO Implement
 
     /**

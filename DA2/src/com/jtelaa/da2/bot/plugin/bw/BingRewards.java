@@ -44,7 +44,7 @@ public class BingRewards extends Thread {
         boolean terminal_process = true;
 
         // Default configuration file location
-        String config_file_location = "config.properties";
+        String config_file_location = "bwconfig.properties";
 
         // Check for first time setup
         boolean first_time = false;

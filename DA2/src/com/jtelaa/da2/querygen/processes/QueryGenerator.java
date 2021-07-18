@@ -53,10 +53,10 @@ public class QueryGenerator extends Thread {
     private boolean run = true;
 
     /** Stops the command receiver */
-    public synchronized void stopReceiver() { run = false; }
+    public synchronized void stopGen() { run = false; }
 
     /** Checks if the receier is ready */
-    public synchronized static boolean receiverReady() { return run; }
+    public synchronized boolean generatorReady() { return run; }
     // TODO Implement
     
     private Query generate() {

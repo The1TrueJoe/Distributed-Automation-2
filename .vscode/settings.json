@@ -2,5 +2,8 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "DA2/jars/*.jar"
+    ],
+    "java.project.sourcePaths": [
+        "DA2/src"
     ]
 }

@@ -4,7 +4,7 @@ import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.querygen.processes.QueryGenerator;
 import com.jtelaa.da2.querygen.processes.QueryServer;
-import com.jtelaa.da2.querygen.processes.RequestClient;
+import com.jtelaa.da2.querygen.processes.RequestServer;
 
 // TODO Comment
 
@@ -36,7 +36,7 @@ public class Main {
         Log.openClient("logging_server_ip");
 
         // Request server setup
-        RequestClient req_srv = new RequestClient();
+        RequestServer req_srv = new RequestServer();
         Log.sendMessage("Starting request server");
         req_srv.start();
         
@@ -55,7 +55,7 @@ public class Main {
         Log.sendLogMessage("Done! Shutting down");
         Log.closeLog();
         req_srv.stopServer();
-        qry_serv.stopServer();
+        qry_serv.stopReceiver();
         qry_gen.stopGen();
     }
     
