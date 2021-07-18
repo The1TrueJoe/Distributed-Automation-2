@@ -30,7 +30,7 @@ public class Main {
         boolean first_time = false;
         for (String arg : args) {
             if (arg.equalsIgnoreCase("setup")) {
-                config_file_location = "com/jtelaa/da2/bot/main/conifg.properties";
+                config_file_location = "com/jtelaa/da2/bot/main/config.properties";
                 me = new Bot(new ConfigHandler(config_file_location, true));
                 first_time = true;
                 break;
