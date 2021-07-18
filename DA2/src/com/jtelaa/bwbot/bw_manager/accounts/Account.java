@@ -16,18 +16,26 @@ import com.jtelaa.da2.lib.files.ObjectUtils;
 
 public class Account implements Serializable {
 
+    /** */
     public static final String EMAIL_DOMAIN = "@hotmail.com";
 
+    /** */
     private String username;
+    /** */
     private String email;
+    /** */
     private String password;
 
+    /** */
     private String first_name;
+    /** */
     private String last_name;
 
+    /** */
     private GregorianCalendar birth_date;
 
-    private int entitled_points;
+    /** */
+    private int points;
 
     /**
      * Default Constructor
@@ -54,7 +62,9 @@ public class Account implements Serializable {
         newPoints(Integer.parseInt(config.getProperty("points")));
         
         try {
-            setBirthDay((GregorianCalendar) ObjectUtils.objfromString(config.getProperty("birthday")));
+            GregorianCalendar bday = new GregorianCalendar();
+            bday.setTimeInMillis(Long.parseLong(config.getProperty("password")));
+            setBirthDay(bday);
         
         } catch (Exception e) {
             setBirthDay(Accounts.getRandomBirthDate());
@@ -76,7 +86,7 @@ public class Account implements Serializable {
         config.setProperty("last_name", last_name);
         config.setProperty("user_name", username);
         config.setProperty("password", password);
-        config.setProperty("points", entitled_points + "");
+        config.setProperty("points", points + "");
 
         try {
             config.setProperty("birthday", ObjectUtils.objtoString(birth_date));
@@ -84,28 +94,39 @@ public class Account implements Serializable {
         } catch (IOException e) {
 
         }
-
-
     }
 
+    /** */
     public void setFirstName(String first_name) { this.first_name = first_name; }
+    /** */
     public void setLastName(String last_name) { this.last_name = last_name; }
 
+    /** */
     public void setUsername(String username) { this.username = username; email = username + EMAIL_DOMAIN;}
+    /** */
     public void setPassword(String password) { this.password = password; }
 
+    /** */
     public void setBirthDay(GregorianCalendar birth_date) { this.birth_date = birth_date; }
     
+    /** */
     public String getFirstName() { return first_name; }
+    /** */
     public String getLastName() { return last_name; }
 
+    /** */
     public String getUsername() { return username; }
+    /** */
     public String getEmail() { return email; }
+    /** */
     public String getPassword() { return password; }
-    public int getPoints() { return entitled_points; }
+    /** */
+    public int getPoints() { return points; }
 
+    /** */
     public GregorianCalendar getBirthDay() { return birth_date; }
 
+    /** */
     public String getFormattedBirthDay() { 
         return 
             birth_date.get(GregorianCalendar.YEAR) + "-" + 
@@ -114,9 +135,12 @@ public class Account implements Serializable {
         ; 
     }
 
-    public void updatePoints(int change) { entitled_points += change; }
-    public void newPoints(int new_points) { entitled_points = new_points; }
+    /** */
+    public void updatePoints(int change) { points += change; }
+    /** */
+    public void newPoints(int new_points) { points = new_points; }
 
+    /** */
     public String toString() { 
         return 
             "[Email: " + email + 

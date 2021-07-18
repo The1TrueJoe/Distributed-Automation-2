@@ -2,10 +2,10 @@ package com.jtelaa.bwbot.bw;
 
 import com.jtelaa.bwbot.bw.sys.AcctInfo;
 import com.jtelaa.bwbot.bw.sys.SearchSystem;
-import com.jtelaa.da2.bot.main.Main;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.control.Command;
+import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 
 /**
@@ -17,7 +17,7 @@ import com.jtelaa.da2.lib.log.Log;
 
 // TODO comment
 
-public class BingRewards extends Thread {
+public class Main extends Thread {
 
     /** Local config handler */
     public static ConfigHandler config;
@@ -30,6 +30,7 @@ public class BingRewards extends Thread {
      * 
      * @param args
      */
+    
     public synchronized void args(String[] args) { this.args = args; }
 
     /**
@@ -37,6 +38,7 @@ public class BingRewards extends Thread {
      * 
      * @param command
      */
+
     public synchronized void args(Command command) { args = Command.toString(command.getSubCommands(Command.LOCAL_ARG1)); }
 
     public void run() {
@@ -67,6 +69,9 @@ public class BingRewards extends Thread {
         // Load normally if not first time
         if (!first_time) { config = new ConfigHandler(config_file_location, false); }
 
+        // Load Log config and start client
+        Log.openClient("127.0.0.1");
+
         // Startup
         Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/da2/bot/plugin/bw/misc/Rewards.txt"));
         Log.sendMessage("Bing Rewards Plugin Enabled");
@@ -90,7 +95,7 @@ public class BingRewards extends Thread {
         if (terminal_process) {
             // Shutdown
             Log.sendMessage("Shutting Down Plugin");
-            Main.cli.addCommandRX("shutdown");
+            ComputerControl.shutdown();
 
         }
 

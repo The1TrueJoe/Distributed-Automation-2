@@ -20,8 +20,10 @@ import com.jtelaa.da2.lib.files.FileUtil;
 
 public class Accounts {
 
+    /** */
     private static Random rng;
 
+    /** */
     private static final String NAME_PATH = "com/jtelaa/da2/redemption_manager/accounts/namedata/";
 
     

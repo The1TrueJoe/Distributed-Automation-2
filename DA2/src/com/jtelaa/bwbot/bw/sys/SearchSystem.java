@@ -3,7 +3,7 @@ package com.jtelaa.bwbot.bw.sys;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-import com.jtelaa.bwbot.bw.BingRewards;
+import com.jtelaa.bwbot.bw.Main;
 import com.jtelaa.bwbot.bw_manager.util.BWMessages;
 import com.jtelaa.bwbot.bw_manager.util.BWPorts;
 import com.jtelaa.bwbot.querygen.util.Query;
@@ -25,14 +25,22 @@ import com.jtelaa.da2.lib.net.server.Server;
 
 public class SearchSystem {
 
+    /** */
     private static int executed_pc_searches;
+
+    /** */
     private static int executed_mobile_searches;
 
+    /** */
     public static int max_pc_searches;
+
+    /** */
     public static int max_mobile_searches;
 
+    /** */
     private static String query_ip;
 
+    /** */
     public static final String BING_URL = "bing.com/search?q=";
     
     /**
@@ -41,7 +49,7 @@ public class SearchSystem {
 
     public static void startSearch() {
         // Load IP
-        query_ip = BingRewards.config.getProperty("qry_gen_ip");
+        query_ip = Main.config.getProperty("qry_gen_ip");
 
         // Calc Max Searches
         populateSearchMax();

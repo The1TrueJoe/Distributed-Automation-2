@@ -7,7 +7,8 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.jtelaa.bwbot.bw.BingRewards;
+
+import com.jtelaa.bwbot.bw.Main;
 import com.jtelaa.bwbot.bw_manager.accounts.Account;
 import com.jtelaa.bwbot.bw_manager.redemptions.CardType;
 import com.jtelaa.bwbot.bw_manager.util.BWMessages;
@@ -27,14 +28,18 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 public class AcctInfo {
 
+    /** */
     public static final String OUTLOOK_EMAIL_ADDRESS = "https://outlook.live.com/mail/0/inbox";
 
+    /** */
     public static String pt_mgr_ip;
 
+    /** */
     public static Account me;
 
+    /** */
     public static void setup() {
-        pt_mgr_ip = BingRewards.config.getProperty("pt_mgr_ip");
+        pt_mgr_ip = Main.config.getProperty("pt_mgr_ip");
 
     }
 
@@ -106,13 +111,13 @@ public class AcctInfo {
     public static void loadAccount() {
         me = new Account();
 
-        me.setFirstName(BingRewards.config.getProperty("first_name", "Jane"));
-        me.setLastName(BingRewards.config.getProperty("last_name", "Doe"));
-        me.setUsername(BingRewards.config.getProperty("user", "JDoe20"));
-        me.setPassword(BingRewards.config.getProperty("password", "Passw0rd!"));
+        me.setFirstName(Main.config.getProperty("first_name", "Jane"));
+        me.setLastName(Main.config.getProperty("last_name", "Doe"));
+        me.setUsername(Main.config.getProperty("user", "JDoe20"));
+        me.setPassword(Main.config.getProperty("password", "Passw0rd!"));
 
         GregorianCalendar dob = new GregorianCalendar();
-        dob.setTimeInMillis(Long.parseLong(BingRewards.config.getProperty("dob", "0")));
+        dob.setTimeInMillis(Long.parseLong(Main.config.getProperty("dob", "0")));
         me.setBirthDay(dob);
 
     }
@@ -123,12 +128,15 @@ public class AcctInfo {
 
     public static void requestAccount() {
 
+        // Server to send account data
         ServerUDP acct_response = new ServerUDP(BWPorts.INFO_RECEIVE.getPort());
         acct_response.startServer();
 
+        // Client to accept requests
         ClientUDP acct_request = new ClientUDP(pt_mgr_ip, BWPorts.INFO_REQUEST.getPort());
         acct_request.startClient();
 
+        // Send an account request
         acct_request.sendMessage(BWMessages.ACCOUNT_REQUEST_MESSAGE.getMessage());
 
         String response;
@@ -139,11 +147,11 @@ public class AcctInfo {
             if (response.contains(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage())) {
                 me = (Account) acct_response.getObject();
                 
-                BingRewards.config.setProperty("user", me.getUsername());
-                BingRewards.config.setProperty("password", me.getPassword());
-                BingRewards.config.setProperty("first_name", me.getPassword());
-                BingRewards.config.setProperty("last_name", me.getPassword());
-                BingRewards.config.setProperty("dob", me.getBirthDay().getTimeInMillis() + "");
+                Main.config.setProperty("user_name", me.getUsername());
+                Main.config.setProperty("password", me.getPassword());
+                Main.config.setProperty("first_name", me.getPassword());
+                Main.config.setProperty("last_name", me.getPassword());
+                Main.config.setProperty("birthday", me.getBirthDay().getTimeInMillis() + "");
                 
                 return;
             }
@@ -176,6 +184,8 @@ public class AcctInfo {
         return "";
 
     }
+
+    /** */
 
     public String getGiftCardCode() {
         return "";
