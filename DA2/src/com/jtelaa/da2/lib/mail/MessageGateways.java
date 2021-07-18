@@ -3,8 +3,8 @@ package com.jtelaa.da2.lib.mail;
 import java.util.Locale;
 
 import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper;
-import com.google.i18n.phonenumbers.PhoneNumber;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 /**
  * ENUM containing the gateway address for SMS
@@ -15,7 +15,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 public enum MessageGateways {
     ATT("txt.att.net", "mms.att.net"),
     BOOST("sms.myboostmobile.com", "myboostmobile.com"),
-    CSPIRE("cspire1.com").
+    CSPIRE("cspire1.com"),
     CONSUMER("mailmymobile.net"),
     CRICKET("sms.cricketwireless.net", "mms.cricketwireless.net"),
     GOOGLE("msg.fi.google.com", true),
@@ -29,7 +29,7 @@ public enum MessageGateways {
     TING("message.ting.com"),
     TRACFONE("mmst5.tracfone.com", true),
     USCELL("email.uscc.net", "mms.uscc.net"),
-    VERIZON("vtext.com". "vzwpix.com"),
+    VERIZON("vtext.com", "vzwpix.com"),
     VIRGIN("vmobl.com", "vmpix.com"),
     XFINITY("vtext.com", "mypixmessages.com")
     ;
@@ -48,7 +48,7 @@ public enum MessageGateways {
      * 
      */
 
-    public MessageGateways(String sms_address, String mms_address) {
+    MessageGateways(String sms_address, String mms_address) {
         this.sms_address = sms_address.toCharArray();
         has_sms_address = true;
 
@@ -61,7 +61,7 @@ public enum MessageGateways {
      * 
      */
 
-    public MessageGateways(String sms_address) {
+    MessageGateways(String sms_address) {
         this.sms_address = sms_address.toCharArray();
         has_sms_address = true;
         has_mms_address = false;
@@ -72,8 +72,8 @@ public enum MessageGateways {
      * 
      */
 
-    public MessageGateways(String address, boolean supports_both) {
-        this.sms_address = sms_address.toCharArray();
+    MessageGateways(String address, boolean supports_both) {
+        this.sms_address = address.toCharArray();
         has_sms_address = true;
 
         if (supports_both) { mms_address = sms_address; }
@@ -101,14 +101,14 @@ public enum MessageGateways {
 
     public static MessageGateways findCarrier(String carrier) {
         // Look for a carrier with the name given
-        for (SMSGateways e : values()) {
+        for (MessageGateways e : values()) {
             if (e.toString().equalsIgnoreCase(carrier)) {
                 return e;
             }
         }
 
         // Looks for the first carrier that is similar
-        for (SMSGateways e : values()) {
+        for (MessageGateways e : values()) {
             if (carrier.toLowerCase().contains(e.toString().toLowerCase())) {
                 return e;
             }
@@ -127,9 +127,9 @@ public enum MessageGateways {
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
 
         if (phoneNumberUtil.isPossibleNumber(number)) {
-            String carrier = findCarrier(mapper.getNameForNumber(number, Locale.US));
+            MessageGateways carrier = MessageGateways.findCarrier(mapper.getNameForNumber(number, Locale.US));
             
-            if (carrier != null && carrier != " " && carrier != "") {
+            if (carrier.getMMSAddress() != null && carrier.getMMSAddress() != " " && carrier.getMMSAddress() != "") {
                 return carrier;
 
             } 
@@ -145,7 +145,7 @@ public enum MessageGateways {
 
     public static MessageGateways getCarrier(String number) {
         PhoneNumber phonenumber = new PhoneNumber();
-        phonenumber.setCountryCode(1).setNationalNumber(number);
+        phonenumber.setCountryCode(1).setNationalNumber(Long.parseLong(number));
         
         return getCarrier(phonenumber);
         
