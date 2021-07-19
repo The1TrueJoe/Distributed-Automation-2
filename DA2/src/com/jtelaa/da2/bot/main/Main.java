@@ -2,6 +2,7 @@ package com.jtelaa.da2.bot.main;
 
 import com.jtelaa.da2.bot.util.CLI;
 import com.jtelaa.da2.bot.util.Heartbeat;
+import com.jtelaa.da2.bot.util.LogRepeater;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
@@ -45,6 +46,10 @@ public class Main {
         Log.loadConfig(me.getConfig());
         Log.openClient(me.getConfig().getLogIP());
 
+        // Start Log Repeater
+        LogRepeater repeater = new LogRepeater();
+        repeater.start();
+
         // Send welcome message
         Log.sendSysMessage(ConsoleBanners.botBanner());
         Log.sendMessage("Welcome to the DA2 Bot Client! I am bot " + me.getID());
@@ -67,6 +72,7 @@ public class Main {
         // Stop
         beat.stopHeart();
         Log.closeLog();
+        repeater.stopRepeater();
 
     }
 }
