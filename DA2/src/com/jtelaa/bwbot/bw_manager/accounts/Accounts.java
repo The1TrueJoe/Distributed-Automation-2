@@ -25,7 +25,7 @@ public class Accounts {
     private static Random rng;
 
     /** */
-    private static final String NAME_PATH = "com/jtelaa/da2/redemption_manager/accounts/namedata/";
+    private static final String NAME_PATH = "com/jtelaa/bwbot/bw_manager/accounts/namedata/";
 
     
     /**
@@ -156,6 +156,7 @@ public class Accounts {
         if (year < 2000) { year = 2000; }
 
         ArrayList<String> lines = FileUtil.listLinesInternalFile(NAME_PATH + year + "Names.txt");
+        if (lines.size() < 1) { return "Chad"; }
         return (lines.get(rng.nextInt(lines.size())));
 
     }
@@ -168,6 +169,7 @@ public class Accounts {
 
     public static String getRandomLastName() {
         ArrayList<String> lines = FileUtil.listLinesInternalFile(NAME_PATH + "LastNames.txt");
+        if (lines.size() < 1) { return "Lee"; }
         return (lines.get(rng.nextInt(lines.size())));
         
     }
@@ -179,7 +181,7 @@ public class Accounts {
 
     public static void main(String[] args) {
         while (true) {
-            System.out.println(generateAccount());
+            System.out.println(generateAccount().formatToString());
         }
 
     }

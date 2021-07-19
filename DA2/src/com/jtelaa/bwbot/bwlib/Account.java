@@ -144,10 +144,21 @@ public class Account implements Serializable {
     /** */
     public String toString() { 
         return 
-            "[Email: " + email + 
-            ", Name: "+ first_name + " " + last_name + 
+            "[Name: "+ first_name + " " + last_name + 
             ", Birthday: " + getFormattedBirthDay() +
-            ", Password: " + password + "]";
+            ", Password: " + password + 
+            ", Email: " + email + "]";
     }
     
+    public String formatToString() {
+        return String.format(
+            "%-40s%-32s%-24s%-32s",
+            "Email: " + email,
+            "Name: "+ first_name + " " + last_name,
+            "Birthday: " + getFormattedBirthDay(),
+            "Password: " + password
+            );
+
+    }
+
 }
