@@ -50,6 +50,7 @@ public class Main extends Thread {
         if (!first_time) { config = new ConfigHandler(config_file_location, false); }
 
         // Load Log config and start client
+        Log.loadConfig(config);
         Log.openClient("127.0.0.1");
 
         // Startup
