@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.jtelaa.bwbot.bw_manager.accounts.Accounts;
-import com.jtelaa.bwbot.bw_manager.util.BWMessages;
-import com.jtelaa.bwbot.bw_manager.util.BWPorts;
+import com.jtelaa.bwbot.bwlib.BWMessages;
+import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.files.ObjectUtils;

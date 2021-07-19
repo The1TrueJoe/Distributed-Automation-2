@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Random;
 
+import com.jtelaa.bwbot.bwlib.Account;
 import com.jtelaa.da2.lib.files.FileUtil;
 
 /**
@@ -13,7 +14,7 @@ import com.jtelaa.da2.lib.files.FileUtil;
  * @since 2
  * @author Joseph
  * 
- * @see com.jtelaa.bwbot.bw_manager.accounts.Account
+ * @see com.jtelaa.bwbot.bwlib.Account
  */
 
 // TODO Comment

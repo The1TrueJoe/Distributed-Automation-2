@@ -4,9 +4,9 @@ import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import com.jtelaa.bwbot.bw.Main;
-import com.jtelaa.bwbot.bw_manager.util.BWMessages;
-import com.jtelaa.bwbot.bw_manager.util.BWPorts;
-import com.jtelaa.bwbot.querygen.util.Query;
+import com.jtelaa.bwbot.bwlib.BWMessages;
+import com.jtelaa.bwbot.bwlib.BWPorts;
+import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;

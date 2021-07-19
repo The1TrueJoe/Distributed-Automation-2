@@ -1,9 +1,10 @@
-package com.jtelaa.bwbot.bw_manager.accounts;
+package com.jtelaa.bwbot.bwlib;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 
+import com.jtelaa.bwbot.bw_manager.accounts.Accounts;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.files.ObjectUtils;
 

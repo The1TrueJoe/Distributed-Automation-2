@@ -1,4 +1,4 @@
-package com.jtelaa.bwbot.bw_manager.util;
+package com.jtelaa.bwbot.bwlib;
 
 /***
  * 
