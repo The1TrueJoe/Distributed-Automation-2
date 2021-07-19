@@ -23,7 +23,7 @@ public class Cases {
      */
 
     public static boolean exit(Command command) {
-        if (command.command().equalsIgnoreCase("exit") || command.command().equalsIgnoreCase("end")) {
+        if (command.command(0).equals("exit") || command.command(0).equals("end")) {
             return true;
         } else {
             return false;
@@ -39,7 +39,7 @@ public class Cases {
      */
 
     public static boolean command(Command command) {
-        if (command.command().equalsIgnoreCase("command") || command.command().equalsIgnoreCase("cmd") || command.command().equalsIgnoreCase("-cmd")) {
+        if (command.command(0).equals("command") || command.command(0).equals("cmd") || command.command(0).equals("-cmd")) {
             return true;
         } else {
             return false;
@@ -55,7 +55,7 @@ public class Cases {
      */
 
     public static boolean shutdown(Command command) {
-        if (command.command().equalsIgnoreCase("shutdown") || command.command().equalsIgnoreCase("shut") || command.command().equalsIgnoreCase("off") || command.command().equalsIgnoreCase("-off")) {
+        if (command.command(0).equals("shutdown") || command.command(0).equals("shut") || command.command(0).equals("off") || command.command(0).equals("-off")) {
             return true;
         } else {
             return false;
@@ -71,7 +71,7 @@ public class Cases {
      */
 
     public static boolean help(Command command) {
-        if (command.command().equalsIgnoreCase("help") || command.command().equalsIgnoreCase("-h") || command.command().equalsIgnoreCase("-?")) {
+        if (command.command(0).equals("help") || command.command(0).equals("-h") || command.command(0).equals("-?")) {
             return true;
         } else {
             return false;
@@ -87,7 +87,7 @@ public class Cases {
      */
 
     public static boolean director(Command command) {
-        if (command.command().equalsIgnoreCase("director") || command.command().equalsIgnoreCase("direc") || command.command().equalsIgnoreCase("d") || command.command().equalsIgnoreCase("-d")) {
+        if (command.command(0).equals("director") || command.command(0).equals("direc") || command.command(0).equals("d") || command.command(0).equals("-d")) {
             return true;
         } else {
             return false;
@@ -103,7 +103,7 @@ public class Cases {
      */
 
     public static boolean hypervisor(Command command) {
-        if (command.command().equalsIgnoreCase("hypervisor") || command.command().equalsIgnoreCase("hyp") || command.command().equalsIgnoreCase("-hyp")) {
+        if (command.command(0).equals("hypervisor") || command.command(0).equals("hyp") || command.command(0).equals("-hyp")) {
             return true;
         } else {
             return false;
@@ -121,7 +121,7 @@ public class Cases {
      */
 
     public static boolean scheduler(Command command) {
-        if (command.command().equalsIgnoreCase("scheduler") || command.command().equalsIgnoreCase("sched")) {
+        if (command.command(0).equals("scheduler") || command.command(0).equals("sched")) {
             return true;
         } else {
             return false;
@@ -137,7 +137,7 @@ public class Cases {
      */
 
     public static boolean querygen(Command command) {
-        if (command.command().equalsIgnoreCase("querygen") || command.command().equalsIgnoreCase("gen") || command.command().equalsIgnoreCase("qry")) {
+        if (command.command(0).equals("querygen") || command.command(0).equals("gen") || command.command(0).equals("qry")) {
             return true;
         } else {
             return false;
@@ -153,7 +153,7 @@ public class Cases {
      */
 
     public static boolean bot(Command command) {
-        if (command.command().equalsIgnoreCase("bot") || command.command().equalsIgnoreCase("bt")) {
+        if (command.command(0).equals("bot") || command.command(0).equals("bt")) {
             return true;
         } else {
             return false;
@@ -169,27 +169,11 @@ public class Cases {
      */
 
     public static boolean plugin(Command command) {
-        if (command.command().equalsIgnoreCase("plugin") || command.command().equalsIgnoreCase("plug")) {
+        if (command.command(0).equals("plugin") || command.command(0).equals("plug")) {
             return true;
         } else {
             return false;
         }
     }
 
-    /**
-     * Case for exit (exit or end)
-     * 
-     * @param command Command
-     * 
-     * @return if case is applicable
-     */
-
-    public static boolean rewards_plugin(Command command) {
-        if (command.command().equalsIgnoreCase("bing") || command.command().equalsIgnoreCase("rewards") || command.command().equalsIgnoreCase("rw")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
 }

@@ -1,6 +1,6 @@
 package com.jtelaa.da2.bot.util;
 
-import com.jtelaa.bwbot.bw.Main;
+import com.jtelaa.da2.bot.plugin.Plugins;
 import com.jtelaa.da2.director.botmgmt.MgmtMessages;
 import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.cli.LocalCLI;
@@ -8,7 +8,13 @@ import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 
-// TODO comment
+/**
+ * Local CLI
+ * 
+ * @author Joseph
+ * @since 2
+ * 
+ */
 
 public class CLI extends LocalCLI {
 
@@ -39,10 +45,9 @@ public class CLI extends LocalCLI {
 
             ComputerControl.shutdown();
         
-        } else if (Cases.rewards_plugin(command)) {
-            Main bw = new Main();
-            bw.args(command);
-            bw.start();
+        } else if (Cases.plugin(command)) {
+            // Start a plugin
+            Plugins.start(command.command(1).command());
             
         }
 

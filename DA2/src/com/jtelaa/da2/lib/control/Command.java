@@ -399,6 +399,13 @@ public class Command implements Serializable {
     public String command() { return command; }
 
     /**
+     * @param index
+     * 
+     * @return
+     */
+    public Command command(int index) { return split[index]; }
+
+    /**
      * 
      * @return
      */

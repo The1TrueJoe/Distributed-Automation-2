@@ -1,5 +1,6 @@
 package com.jtelaa.da2.bot.main;
 
+import com.jtelaa.da2.bot.plugin.Plugins;
 import com.jtelaa.da2.bot.util.CLI;
 import com.jtelaa.da2.bot.util.Heartbeat;
 import com.jtelaa.da2.bot.util.LogRepeater;
@@ -56,6 +57,9 @@ public class Main {
         
         // Start heartbeat
         if (me.hasHeartBeat()) { beat = new Heartbeat(); } 
+
+        // Add plugins
+        Plugins.importPlugins(me.getConfig().getProperty("plugin_path", "plugins.txt"));
         
         // Start CLI
         cli = new CLI();

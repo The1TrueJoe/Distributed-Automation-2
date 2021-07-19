@@ -84,6 +84,18 @@ public class FileUtil {
      */
 
     public synchronized static String readFile(String path) {
+        return readFile(new File(path));
+
+    }
+
+    /**
+     * Reads a file
+     * 
+     * @param path Path of the file
+     * @return File as a String
+     */
+
+    public synchronized static String readFile(File path) {
         ArrayList<String> list = listLinesFile(path);
         String out = "";
 
@@ -104,11 +116,22 @@ public class FileUtil {
      */
 
     public synchronized static ArrayList<String> listLinesFile(String path) {
+        return listLinesFile(new File(path));
+        
+    }
+
+    /**
+     * Reads a file
+     * 
+     * @param path Path of the file
+     * @return File as a list of the lines
+     */
+
+    public synchronized static ArrayList<String> listLinesFile(File file) {
         ArrayList<String> list = new ArrayList<String>();
         
         try {
             @SuppressWarnings ({"all"})
-            File file = new File(path);
             FileInputStream fileInputStream = new FileInputStream(file);
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
 

@@ -4,7 +4,6 @@ import com.jtelaa.bwbot.bw.sys.AcctInfo;
 import com.jtelaa.bwbot.bw.sys.SearchSystem;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
-import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 
@@ -21,27 +20,8 @@ public class Main extends Thread {
 
     /** Local config handler */
     public static ConfigHandler config;
+    public static void main(String[] args) {
 
-    /** Arguments */
-    private volatile String[] args;
-
-    /**
-     * Adds aguments to the process
-     * 
-     * @param args
-     */
-    
-    public synchronized void args(String[] args) { this.args = args; }
-
-    /**
-     * Adds aguments to the process
-     * 
-     * @param command
-     */
-
-    public synchronized void args(Command command) { args = Command.toString(command.getSubCommands(Command.LOCAL_ARG1)); }
-
-    public void run() {
         // Is this process terminal
         boolean terminal_process = true;
 
@@ -52,7 +32,7 @@ public class Main extends Thread {
         boolean first_time = false;
         for (String arg : args) {
             if (arg.equalsIgnoreCase("setup")) {
-                config_file_location = "com/jtelaa/da2/bot/plugin/bw/config.properties";
+                config_file_location = "com/jtelaa/bwbot/bw/bwconfig.properties";
                 config = new ConfigHandler(config_file_location, true);
                 first_time = true;
                 break;
@@ -60,7 +40,7 @@ public class Main extends Thread {
             } if (arg.equalsIgnoreCase("shutdown")) {
                 terminal_process = true;
 
-            } else if (arg.equalsIgnoreCase(" no shutdown")) {
+            } else if (arg.equalsIgnoreCase("no shutdown")) {
                 terminal_process = false;
                 
             }
@@ -73,7 +53,7 @@ public class Main extends Thread {
         Log.openClient("127.0.0.1");
 
         // Startup
-        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/da2/bot/plugin/bw/misc/Rewards.txt"));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/Rewards.txt"));
         Log.sendMessage("Bing Rewards Plugin Enabled");
 
         // Announce Account
