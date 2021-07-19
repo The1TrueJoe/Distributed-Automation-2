@@ -3,13 +3,29 @@ package com.jtelaa.bwbot.querygen;
 import com.jtelaa.bwbot.querygen.processes.QueryGenerator;
 import com.jtelaa.bwbot.querygen.processes.QueryServer;
 import com.jtelaa.bwbot.querygen.processes.RequestServer;
+import com.jtelaa.bwbot.querygen.util.CLI;
 import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.log.Log;
+import com.jtelaa.da2.lib.misc.MiscUtil;
 
+/**
+ * Main for the query generation application
+ * 
+ * @author Joseph
+ * @since 2
+ * 
+ * @see com.jtelaa.bwbot.bwlib.Query
+ * @see com.jtelaa.bwbot.querygen.processes.QueryGenerator
+ */
 // TODO Comment
 
 public class Main {
+
+    /** The cli local object */ 
+    public static CLI cli;
     
+    /** Local configuration handler */
     public static ConfigHandler my_config;
 
     public static void main(String[] args) {
@@ -35,6 +51,10 @@ public class Main {
         Log.loadConfig(my_config);
         Log.openClient("logging_server_ip");
 
+        // Startup
+        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/querygen/misc/QueryGen.txt"));
+        Log.sendMessage("Query Generator Enabled");
+
         // Request server setup
         RequestServer req_srv = new RequestServer();
         Log.sendMessage("Starting request server");
@@ -50,7 +70,17 @@ public class Main {
         Log.sendMessage("Starting query generator");
         qry_gen.start();
 
-        // TODO add CLI & Manual Intervention
+        // Start CLI
+        cli = new CLI();
+        cli.start();
+
+        // Wait
+        MiscUtil.waitasec();
+
+        // While CLI is available
+        while (cli.cli_enabled) {
+
+        }
 
         Log.sendLogMessage("Done! Shutting down");
         Log.closeLog();

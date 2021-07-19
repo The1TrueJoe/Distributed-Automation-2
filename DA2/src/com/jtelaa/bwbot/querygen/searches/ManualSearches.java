@@ -1,10 +1,13 @@
 package com.jtelaa.bwbot.querygen.searches;
 
 /**
- * @deprecated
+ * List of manual searches
+ * 
+ * @deprecated Can still be used but has less randomness (May be undeprecated in future)
+ * 
+ * @since 1
+ * @author Joseph
  */
-
-// TODO comment
 
 public class ManualSearches {
 

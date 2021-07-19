@@ -4,45 +4,88 @@ import java.util.Random;
 import java.util.ArrayList;
 
 import com.jtelaa.bwbot.bw.sys.SearchSystem;
-import com.jtelaa.bwbot.querygen.util.Query;
+import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.files.FileUtil;
 
-// TODO comment
+/**
+ * Random search query generator
+ * 
+ * @since 2
+ * @author Joseph
+ * 
+ * @see com.jtelaa.bwbot.bwlib.Query
+ * @see com.jtelaa.bwbot.querygen.processes.QueryGenerator
+ */
 
 public class SearchHandler {
 
+    /**
+     * Test that prints out searches
+     * 
+     * @param args Arguments
+     */ 
     public static void main(String[] args) {
         while (true) {
             System.out.println(SearchSystem.BING_URL + getRandomSearch());
+
         }
     }
 
+    /**
+     * Generates random searches
+     * 
+     * @return new Query
+     */
 
     public synchronized static Query getRandomSearch() { 
         Random rand = new Random();
-        Query[] searches = loadSearches(100);
+
+        // Generate an array and pick at a random index
+        Query[] searches = getRandomSearches(100);
         return searches[rand.nextInt(searches.length-1)]; 
+
     }
+
+    /**
+     * Generates an array of random searches
+     * 
+     * @param count Size of the array
+     * 
+     * @return Array of random searches
+     */
     
-    public synchronized static Query[] loadSearches(int count) {
-        Query[] searches = new Query[count];
-        ArrayList<String> search_list = pickList();
+    public synchronized static Query[] getRandomSearches(int count) {
         Random rand = new Random();
 
+        // Setup lists
+        Query[] searches = new Query[count];
+        ArrayList<String> search_list = pickList();
+
+        // Populate lists
         for (int i = 0; i < searches.length; i++) {
             searches[i] = new Query(search_list.get(rand.nextInt(search_list.size()-1)));
         
         }
 
+        // Return
         return searches;
+
     }
+
+    /**
+     * Pick a list of popular searches
+     * 
+     * @return List of popular searches
+     */
 
     private synchronized static ArrayList<String> pickList() {
         Random rand = new Random();
 
+        // Path of lists
         final String PATH = "com/jtelaa/da2/querygen/searches/searchdata/";
         String name;
 
+        // Find random list
         switch (rand.nextInt(15)) {
             case 1:
                 name = ("Searches2009.txt");
@@ -69,7 +112,9 @@ public class SearchHandler {
 
         }
 
+        // Return list + path
         return FileUtil.listLinesInternalFile(PATH + name);
+
     }
     
 }

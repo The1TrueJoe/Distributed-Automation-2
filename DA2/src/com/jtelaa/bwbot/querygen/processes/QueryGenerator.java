@@ -2,40 +2,46 @@ package com.jtelaa.bwbot.querygen.processes;
 
 import java.util.Random;
 
+import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.bwbot.querygen.searches.SearchHandler;
-import com.jtelaa.bwbot.querygen.util.Query;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 
 /**
  * This process generates random search queries to be searched by clients
  * 
  * @since 2
- * @author Josepj
+ * @author Joseph
  * 
- * @see com.jtelaa.da2.querygen.QueryServer.java
- * @see com.jtelaa.da2.redemption_manager.processes.RequestClient.java
+ * @see com.jtelaa.bwbot.querygen.processes.QueryServer
+ * @see com.jtelaa.bwbot.querygen.processes.RequestServer
  */
-
- // TODO comment
 
 public class QueryGenerator extends Thread {
 
+    /** Maximum size of the query queu */
     public volatile static int MAX_QUERY_QUEUE_SIZE = 10000;
 
     public void run() {
+        // Random
         Random rand = new Random();
         int rng;
 
+        // While running
         while(run) {
+            // If ready for a query
             if (QueryServer.readyForQuery()) {
+                // Generate random case
                 rng = rand.nextInt(100);
 
-                if (rng <= 50) {
+                if (rng <= 90) {
+                    // Add a single query
                     QueryServer.addQuery(generate());
 
                 } else {
+                    // Generate random query
                     Query[] queries = generate(rand.nextInt(rand.nextInt(rng)));
                     
+                    // Add queries
                     for (Query query : queries) {
                         QueryServer.addQuery(query);
 
@@ -43,6 +49,7 @@ public class QueryGenerator extends Thread {
                 }
 
             } else {
+                // Wait if not ready
                 MiscUtil.waitasec();
 
             }
@@ -57,14 +64,27 @@ public class QueryGenerator extends Thread {
 
     /** Checks if the receier is ready */
     public synchronized boolean generatorReady() { return run; }
-    // TODO Implement
     
+    /**
+     * Generates a random search query
+     * 
+     * @return Random query
+     */
+
     private Query generate() {
         return SearchHandler.getRandomSearch();
     }
 
+    /**
+     * Generates a list of random search queries
+     * 
+     * @param count Size of lisr
+     * 
+     * @return Array of searches
+     */
+
     private Query[] generate(int count) {
-        return SearchHandler.loadSearches(count);
+        return SearchHandler.getRandomSearches(count);
 
     }
     

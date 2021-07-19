@@ -1,7 +1,7 @@
 package com.jtelaa.bwbot.querygen.processes;
 
-import com.jtelaa.bwbot.bw_manager.util.BWMessages;
-import com.jtelaa.bwbot.bw_manager.util.BWPorts;
+import com.jtelaa.bwbot.bwlib.BWMessages;
+import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
@@ -16,22 +16,28 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
  * @see com.jtelaa.da2.querygen.QueryGenerator.java
  */
 
- // TODO comment
-
 public class RequestServer extends Thread {
 
     public void run() {
+        // Setup server
         ServerUDP server = new ServerUDP(BWPorts.QUERY_REQUEST.getPort());
         
+        // If server is ready
         if (server.startServer()) {
             while (run) {
+    
+                // If a request messahe is receiver
                 String response = server.getMessage();
-
                 if (response.equals(BWMessages.QUERY_REQUEST_MESSAGE.getMessage())) {
                     QueryServer.addBot(new Bot(server.getClientAddress()));
                 
                 }
             }
+
+        } else {
+            // Is not ready
+            run = false;
+
         }
     }
 
@@ -43,6 +49,5 @@ public class RequestServer extends Thread {
 
     /** Checks if the receier is ready */
     public synchronized boolean serverReady() { return run; }
-    // TODO Implement
     
 }
