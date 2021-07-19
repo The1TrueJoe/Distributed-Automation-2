@@ -64,8 +64,8 @@ public class Log {
      */
 
     public synchronized static void sendMessage(String message) {
-        if (app_verbose) { sendSysMessage(message); }   // System message
-        if (log_verbose) { sendLogMessage(message); }   // Logging message
+        if (app_verbose) { sendManSysMessage(message); }   // System message
+        if (log_verbose) { sendManLogMessage(message); }   // Logging message
 
     }
 
@@ -87,9 +87,21 @@ public class Log {
      * @param message Message to send
      */
 
-    public synchronized static boolean sendSysMessage(String message) {
+    public synchronized static boolean sendManSysMessage(String message) {
         System.out.println(message);
         return true;
+
+    }
+
+    /**
+     * Sends system message depending on verbosity
+     * 
+     * @param message Message to send
+     */
+
+    public synchronized static boolean sendSysMessage(String message) {
+        if (app_verbose) { System.out.println(message); }
+        return app_verbose;
 
     }
 
@@ -101,10 +113,28 @@ public class Log {
      * @param message Message to send
      */
 
+    public synchronized static boolean sendManLogMessage(String message) {
+        if (log_established || sender.isAlive()) { 
+            logging_queue.add(message); 
+            return true; 
+        
+        }
+        
+        return false;
+
+    }
+
+    /**
+     * Sends logging message depending on verbosity <b>
+     * Will not attempt to send unless the log is established <b>
+     * This adds the message to the queue
+     * 
+     * @param message Message to send
+     */
+
     public synchronized static boolean sendLogMessage(String message) {
-        if (!log_established || !sender.isAlive()) { return false; }
-        logging_queue.add(message);
-        return true;
+        if (log_verbose) { sendManLogMessage(message); }
+        return log_verbose;
 
     }
 

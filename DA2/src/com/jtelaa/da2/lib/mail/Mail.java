@@ -105,12 +105,18 @@ public class Mail implements Serializable {
      */
 
     public String summary() {
-        return "[To: " + email_to + ", From: " + email_from + ", Subject: " + subject +"]";
+        String receps = "";
+        for (String to : email_to) { receps += to + " "; }
+
+        return "[To: " + receps + ", From: " + email_from + ", Subject: " + subject +"]";
     }
 
     public String toString() { 
+        String receps = "";
+        for (String to : email_to) { receps += to + " "; }
+
         return 
-            "To: " + email_to + ", From: " + email_from + "\n" +
+            "To: " + receps + ", From: " + email_from + "\n" +
             "Subject: " + subject + "\n" +
             "Message:\n" + 
             message

@@ -94,5 +94,9 @@ public class QueuedCommandReceiver extends Thread {
     /** Stops the command receiver */
     public synchronized void stopReceiver() { run = false; }
 
+    /** Checks if the receier is ready */
+    public synchronized boolean receiverReady() { return run; }
+    // TODO Implement
+
     
 }

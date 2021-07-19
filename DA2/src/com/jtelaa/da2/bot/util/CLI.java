@@ -1,6 +1,6 @@
 package com.jtelaa.da2.bot.util;
 
-import com.jtelaa.da2.bot.plugin.bw.BingRewards;
+import com.jtelaa.bwbot.bw.Main;
 import com.jtelaa.da2.director.botmgmt.MgmtMessages;
 import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.cli.LocalCLI;
@@ -40,7 +40,7 @@ public class CLI extends LocalCLI {
             ComputerControl.shutdown();
         
         } else if (Cases.rewards_plugin(command)) {
-            BingRewards bw = new BingRewards();
+            Main bw = new Main();
             bw.args(command);
             bw.start();
             

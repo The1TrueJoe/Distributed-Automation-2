@@ -2,6 +2,7 @@ package com.jtelaa.da2.bot.main;
 
 import com.jtelaa.da2.bot.util.CLI;
 import com.jtelaa.da2.bot.util.Heartbeat;
+import com.jtelaa.da2.bot.util.LogRepeater;
 import com.jtelaa.da2.director.botmgmt.Bot;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
@@ -30,7 +31,7 @@ public class Main {
         boolean first_time = false;
         for (String arg : args) {
             if (arg.equalsIgnoreCase("setup")) {
-                config_file_location = "com/jtelaa/da2/bot/main/conifg.properties";
+                config_file_location = "com/jtelaa/da2/bot/main/config.properties";
                 me = new Bot(new ConfigHandler(config_file_location, true));
                 first_time = true;
                 break;
@@ -44,6 +45,10 @@ public class Main {
         // Load Log config and start client
         Log.loadConfig(me.getConfig());
         Log.openClient(me.getConfig().getLogIP());
+
+        // Start Log Repeater
+        LogRepeater repeater = new LogRepeater();
+        repeater.start();
 
         // Send welcome message
         Log.sendSysMessage(ConsoleBanners.botBanner());
@@ -67,6 +72,7 @@ public class Main {
         // Stop
         beat.stopHeart();
         Log.closeLog();
+        repeater.stopRepeater();
 
     }
 }

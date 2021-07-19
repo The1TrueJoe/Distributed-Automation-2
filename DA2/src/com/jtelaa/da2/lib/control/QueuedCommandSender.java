@@ -47,8 +47,15 @@ public class QueuedCommandSender extends Thread {
         }
     }
 
+    /** Boolean to control the receiver */
     private boolean run = true;
+
+    /** Stops the command receiver */
     public synchronized void stopSender() { run = false; }
+
+    /** Checks if the receier is ready */
+    public synchronized boolean senderReady() { return run; }
+    // TODO Implement
 
     private void sendMessage(Command command_to_send) {
         String message = command_to_send.command();

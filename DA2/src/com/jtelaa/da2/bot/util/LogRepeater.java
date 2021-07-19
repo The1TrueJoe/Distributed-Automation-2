@@ -1,13 +1,12 @@
-package com.jtelaa.da2.lib.control;
+package com.jtelaa.da2.bot.util;
 
-import java.util.Queue;
-
+import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
- * Receives command responses
+ * Receives logs and repeates them
  * 
  * @since 2
  * @author Joseph
@@ -15,14 +14,9 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 
  // TODO comment
 
-public class QueuedResponseReceiver extends Thread {
-
-    private volatile static Queue<String> response_queue;
+public class LogRepeater extends Thread {
 
     private ServerUDP cmd_rx;
-
-    public synchronized String getLatest() { return response_queue.poll(); }
-    public synchronized String getMessage() { return response_queue.poll(); }
 
     public void run() {
         cmd_rx = new ServerUDP(Ports.RESPONSE.getPort());
@@ -32,7 +26,7 @@ public class QueuedResponseReceiver extends Thread {
                 String response = cmd_rx.getMessage();
 
                 if (MiscUtil.notBlank(response)) {
-                    response_queue.add(response);
+                    Log.sendMessage(response);
                 
                 }
             }
@@ -43,10 +37,10 @@ public class QueuedResponseReceiver extends Thread {
    private boolean run = true;
 
    /** Stops the command receiver */
-   public synchronized void stopReceiver() { run = false; }
+   public synchronized void stopRepeater() { run = false; }
 
    /** Checks if the receier is ready */
-   public synchronized boolean receiverReady() { return run; }
+   public synchronized boolean repeaterReady() { return run; }
    // TODO Implement
 
     
