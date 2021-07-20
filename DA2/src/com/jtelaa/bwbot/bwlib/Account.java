@@ -17,6 +17,9 @@ import com.jtelaa.da2.lib.files.ObjectUtils;
 
 public class Account implements Serializable {
 
+    /** Unique system id */
+    private int id;
+
     /** */
     public static final String EMAIL_DOMAIN = "@hotmail.com";
 
@@ -59,6 +62,7 @@ public class Account implements Serializable {
         setLastName(config.getProperty("last_name"));
         setUsername(config.getProperty("user_name"));
         setPassword(config.getProperty("password"));
+        setID(Integer.parseInt(config.getProperty("id")));
 
         newPoints(Integer.parseInt(config.getProperty("points")));
         
@@ -88,6 +92,7 @@ public class Account implements Serializable {
         config.setProperty("user_name", username);
         config.setProperty("password", password);
         config.setProperty("points", points + "");
+        config.setProperty("id", id + "");
 
         try {
             config.setProperty("birthday", ObjectUtils.objtoString(birth_date));
@@ -96,6 +101,9 @@ public class Account implements Serializable {
 
         }
     }
+
+    /** */
+    public void setID(int id) { this.id = id; }
 
     /** */
     public void setFirstName(String first_name) { this.first_name = first_name; }
@@ -114,6 +122,9 @@ public class Account implements Serializable {
     public String getFirstName() { return first_name; }
     /** */
     public String getLastName() { return last_name; }
+
+    /** */
+    public int getID() { return id; }
 
     /** */
     public String getUsername() { return username; }

@@ -21,6 +21,9 @@ import com.jtelaa.da2.lib.files.FileUtil;
 
 public class Accounts {
 
+    /** The account last created by the generator */
+    public volatile static Account last_created_account; // TODO Load in program initialization
+
     /** */
     private static Random rng;
 
@@ -43,7 +46,9 @@ public class Accounts {
         account.setBirthDay(getRandomBirthDate());
         account.setUsername(getRandomUsername(account));
         account.setPassword(getRandomPassword(8 + rng.nextInt(6)));
+        account.setID(last_created_account.getID() + 1);
 
+        last_created_account = account;
         return account;
 
     }

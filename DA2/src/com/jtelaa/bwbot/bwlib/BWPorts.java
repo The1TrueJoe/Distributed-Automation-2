@@ -15,8 +15,8 @@ public enum BWPorts {
     /** Port to receive queries */
     QUERY_RECEIVE(9999),
 
-    /** Port to announce info (Eg. Accounts) */
-    INFO_ANNOUNCE(10000),
+    /** Announces account and updates */
+    ACCOUNT_ANNOUNCE(10000),
 
     /** Port to request info (Explicit requests)*/
     INFO_REQUEST(10010),

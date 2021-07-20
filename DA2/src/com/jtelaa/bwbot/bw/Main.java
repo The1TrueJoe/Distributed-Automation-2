@@ -4,6 +4,7 @@ import com.jtelaa.bwbot.bw.sys.AcctInfo;
 import com.jtelaa.bwbot.bw.sys.SearchSystem;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 
@@ -13,8 +14,6 @@ import com.jtelaa.da2.lib.log.Log;
  * @since 1
  * @author Joseph
  */
-
-// TODO comment
 
 public class Main extends Thread {
 
@@ -54,17 +53,20 @@ public class Main extends Thread {
         Log.openClient("127.0.0.1");
 
         // Startup
-        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/Rewards.txt"));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/misc/Rewards.txt", ConsoleColors.BLUE_BOLD_BRIGHT));
         Log.sendMessage("Bing Rewards Plugin Enabled");
 
-        // Announce Account
+        // Setup local acct mgmt
+        AcctInfo.setup();
+        
+        // Get Account
         if (first_time) {
             AcctInfo.requestAccount();
             AcctInfo.setupAccount();
         
         } 
         
-        AcctInfo.setup();
+        // Announce current account
         AcctInfo.announceAccount();
 
         // Start the searches

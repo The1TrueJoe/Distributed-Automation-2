@@ -48,12 +48,19 @@ public class AcctInfo {
      */
 
     public static void announceAccount() {
-        ClientUDP pt_announce = new ClientUDP(pt_mgr_ip, BWPorts.INFO_ANNOUNCE.getPort());
+        // Setup client
+        ClientUDP pt_announce = new ClientUDP(pt_mgr_ip, BWPorts.ACCOUNT_ANNOUNCE.getPort());
         pt_announce.startClient();
         
+        // Recalculate points
         me.newPoints(getPointCount());
+
+        // Send account
         pt_announce.sendObject(me);
+
+        // Close
         pt_announce.closeClient();
+
     }
 
 
@@ -129,7 +136,7 @@ public class AcctInfo {
     public static void requestAccount() {
 
         // Server to send account data
-        ServerUDP acct_response = new ServerUDP(BWPorts.INFO_RECEIVE.getPort());
+        ServerUDP acct_response = new ServerUDP(BWPorts.ACCOUNT_ANNOUNCE.getPort());
         acct_response.startServer();
 
         // Client to accept requests
@@ -143,10 +150,12 @@ public class AcctInfo {
         me = new Account();
 
         do {
+            // Get and check response
             response = acct_response.getMessage();
             if (response.contains(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage())) {
                 me = (Account) acct_response.getObject();
                 
+                // Store account info
                 Main.config.setProperty("user_name", me.getUsername());
                 Main.config.setProperty("password", me.getPassword());
                 Main.config.setProperty("first_name", me.getPassword());
