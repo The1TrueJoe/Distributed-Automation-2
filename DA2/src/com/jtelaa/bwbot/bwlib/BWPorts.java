@@ -1,5 +1,7 @@
 package com.jtelaa.bwbot.bwlib;
 
+import com.jtelaa.da2.lib.net.Ports;
+
 /**
  * Enumeration type containing port numbers for the BW system plugin
  * 
@@ -7,7 +9,7 @@ package com.jtelaa.bwbot.bwlib;
  * @author Joseph
  */
 
-public enum BWPorts {
+public enum BWPorts implements Ports {
 
     /** Port for query requests  */
     QUERY_REQUEST(9998),
@@ -38,7 +40,7 @@ public enum BWPorts {
         
     }
 
-    /** Return port */
+    /** @return port */
     public int getPort() { return port; }
     
 }

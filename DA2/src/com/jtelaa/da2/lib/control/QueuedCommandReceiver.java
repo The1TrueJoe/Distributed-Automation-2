@@ -5,7 +5,7 @@ import java.util.Queue;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
@@ -34,7 +34,7 @@ public class QueuedCommandReceiver extends Thread {
     public void run() {
         // Open UDP server
         Log.sendMessage("Starting command receiver");
-        cmd_rx = new ServerUDP(Ports.CMD.getPort());
+        cmd_rx = new ServerUDP(SysPorts.CMD);
 
         // Check if the server is ready
         if (!cmd_rx.startServer()) { 

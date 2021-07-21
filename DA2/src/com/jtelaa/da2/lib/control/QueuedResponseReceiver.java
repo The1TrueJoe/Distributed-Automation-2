@@ -3,7 +3,7 @@ package com.jtelaa.da2.lib.control;
 import java.util.Queue;
 
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
@@ -25,7 +25,7 @@ public class QueuedResponseReceiver extends Thread {
     public synchronized String getMessage() { return response_queue.poll(); }
 
     public void run() {
-        cmd_rx = new ServerUDP(Ports.RESPONSE.getPort());
+        cmd_rx = new ServerUDP(SysPorts.RESPONSE);
 
         if (cmd_rx.startServer()) {
             while (run) {

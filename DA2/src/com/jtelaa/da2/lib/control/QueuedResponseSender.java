@@ -6,7 +6,7 @@ import java.util.Queue;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 
 /**
@@ -61,7 +61,7 @@ public class QueuedResponseSender extends Thread {
             
         }
 
-        cmd_tx = new ClientUDP(server, Ports.RESPONSE.getPort());
+        cmd_tx = new ClientUDP(server, SysPorts.RESPONSE);
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(message);

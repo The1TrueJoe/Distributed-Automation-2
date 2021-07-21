@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 
 /**
@@ -61,7 +61,7 @@ public class QueuedCommandSender extends Thread {
         String message = command_to_send.command();
         String server = command_to_send.destination();
 
-        cmd_tx = new ClientUDP(server, Ports.CMD.getPort());
+        cmd_tx = new ClientUDP(server, SysPorts.CMD);
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(message);
