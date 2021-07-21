@@ -1,7 +1,7 @@
 package com.jtelaa.da2.bot.util;
 
 import com.jtelaa.da2.bot.main.Main;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 
 /**
@@ -22,7 +22,7 @@ public class Heartbeat extends Thread {
     
     public void run() {
         // Setup
-        heart = new ClientUDP(Main.me.getHearbeatIP(), Ports.HEARTBEAT.getPort());
+        heart = new ClientUDP(Main.me.getHearbeatIP(), SysPorts.HEARTBEAT);
         heart.startClient();
 
         while (run) {

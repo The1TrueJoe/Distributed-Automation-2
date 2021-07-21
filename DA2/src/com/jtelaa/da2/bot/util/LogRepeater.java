@@ -2,7 +2,7 @@ package com.jtelaa.da2.bot.util;
 
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
@@ -19,7 +19,7 @@ public class LogRepeater extends Thread {
     private ServerUDP cmd_rx;
 
     public void run() {
-        cmd_rx = new ServerUDP(Ports.RESPONSE.getPort());
+        cmd_rx = new ServerUDP(SysPorts.RESPONSE);
 
         if (cmd_rx.startServer()) {
             while (run) {

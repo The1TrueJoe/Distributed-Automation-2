@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.jtelaa.da2.lib.config.ConfigHandler;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 
 /**
@@ -45,7 +45,7 @@ public class Log {
         if (!log_verbose) { return; } // Stop if log is not verbose
 
         // Start logging client
-        logging_client = new ClientUDP(logging_server_ip, Ports.LOG.getPort());
+        logging_client = new ClientUDP(logging_server_ip, SysPorts.LOG);
         log_established = logging_client.startClient();
 
         // Create the queue

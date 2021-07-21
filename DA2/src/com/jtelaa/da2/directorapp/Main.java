@@ -3,7 +3,7 @@ package com.jtelaa.da2.directorapp;
 import java.util.Scanner;
 
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.Client;
@@ -46,9 +46,9 @@ public class Main {
 
         }
 
-        System.out.println("Are you using the default CMD port of " + Ports.CMD.getPort() + "(y or n)");
+        System.out.println("Are you using the default CMD port of " + SysPorts.CMD.getPort() + "(y or n)");
         keyboard_response = keyboard.next();
-        int CMD_Port = Ports.CMD.getPort();
+        int CMD_Port = SysPorts.CMD.getPort();
 
         if (keyboard_response.equalsIgnoreCase("n") || keyboard_response.equalsIgnoreCase("no")) {
             do {
@@ -58,9 +58,9 @@ public class Main {
             } while (!MiscUtil.isNumeric(keyboard_response));
         }
 
-        System.out.println("Are you using the default Response port of " + Ports.CMD.getPort() + "(y or n)");
+        System.out.println("Are you using the default Response port of " + SysPorts.CMD.getPort() + "(y or n)");
         keyboard_response = keyboard.next();
-        int RESPONSE_Port = Ports.RESPONSE.getPort();
+        int RESPONSE_Port = SysPorts.RESPONSE.getPort();
 
         if (keyboard_response.equalsIgnoreCase("n") || keyboard_response.equalsIgnoreCase("no")) {
             do {
