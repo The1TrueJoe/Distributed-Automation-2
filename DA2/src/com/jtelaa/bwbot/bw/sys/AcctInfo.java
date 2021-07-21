@@ -32,14 +32,14 @@ public class AcctInfo {
     public static final String OUTLOOK_EMAIL_ADDRESS = "https://outlook.live.com/mail/0/inbox";
 
     /** */
-    public static String pt_mgr_ip;
+    public static String bw_mgr_ip;
 
     /** */
     public static Account me;
 
     /** */
     public static void setup() {
-        pt_mgr_ip = Main.config.getProperty("pt_mgr_ip");
+        bw_mgr_ip = Main.config.getProperty("bw_mgr_ip");
 
     }
 
@@ -49,7 +49,7 @@ public class AcctInfo {
 
     public static void announceAccount() {
         // Setup client
-        ClientUDP pt_announce = new ClientUDP(pt_mgr_ip, BWPorts.ACCOUNT_ANNOUNCE.getPort());
+        ClientUDP pt_announce = new ClientUDP(bw_mgr_ip, BWPorts.ACCOUNT_ANNOUNCE.getPort());
         pt_announce.startClient();
         
         // Recalculate points
@@ -140,7 +140,7 @@ public class AcctInfo {
         acct_response.startServer();
 
         // Client to accept requests
-        ClientUDP acct_request = new ClientUDP(pt_mgr_ip, BWPorts.INFO_REQUEST.getPort());
+        ClientUDP acct_request = new ClientUDP(bw_mgr_ip, BWPorts.INFO_REQUEST.getPort());
         acct_request.startClient();
 
         // Send an account request
