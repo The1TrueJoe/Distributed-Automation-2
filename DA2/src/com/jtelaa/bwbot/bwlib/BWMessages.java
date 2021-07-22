@@ -31,7 +31,10 @@ public enum BWMessages implements Messages {
     /** @return Message as a string */
     public String toString() { return getMessage(); }
     
-    /** Check if the mgmt messages are equal */
-    public boolean equals(Messages mgmt_message) { return getMessage().equalsIgnoreCase(mgmt_message.getMessage()); }
+    /** Check if the messages are the same */
+    public synchronized boolean equals(String message) { return getMessage().equalsIgnoreCase(message); }
+
+    /** Check if the string contains a message */
+    public synchronized boolean contains(String message) { return getMessage().contains(message.toUpperCase()); }
 
 }

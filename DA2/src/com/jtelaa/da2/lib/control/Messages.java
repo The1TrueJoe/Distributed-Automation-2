@@ -15,7 +15,10 @@ public interface Messages {
     /** @return Message as a string */
     public String toString();
     
-    /** Check if the mgmt messages are equal */
-    public boolean equals(Messages mgmt_message);
+    /** Check if the messages are the same */
+    public boolean equals(String message);
+
+    /** Check if the string contains a message */
+    public boolean contains(String message);
     
 }
