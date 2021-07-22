@@ -10,13 +10,25 @@ package com.jtelaa.da2.lib.net;
 public enum SysPorts implements Ports {
 
     /** Port for bot heartbeats */
+    BOT_ANNOUNCE(8678),
+
+    /** Port for bot heartbeats */
     HEARTBEAT(8679),
+
+    /** Port for bot heartbeats (Master director) */
+    HEARTBEAT_MASTER(8680),
 
     /** Port for commands */
     CMD(8699),
 
+    /** Port for info */
+    INFO(8700),
+
     /** Port for responses */
     RESPONSE(8701),
+
+    /** Port for info */
+    INFO_RESPONSE(8702),
 
     /** Port for logging */
     LOG(8775);
