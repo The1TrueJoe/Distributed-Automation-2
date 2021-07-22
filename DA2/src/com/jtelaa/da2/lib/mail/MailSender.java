@@ -1,5 +1,6 @@
 package com.jtelaa.da2.lib.mail;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Queue;
@@ -10,6 +11,7 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 
+import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 
@@ -24,20 +26,19 @@ import com.jtelaa.da2.lib.misc.MiscUtil;
  * @see com.jtelaa.da2.lib.mail.Mail
  */
 
- //TODO Comment
-
 public class MailSender extends Thread {
 
-    private String host;
-
+    /** User */
     private String user;
+    /** Password */
     private String password;
 
-    private boolean isConfigured;
-
+    /** Mail properties */
     private Properties properties;
+    /** Mail session */
     private Session session;
 
+    /** Mail queue */
     public static volatile Queue<Mail> mail_queue;
 
     /**
@@ -51,16 +52,52 @@ public class MailSender extends Thread {
     public synchronized void configure(String user, String password, String host) {
         this.user = user;
         this.password = password;
-        this.host = host;
 
-        isConfigured = true;
+        // Setup properties
+        properties = new Properties();
+        properties.put("mail.smtp.host", host);  
+        properties.put("mail.smtp.auth", "true"); 
+
+        run = true;
+
+    }
+
+    /**
+     * Configures SMTP
+     * 
+     * @param properties
+     */
+
+    public synchronized void configure(Properties properties) {
+        this.properties = properties;
+
+        run = true;
+
+    }
+
+    /**
+     * Configures SMTP
+     * 
+     * @param properties
+     */
+
+    public synchronized void configure(File file) {
+        ConfigHandler configHandler = new ConfigHandler(file);
+        properties = configHandler.get();
+
+        run = true;
+
     }
 
 
     public void run() {
-        properties = new Properties();
-        properties.put("mail.smtp.host", host);  
-        properties.put("mail.smtp.auth", "true"); 
+        if (!run) {
+            do {
+                MiscUtil.waitasec();
+                Log.sendMessage("Mail waiting for config!");
+
+            } while (!run);
+        }
 
         mail_queue = new LinkedList<>();
 
@@ -73,26 +110,20 @@ public class MailSender extends Thread {
             }
         );
 
-        if (!isConfigured) {
-            do {
-                MiscUtil.waitasec();
-                Log.sendMessage("Mail waiting for config!");
-            } while (!isConfigured);
-        }
-
         while (run) {
             sendMessage();
+
         }
     }
 
     /** Boolean to control the receiver */
-    private boolean run = true;
+    private boolean run = false;
 
     /** Stops the command receiver */
-    public synchronized void stopReceiver() { run = false; }
+    public synchronized void stopSender() { run = false; }
 
     /** Checks if the receier is ready */
-    public synchronized boolean receiverReady() { return run; }
+    public synchronized boolean senderReady() { return run; }
     // TODO Implement
 
     /**

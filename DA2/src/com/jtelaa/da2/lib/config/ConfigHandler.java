@@ -23,7 +23,8 @@ public class ConfigHandler {
     private Properties config;
 
     /**
-     * 
+     * Constructor
+     * <p> Creates a new config file
      */
 
     public ConfigHandler() {
@@ -32,8 +33,9 @@ public class ConfigHandler {
     }
 
     /**
+     * Constructor
      * 
-     * @param properties
+     * @param properties Properties file
      */
 
     public ConfigHandler(Properties properties) {
@@ -42,8 +44,9 @@ public class ConfigHandler {
     }
 
     /**
+     * Constructor
      * 
-     * @param path
+     * @param path Path of properties file
      */
 
     public ConfigHandler(String path) {
@@ -53,9 +56,10 @@ public class ConfigHandler {
     }
 
     /**
+     * Constructor
      * 
-     * @param path
-     * @param internal
+     * @param path Path of properties file
+     * @param internal Wether or not the file is internal
      */
 
     public ConfigHandler(String path, boolean internal) {
@@ -71,7 +75,9 @@ public class ConfigHandler {
     }
 
     /**
+     * Constructor
      * 
+     * @param config_file File object of properties file
      */
 
     public ConfigHandler(File config_file) {
