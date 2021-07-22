@@ -1,6 +1,8 @@
 package com.jtelaa.da2.bot.util;
 
 import com.jtelaa.da2.bot.main.Main;
+import com.jtelaa.da2.director.botmgmt.MgmtMessages;
+import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
 
@@ -16,7 +18,6 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
 public class Heartbeat extends Thread {
 
     public static int HEARTBEAT_INTERVAL = 60000;
-    public static String HEARTBEAT_MESSAGE = "Alive!";
 
     private ClientUDP heart;
     
@@ -26,12 +27,19 @@ public class Heartbeat extends Thread {
         heart.startClient();
 
         while (run) {
-            heart.sendMessage(HEARTBEAT_MESSAGE);
+            heart.sendMessage(MgmtMessages.BEAT.getMessage() + " " + Main.me.getID());
+            MiscUtil.waitamoment(HEARTBEAT_INTERVAL);
+
         }
     }
 
+    /** Boolean to control the receiver */
     private boolean run = true;
+
+    /** Stops the command receiver */
     public synchronized void stopHeart() { run = false; }
+
+    /** Checks if the receier is ready */
     public synchronized boolean heartReady() { return run; }
 
 
