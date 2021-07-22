@@ -1,10 +1,17 @@
 package com.jtelaa.bwbot.bw_manager.processes;
 // TODO comment
 
+import com.jtelaa.da2.lib.misc.MiscUtil;
+
 public class PointAnnouncementListener extends Thread {
 
     public void run() {
         // TODO add setup
+
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
 
         while(run) {
             // TODO program process

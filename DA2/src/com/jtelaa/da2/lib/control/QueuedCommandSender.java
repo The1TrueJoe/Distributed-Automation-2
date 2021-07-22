@@ -3,6 +3,7 @@ package com.jtelaa.da2.lib.control;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
 import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
@@ -36,6 +37,11 @@ public class QueuedCommandSender extends Thread {
     public void run() {
         command_queue = new LinkedList<>();
         Command command;
+
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
 
         while (run) {
             command = command_queue.poll();

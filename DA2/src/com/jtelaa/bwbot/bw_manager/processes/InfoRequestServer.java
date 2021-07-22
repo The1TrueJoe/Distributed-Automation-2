@@ -22,6 +22,11 @@ public class InfoRequestServer extends Thread {
 
     public void run() {
         ServerUDP server = new ServerUDP(BWPorts.INFO_REQUEST.getPort());
+
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
         
         if (server.startServer()) {
             while (run) {

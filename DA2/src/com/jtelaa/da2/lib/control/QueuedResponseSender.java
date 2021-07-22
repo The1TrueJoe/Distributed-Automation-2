@@ -36,6 +36,11 @@ public class QueuedResponseSender extends Thread {
         response_queue = new LinkedList<>();
         response_server_queue = new LinkedList<>();
 
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
+
         while (run) {
             sendMessage();
         }

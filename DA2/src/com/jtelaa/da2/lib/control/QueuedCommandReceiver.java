@@ -36,6 +36,11 @@ public class QueuedCommandReceiver extends Thread {
         Log.sendMessage("Starting command receiver");
         cmd_rx = new ServerUDP(SysPorts.CMD);
 
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
+
         // Check if the server is ready
         if (!cmd_rx.startServer()) { 
             boolean started = false;

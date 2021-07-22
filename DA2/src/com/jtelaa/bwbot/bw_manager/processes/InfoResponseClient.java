@@ -44,6 +44,11 @@ public class InfoResponseClient extends Thread {
     public void run() {
         request_queue = new LinkedList<>();
 
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
+
         while (run) {
             fillRequest();
         }
