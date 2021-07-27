@@ -24,6 +24,9 @@ public class Account implements Serializable {
     public static final String EMAIL_DOMAIN = "@hotmail.com";
 
     /** */
+    private boolean is_blank;
+
+    /** */
     private String username;
     /** */
     private String email;
@@ -46,6 +49,7 @@ public class Account implements Serializable {
      */
 
     public Account() {
+        is_blank = true;
 
     }
 
@@ -76,6 +80,8 @@ public class Account implements Serializable {
             
         }
 
+        is_blank = false;
+
     }
 
     /**
@@ -102,21 +108,24 @@ public class Account implements Serializable {
         }
     }
 
-    /** */
-    public void setID(int id) { this.id = id; }
+    /** @return if account has any info stored */
+    public boolean isBlank() { return is_blank; }
 
     /** */
-    public void setFirstName(String first_name) { this.first_name = first_name; }
-    /** */
-    public void setLastName(String last_name) { this.last_name = last_name; }
+    public void setID(int id) { this.id = id; is_blank = false; }
 
     /** */
-    public void setUsername(String username) { this.username = username; email = username + EMAIL_DOMAIN;}
+    public void setFirstName(String first_name) { this.first_name = first_name; is_blank = false; }
     /** */
-    public void setPassword(String password) { this.password = password; }
+    public void setLastName(String last_name) { this.last_name = last_name; is_blank = false; }
 
     /** */
-    public void setBirthDay(GregorianCalendar birth_date) { this.birth_date = birth_date; }
+    public void setUsername(String username) { this.username = username; email = username + EMAIL_DOMAIN; is_blank = false; }
+    /** */
+    public void setPassword(String password) { this.password = password; is_blank = false; }
+
+    /** */
+    public void setBirthDay(GregorianCalendar birth_date) { this.birth_date = birth_date; is_blank = false; }
     
     /** */
     public String getFirstName() { return first_name; }
