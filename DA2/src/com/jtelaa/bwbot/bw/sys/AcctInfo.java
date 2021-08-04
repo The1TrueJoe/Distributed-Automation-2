@@ -9,6 +9,7 @@ import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 import com.jtelaa.bwbot.bw.Main;
+import com.jtelaa.bwbot.bw.util.BWControls;
 import com.jtelaa.bwbot.bwlib.Account;
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
@@ -29,7 +30,7 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 public class AcctInfo {
 
     /** */
-    public static final String OUTLOOK_EMAIL_ADDRESS = "https://outlook.live.com/mail/0/inbox";
+    public static final String OUTLOOK_EMAIL_URL = "https://outlook.live.com/mail/0/inbox";
 
     /** */
     public static String bw_mgr_ip;
@@ -188,7 +189,7 @@ public class AcctInfo {
 
         // TODO add redemption system
 
-        SearchSystem.openChrome(url);
+        BWControls.openChrome(url);
 
         return "";
 
