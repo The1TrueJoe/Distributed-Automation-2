@@ -25,13 +25,16 @@ public class Main extends Thread {
 
     /** Local config handler */
     public static ConfigHandler config;
+
+    /** First time run */
+    public static boolean first_time;
     public static void main(String[] args) {
 
         /* Args and first time setup */
 
         // Set conditions to check
         boolean terminal_process = true;
-        boolean first_time = false;
+        first_time = false;
 
         // Default configuration file location
         String config_file_location = "bwconfig.properties";
@@ -89,7 +92,7 @@ public class Main extends Thread {
                 ClientUDP msg_request = new ClientUDP(config.getProperty("bw_mgr_ip", "10.0.0.1"), BWPorts.INFO_REQUEST);
                 msg_request.startClient();
 
-                // Send an account request
+                // Send a gateway request
                 msg_request.sendMessage(BWMessages.GATEWAY_REQUEST_MESSAGE);
 
                 // Wait
@@ -105,13 +108,13 @@ public class Main extends Thread {
                 }
             
             } while (!NetTools.getExternalIP().equals(external_ip));
-
         }
 
         /* Setup account */
 
-        // Setup local acct mgmt
+        // Setup local systems
         AcctInfo.setup();
+        SearchSystem.setup();
         
         // Get Account
         if (first_time) {
@@ -119,12 +122,14 @@ public class Main extends Thread {
             AcctInfo.setupAccount();
         
         } 
+
+        /* Search process */
         
         // Announce current account
         AcctInfo.announceAccount();
 
         // Start the searches
-        SearchSystem.startSearch();
+        SearchSystem.start();
 
         // Announce Points
         AcctInfo.announceAccount();

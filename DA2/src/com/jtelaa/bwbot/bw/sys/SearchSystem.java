@@ -1,14 +1,12 @@
 package com.jtelaa.bwbot.bw.sys;
 
-import java.awt.event.KeyEvent;
 import java.util.Random;
 
 import com.jtelaa.bwbot.bw.Main;
+import com.jtelaa.bwbot.bw.util.BWControls;
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.bwbot.bwlib.Query;
-import com.jtelaa.da2.lib.control.Command;
-import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
@@ -21,51 +19,79 @@ import com.jtelaa.da2.lib.net.server.Server;
  * @author Joseph
  */
 
-// TODO comment
-
 public class SearchSystem {
 
-    /** */
+    /** Number of searches executed */
     private static int executed_pc_searches;
 
-    /** */
+    /** Number of mobile searches executed */
     private static int executed_mobile_searches;
 
-    /** */
+    /** Maxiumum number of pc searches */
     public static int max_pc_searches;
 
-    /** */
+    /** Maximum number of mobile searches */
     public static int max_mobile_searches;
 
-    /** */
+    /** Query generator ip */
     private static String query_ip;
 
-    /** */
+    /** Bing Search URL */
     public static final String BING_URL = "bing.com/search?q=";
-    
+
     /**
-     * Starts the searches
+     * Setup search system
      */
 
-    public static void startSearch() {
+    public static void setup() {
         // Load IP
         query_ip = Main.config.getProperty("qry_gen_ip");
 
         // Calc Max Searches
         populateSearchMax();
 
+        // If first time setup
+        if (!Main.first_time) { 
+            // Rand
+            Random rng = new Random();
+
+            // Do mobile searches
+            if (rng.nextInt(10) < 3) {
+                Main.config.setProperty("do_mobile", "false");
+
+            }
+        }
+    }
+    
+    /**
+     * Starts the searches
+     */
+
+    public static void start() {
         // PC Searches
         Log.sendMessage("Starting PC Search");
         executed_pc_searches = runSearches(executed_pc_searches, max_pc_searches);
 
-        // Mobile Searches
-        Log.sendMessage("Starting Mobile Search");
-        enterMobile();
-        executed_mobile_searches = runSearches(executed_mobile_searches, max_mobile_searches);
-        exitMobile();
-
+        // Done
         Log.sendMessage("Done..");
 
+        // Do mobile searches 
+        if (Main.config.isTrue("do_mobile", "false")) {
+            // Enter mobile
+            BWControls.openChrome();
+            BWControls.enterMobile();
+
+            // Search
+            Log.sendMessage("Starting Mobile Search");
+            executed_mobile_searches = runSearches(executed_mobile_searches, max_mobile_searches);
+
+            // Exit mobile
+            BWControls.exitMobile();
+
+            // Done
+            Log.sendMessage("Done..");
+
+        }
     }
 
     /**
@@ -73,24 +99,32 @@ public class SearchSystem {
      * 
      * @param current_count The current number of searches 
      * @param max Number of searches to reach
+     * 
      * @return The new current number of searches
      */
 
     public static int runSearches(int current_count, int max) {
+        // Local var call
         Random rand = new Random();
         Query query;
 
+        // Run n searches based on current count and upper limit
         for (; current_count < max; current_count++) {
+            // Request Search
+            Log.sendMessage("Requesting search " + current_count);
             query = requestQuery(query_ip, BWPorts.QUERY_REQUEST.getPort(), BWPorts.QUERY_RECEIVE.getPort());
             
-            openBing(query);
+            // Run search, wait, and the close
+            BWControls.openBing(query);
             MiscUtil.waitamoment(rand.nextInt(900000));
-            closeTab();
+            BWControls.closeTab();
 
         }
 
-        closeWindow();
+        // Close window
+        BWControls.closeWindow();
 
+        // Return
         return current_count;
     }
 
@@ -99,8 +133,10 @@ public class SearchSystem {
      */
 
     private static void populateSearchMax() {
+        // Rand
         Random rand = new Random();
 
+        // Generate search max
         max_pc_searches = rand.nextInt(25);
         max_mobile_searches = rand.nextInt(25);
 
@@ -114,6 +150,7 @@ public class SearchSystem {
 
     public static Query requestQuery() {
         return requestQuery(query_ip, BWPorts.QUERY_REQUEST.getPort(), BWPorts.QUERY_RECEIVE.getPort());
+
     }
 
     /**
@@ -124,6 +161,7 @@ public class SearchSystem {
 
     public static Query requestQuery(String ip) {
         return requestQuery(ip, BWPorts.QUERY_REQUEST.getPort(), BWPorts.QUERY_RECEIVE.getPort());
+
     }
 
     /**
@@ -133,61 +171,37 @@ public class SearchSystem {
      */
 
     public static Query requestQuery(String ip, int request, int receive) {
+        // Local var setup
         String response = "";
-        sendRequest(ip, request);
 
-        Server get = new Server(receive);
-        get.startServer();
-        
-        while (!MiscUtil.notBlank(response)) {
-            response = get.getMessage();
-
-            MiscUtil.waitamoment(100);
-
-        }
-
-        get.closeServer();
-        return new Query(response, false);
-
-    }
-
-    /**
-     * Sends out a request for a search query
-     * 
-     * @param ip IP address to access
-     * @param request Port for sending requests
-     */
-
-    private static void sendRequest(String ip, int request) {
+        // Setup request client
         ClientUDP send = new ClientUDP(ip, request);
         send.startClient();
+
+        // Send & close
         send.sendMessage(BWMessages.QUERY_REQUEST_MESSAGE.getMessage());
         send.closeClient();
 
+        // Start server
+        Server get = new Server(receive);
+        get.startServer();
+        
+        // Wait for responses
+        do {
+            // Get response
+            response = get.getMessage();
+
+            // Wait
+            MiscUtil.waitamoment(100);
+
+        } while (!MiscUtil.notBlank(response));
+
+        // Close the server
+        get.closeServer();
+
+        // Return the query
+        return new Query(response, false);
+
     }
-
-    /** Opens Bing on chrome to the specified search query */
-    public static void openBing(Query query) { openChrome(BING_URL + query.getQuery());}
-
-    /** Opens chrome to the specified URL */
-    public static void openChrome(String args) { ComputerControl.sendCommand(new Command("chrome.exe " + args)); }
-
-    /** Sets chrome to mobile mode */
-    public static void enterMobile() { chromeInspect(); chromeMobile(); }
-
-    /** Returns chrome from mobile mode */
-    public static void exitMobile()  { chromeMobile(); chromeInspect(); }
-
-    /** Opens chrome in inspect */
-    private static void chromeInspect() { ComputerControl.pressKey(new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_I}); }
-    
-    /** Puts chrome into mobile mode from inspect */
-    private static void chromeMobile()  { ComputerControl.pressKey(new int[] {KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_M}); }
-
-    /** Closes the current tab in chrome */
-    public static void closeTab() { ComputerControl.pressKey(new int[] { KeyEvent.VK_CONTROL, KeyEvent.VK_W}); }
-
-    /** Closes the current tab in chrome */
-    public static void closeWindow() { ComputerControl.pressKey(new int[] { KeyEvent.VK_ALT, KeyEvent.VK_SHIFT, KeyEvent.VK_W}); }
 
 }
