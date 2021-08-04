@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.jtelaa.bwbot.bw_manager.accounts.Accounts;
+import com.jtelaa.bwbot.bw_manager.accounts.AccountGen;
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.da2.director.botmgmt.Bot;
@@ -83,7 +83,7 @@ public class InfoResponseClient extends Thread {
             try {
                 command.forward();
                 sendCommand(command.changeCommand(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage()));
-                sendCommand(command.changeCommand(ObjectUtils.objtoString(Accounts.generateAccount())));
+                sendCommand(command.changeCommand(ObjectUtils.objtoString(AccountGen.generateAccount())));
             
             } catch (IOException e) {
                 Log.sendMessage(e.getMessage());
