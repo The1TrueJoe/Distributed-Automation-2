@@ -29,9 +29,8 @@ public class Query implements Serializable {
         } else {
             query = unformatted_query;
             formatted_query = formatQuery(unformatted_query);
+            
         }
-
-        
     }
 
     /**

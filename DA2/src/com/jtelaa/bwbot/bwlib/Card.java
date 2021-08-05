@@ -118,11 +118,11 @@ public enum Card {
     
     ;
 
-    /** */
-    public static final String REWARDS_ADDRESS = "https://account.microsoft.com/rewards/";
-    /** */
+    /** Rewards redepmtion address base */
+    public static final String REWARDS_ADDRESS = "https://rewards.microsoft.com/";
+    /** Rewards card redemption address (Add product ID at the end to visit) */
     public static final String REWARDS_CARD_ADDRESS = REWARDS_ADDRESS + "redeem/";
-    /** */
+    /** Redeption checkout address (Add product id at the end to open redmeption page) */
     public static final String REDEMPTION_CHECKOUT_ADDRESS = REWARDS_CARD_ADDRESS + "checkout?productId=";
 
     /** */
