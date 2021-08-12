@@ -227,7 +227,7 @@ public enum Card {
      * @return Overall point value
      */
 
-    private int calculatePointCost(String unit, int value) {
+    public static int calculatePointCost(String unit, int value) {
         switch (unit) {
             case "USD": value *= 1050; break;
             case "EAT": value *= 1300; break;
@@ -248,7 +248,7 @@ public enum Card {
      * @return random card
      */
 
-    private static Card randomCard(Card[] cards) {
+    public static Card randomCard(Card[] cards) {
         Random rand = new Random();
 
         return cards[rand.nextInt(cards.length-1)];
