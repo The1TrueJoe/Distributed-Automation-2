@@ -57,6 +57,44 @@ public class Mail implements Serializable {
 
     }
 
+    /**
+     * Constructor
+     * 
+     * @param email_to Email recipient
+     * @param subject Email subject
+     * @param message Email message
+     */
+
+    public Mail(String email_to, String subject, String message) {
+        this.email_to = new String[] { email_to };
+        this.subject = subject;
+        this.message = message;
+
+    }
+
+    /**
+     * Constructor
+     * 
+     * @param email_to Email recipients
+     * @param subject Email subject
+     * @param message Email message
+     */
+
+    public Mail(String email_to[], String subject, String message) {
+        this.email_to = email_to;
+        this.subject = subject;
+        this.message = message;
+
+    }
+
+    /**
+     * 
+     * @param email_from
+     */
+
+    public void setSender(String email_from) { this.email_from = email_from; }
+
+
     /** @return Sender email */
     public String getSender() { return email_from; }
 
