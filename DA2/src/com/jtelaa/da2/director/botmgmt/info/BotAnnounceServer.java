@@ -1,7 +1,7 @@
 package com.jtelaa.da2.director.botmgmt.info;
 
 import com.jtelaa.da2.director.Main;
-import com.jtelaa.da2.director.botmgmt.Bot;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.server.ServerUDP;

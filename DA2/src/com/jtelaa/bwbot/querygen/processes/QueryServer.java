@@ -5,7 +5,7 @@ import java.util.Queue;
 
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.bwbot.bwlib.Query;
-import com.jtelaa.da2.director.botmgmt.Bot;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
 import com.jtelaa.da2.lib.net.client.ClientUDP;

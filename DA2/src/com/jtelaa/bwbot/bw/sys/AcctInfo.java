@@ -14,6 +14,7 @@ import com.jtelaa.bwbot.bwlib.Account;
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.bwbot.bwlib.Card;
+import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
@@ -78,7 +79,7 @@ public class AcctInfo {
     public static int getPointCount() {
         try {
             final WebClient webClient = new WebClient(BrowserVersion.CHROME);
-            final HtmlPage page = webClient.getPage(SearchSystem.BING_URL + "rewards");
+            final HtmlPage page = webClient.getPage(Query.BING_URL + "rewards");
             
             final List<DomElement> spans = page.getElementsByTagName("span");
             for (DomElement element : spans) {

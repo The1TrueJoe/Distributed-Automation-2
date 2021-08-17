@@ -1,7 +1,7 @@
 package com.jtelaa.da2.bot.util;
 
 import com.jtelaa.da2.bot.plugin.Plugins;
-import com.jtelaa.da2.director.botmgmt.MgmtMessages;
+import com.jtelaa.da2.lib.bot.MgmtMessages;
 import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.cli.LocalCLI;
 import com.jtelaa.da2.lib.control.Command;

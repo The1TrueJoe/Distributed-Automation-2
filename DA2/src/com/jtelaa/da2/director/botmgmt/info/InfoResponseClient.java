@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.jtelaa.da2.director.Main;
-import com.jtelaa.da2.director.botmgmt.Bot;
-import com.jtelaa.da2.director.botmgmt.MgmtMessages;
+import com.jtelaa.da2.lib.bot.Bot;
+import com.jtelaa.da2.lib.bot.MgmtMessages;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;

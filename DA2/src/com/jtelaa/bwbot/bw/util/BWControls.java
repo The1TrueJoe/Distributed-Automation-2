@@ -2,7 +2,6 @@ package com.jtelaa.bwbot.bw.util;
 
 import java.awt.event.KeyEvent;
 
-import com.jtelaa.bwbot.bw.sys.SearchSystem;
 import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.ComputerControl;
@@ -25,7 +24,7 @@ public class BWControls {
     /* Browser open */
 
     /** Opens Bing on chrome to the specified search query */
-    public static void openBing(Query query) { openChrome(SearchSystem.BING_URL + query.getQuery());}
+    public static void openBing(Query query) { openChrome(Query.BING_URL + query.getQuery());}
 
     /** Opens chrome to the specified URL */
     public static void openChrome(String args) { ComputerControl.sendCommand(new Command("chrome.exe " + args)); }

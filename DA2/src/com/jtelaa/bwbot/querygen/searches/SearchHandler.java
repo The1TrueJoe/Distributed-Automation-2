@@ -3,7 +3,6 @@ package com.jtelaa.bwbot.querygen.searches;
 import java.util.Random;
 import java.util.ArrayList;
 
-import com.jtelaa.bwbot.bw.sys.SearchSystem;
 import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.files.FileUtil;
 
@@ -26,7 +25,7 @@ public class SearchHandler {
      */ 
     public static void main(String[] args) {
         while (true) {
-            System.out.println(SearchSystem.BING_URL + getRandomSearch());
+            System.out.println(Query.BING_URL + getRandomSearch());
 
         }
     }

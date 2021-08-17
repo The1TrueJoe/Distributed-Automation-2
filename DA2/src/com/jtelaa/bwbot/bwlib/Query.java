@@ -10,6 +10,9 @@ import java.io.Serializable;
  */
 
 public class Query implements Serializable {
+
+    /** Bing Search URL */
+    public static final String BING_URL = "bing.com/search?q=";
     
     /** Unformatted query */
     private String unformatted_query;

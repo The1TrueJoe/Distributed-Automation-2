@@ -1,4 +1,4 @@
-package com.jtelaa.da2.director.botmgmt;
+package com.jtelaa.da2.lib.bot;
 
 import java.io.Serializable;
 

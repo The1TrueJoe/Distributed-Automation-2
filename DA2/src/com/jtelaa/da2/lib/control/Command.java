@@ -3,7 +3,7 @@ package com.jtelaa.da2.lib.control;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.jtelaa.da2.director.botmgmt.MgmtMessages;
+import com.jtelaa.da2.lib.bot.MgmtMessages;
 import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.lib.misc.MiscUtil;

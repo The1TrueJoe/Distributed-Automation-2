@@ -2,7 +2,7 @@ package com.jtelaa.bwbot.querygen.processes;
 
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
-import com.jtelaa.da2.director.botmgmt.Bot;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**

@@ -1,7 +1,7 @@
 package com.jtelaa.da2.bot.util;
 
 import com.jtelaa.da2.bot.main.Main;
-import com.jtelaa.da2.director.botmgmt.MgmtMessages;
+import com.jtelaa.da2.lib.bot.MgmtMessages;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;

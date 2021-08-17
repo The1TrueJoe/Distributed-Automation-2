@@ -4,7 +4,7 @@ import com.jtelaa.da2.bot.plugin.Plugins;
 import com.jtelaa.da2.bot.util.CLI;
 import com.jtelaa.da2.bot.util.Heartbeat;
 import com.jtelaa.da2.bot.util.LogRepeater;
-import com.jtelaa.da2.director.botmgmt.Bot;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.log.Log;

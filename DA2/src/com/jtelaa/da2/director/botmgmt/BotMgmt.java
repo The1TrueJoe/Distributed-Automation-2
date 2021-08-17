@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import com.jtelaa.da2.director.botmgmt.heartbeat.HeartbeatServer;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.QueuedCommandSender;
 import com.jtelaa.da2.lib.files.FileUtil;

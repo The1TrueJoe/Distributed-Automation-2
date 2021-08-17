@@ -1,7 +1,7 @@
 package com.jtelaa.da2.lib.cli;
 
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.director.botmgmt.MgmtMessages;
+import com.jtelaa.da2.lib.bot.MgmtMessages;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.QueuedCommandReceiver;
 import com.jtelaa.da2.lib.control.QueuedCommandSender;

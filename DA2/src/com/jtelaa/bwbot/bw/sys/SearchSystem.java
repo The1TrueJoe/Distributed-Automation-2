@@ -36,9 +36,6 @@ public class SearchSystem {
     /** Query generator ip */
     private static String query_ip;
 
-    /** Bing Search URL */
-    public static final String BING_URL = "bing.com/search?q=";
-
     /**
      * Setup search system
      */

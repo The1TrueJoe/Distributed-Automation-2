@@ -7,7 +7,7 @@ import java.util.Queue;
 import com.jtelaa.bwbot.bw_manager.accounts.AccountGen;
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
-import com.jtelaa.da2.director.botmgmt.Bot;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.files.ObjectUtils;
 import com.jtelaa.da2.lib.log.Log;
