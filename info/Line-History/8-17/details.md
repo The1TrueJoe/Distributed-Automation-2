@@ -1,0 +1,134 @@
+# Details
+
+Date : 2021-08-17 16:42:34
+
+Directory /Users/Joseph/Desktop/GitHub/Distributed-Automation-2/DA2/src
+
+Total : 119 files,  4160 codes, 3058 comments, 2538 blanks, all 9756 lines
+
+[summary](results.md)
+
+## Files
+| filename | language | code | comment | blank | total |
+| :--- | :--- | ---: | ---: | ---: | ---: |
+| [DA2/src/com/jtelaa/bwbot/README.md](/DA2/src/com/jtelaa/bwbot/README.md) | Markdown | 13 | 0 | 1 | 14 |
+| [DA2/src/com/jtelaa/bwbot/bw/Main.java](/DA2/src/com/jtelaa/bwbot/bw/Main.java) | Java | 69 | 39 | 43 | 151 |
+| [DA2/src/com/jtelaa/bwbot/bw/README.md](/DA2/src/com/jtelaa/bwbot/bw/README.md) | Markdown | 7 | 0 | 0 | 7 |
+| [DA2/src/com/jtelaa/bwbot/bw/bwconfig.properties](/DA2/src/com/jtelaa/bwbot/bw/bwconfig.properties) | Properties | 5 | 0 | 0 | 5 |
+| [DA2/src/com/jtelaa/bwbot/bw/sys/AcctInfo.java](/DA2/src/com/jtelaa/bwbot/bw/sys/AcctInfo.java) | Java | 92 | 57 | 57 | 206 |
+| [DA2/src/com/jtelaa/bwbot/bw/sys/SearchSystem.java](/DA2/src/com/jtelaa/bwbot/bw/sys/SearchSystem.java) | Java | 80 | 72 | 53 | 205 |
+| [DA2/src/com/jtelaa/bwbot/bw/util/BWControls.java](/DA2/src/com/jtelaa/bwbot/bw/util/BWControls.java) | Java | 16 | 24 | 20 | 60 |
+| [DA2/src/com/jtelaa/bwbot/bw/util/BWWebTags.java](/DA2/src/com/jtelaa/bwbot/bw/util/BWWebTags.java) | Java | 6 | 9 | 7 | 22 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/Main.java](/DA2/src/com/jtelaa/bwbot/bw_manager/Main.java) | Java | 23 | 12 | 12 | 47 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/README.md](/DA2/src/com/jtelaa/bwbot/bw_manager/README.md) | Markdown | 6 | 0 | 0 | 6 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/accounts/AccountGen.java](/DA2/src/com/jtelaa/bwbot/bw_manager/accounts/AccountGen.java) | Java | 100 | 94 | 60 | 254 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/accounts/AccountMgr.java](/DA2/src/com/jtelaa/bwbot/bw_manager/accounts/AccountMgr.java) | Java | 83 | 96 | 66 | 245 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/apis.properties](/DA2/src/com/jtelaa/bwbot/bw_manager/apis.properties) | Properties | 1 | 0 | 0 | 1 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/config.properties](/DA2/src/com/jtelaa/bwbot/bw_manager/config.properties) | Properties | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/points/PointStats.java](/DA2/src/com/jtelaa/bwbot/bw_manager/points/PointStats.java) | Java | 3 | 0 | 3 | 6 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/processes/InfoRequestServer.java](/DA2/src/com/jtelaa/bwbot/bw_manager/processes/InfoRequestServer.java) | Java | 24 | 15 | 14 | 53 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/processes/InfoResponseClient.java](/DA2/src/com/jtelaa/bwbot/bw_manager/processes/InfoResponseClient.java) | Java | 59 | 18 | 29 | 106 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/processes/PointAnnouncementListener.java](/DA2/src/com/jtelaa/bwbot/bw_manager/processes/PointAnnouncementListener.java) | Java | 14 | 7 | 11 | 32 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/processes/RedemptionQueue.java](/DA2/src/com/jtelaa/bwbot/bw_manager/processes/RedemptionQueue.java) | Java | 3 | 0 | 3 | 6 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/processes/RedemptionRequestServer.java](/DA2/src/com/jtelaa/bwbot/bw_manager/processes/RedemptionRequestServer.java) | Java | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/bwbot/bw_manager/vpn/vpn.properties](/DA2/src/com/jtelaa/bwbot/bw_manager/vpn/vpn.properties) | Properties | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/bwbot/bwlib/Account.java](/DA2/src/com/jtelaa/bwbot/bwlib/Account.java) | Java | 95 | 61 | 47 | 203 |
+| [DA2/src/com/jtelaa/bwbot/bwlib/Accounts.java](/DA2/src/com/jtelaa/bwbot/bwlib/Accounts.java) | Java | 78 | 74 | 47 | 199 |
+| [DA2/src/com/jtelaa/bwbot/bwlib/BWMessages.java](/DA2/src/com/jtelaa/bwbot/bwlib/BWMessages.java) | Java | 19 | 8 | 13 | 40 |
+| [DA2/src/com/jtelaa/bwbot/bwlib/BWPorts.java](/DA2/src/com/jtelaa/bwbot/bwlib/BWPorts.java) | Java | 14 | 18 | 14 | 46 |
+| [DA2/src/com/jtelaa/bwbot/bwlib/BWUser.java](/DA2/src/com/jtelaa/bwbot/bwlib/BWUser.java) | Java | 20 | 19 | 27 | 66 |
+| [DA2/src/com/jtelaa/bwbot/bwlib/Card.java](/DA2/src/com/jtelaa/bwbot/bwlib/Card.java) | Java | 218 | 124 | 96 | 438 |
+| [DA2/src/com/jtelaa/bwbot/bwlib/Query.java](/DA2/src/com/jtelaa/bwbot/bwlib/Query.java) | Java | 24 | 26 | 16 | 66 |
+| [DA2/src/com/jtelaa/bwbot/bwlib/Request.java](/DA2/src/com/jtelaa/bwbot/bwlib/Request.java) | Java | 69 | 6 | 47 | 122 |
+| [DA2/src/com/jtelaa/bwbot/querygen/Main.java](/DA2/src/com/jtelaa/bwbot/querygen/Main.java) | Java | 49 | 23 | 21 | 93 |
+| [DA2/src/com/jtelaa/bwbot/querygen/README.md](/DA2/src/com/jtelaa/bwbot/querygen/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/bwbot/querygen/config.properties](/DA2/src/com/jtelaa/bwbot/querygen/config.properties) | Properties | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/bwbot/querygen/processes/QueryGenerator.java](/DA2/src/com/jtelaa/bwbot/querygen/processes/QueryGenerator.java) | Java | 36 | 33 | 23 | 92 |
+| [DA2/src/com/jtelaa/bwbot/querygen/processes/QueryServer.java](/DA2/src/com/jtelaa/bwbot/querygen/processes/QueryServer.java) | Java | 51 | 46 | 28 | 125 |
+| [DA2/src/com/jtelaa/bwbot/querygen/processes/RequestServer.java](/DA2/src/com/jtelaa/bwbot/querygen/processes/RequestServer.java) | Java | 23 | 17 | 14 | 54 |
+| [DA2/src/com/jtelaa/bwbot/querygen/searches/ManualSearches.java](/DA2/src/com/jtelaa/bwbot/querygen/searches/ManualSearches.java) | Java | 39 | 8 | 7 | 54 |
+| [DA2/src/com/jtelaa/bwbot/querygen/searches/SearchHandler.java](/DA2/src/com/jtelaa/bwbot/querygen/searches/SearchHandler.java) | Java | 56 | 38 | 26 | 120 |
+| [DA2/src/com/jtelaa/bwbot/querygen/util/CLI.java](/DA2/src/com/jtelaa/bwbot/querygen/util/CLI.java) | Java | 12 | 2 | 9 | 23 |
+| [DA2/src/com/jtelaa/da2/bot/README.md](/DA2/src/com/jtelaa/da2/bot/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/bot/main/Main.java](/DA2/src/com/jtelaa/da2/bot/main/Main.java) | Java | 44 | 17 | 21 | 82 |
+| [DA2/src/com/jtelaa/da2/bot/main/config.properties](/DA2/src/com/jtelaa/da2/bot/main/config.properties) | Properties | 8 | 0 | 0 | 8 |
+| [DA2/src/com/jtelaa/da2/bot/plugin/Plugins.java](/DA2/src/com/jtelaa/da2/bot/plugin/Plugins.java) | Java | 51 | 79 | 47 | 177 |
+| [DA2/src/com/jtelaa/da2/bot/plugin/README.md](/DA2/src/com/jtelaa/da2/bot/plugin/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/bot/util/CLI.java](/DA2/src/com/jtelaa/da2/bot/util/CLI.java) | Java | 31 | 12 | 17 | 60 |
+| [DA2/src/com/jtelaa/da2/bot/util/Heartbeat.java](/DA2/src/com/jtelaa/da2/bot/util/Heartbeat.java) | Java | 21 | 11 | 15 | 47 |
+| [DA2/src/com/jtelaa/da2/bot/util/LogRepeater.java](/DA2/src/com/jtelaa/da2/bot/util/LogRepeater.java) | Java | 22 | 11 | 14 | 47 |
+| [DA2/src/com/jtelaa/da2/director/CLI.java](/DA2/src/com/jtelaa/da2/director/CLI.java) | Java | 14 | 8 | 11 | 33 |
+| [DA2/src/com/jtelaa/da2/director/Main.java](/DA2/src/com/jtelaa/da2/director/Main.java) | Java | 34 | 13 | 17 | 64 |
+| [DA2/src/com/jtelaa/da2/director/README.md](/DA2/src/com/jtelaa/da2/director/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/director/botmgmt/BotMgmt.java](/DA2/src/com/jtelaa/da2/director/botmgmt/BotMgmt.java) | Java | 56 | 59 | 43 | 158 |
+| [DA2/src/com/jtelaa/da2/director/botmgmt/heartbeat/HeartbeatServer.java](/DA2/src/com/jtelaa/da2/director/botmgmt/heartbeat/HeartbeatServer.java) | Java | 88 | 63 | 61 | 212 |
+| [DA2/src/com/jtelaa/da2/director/botmgmt/heartbeat/MultipleBeats.java](/DA2/src/com/jtelaa/da2/director/botmgmt/heartbeat/MultipleBeats.java) | Java | 8 | 7 | 8 | 23 |
+| [DA2/src/com/jtelaa/da2/director/botmgmt/info/BotAnnounceServer.java](/DA2/src/com/jtelaa/da2/director/botmgmt/info/BotAnnounceServer.java) | Java | 25 | 15 | 15 | 55 |
+| [DA2/src/com/jtelaa/da2/director/botmgmt/info/InfoRequestServer.java](/DA2/src/com/jtelaa/da2/director/botmgmt/info/InfoRequestServer.java) | Java | 21 | 15 | 13 | 49 |
+| [DA2/src/com/jtelaa/da2/director/botmgmt/info/InfoResponseClient.java](/DA2/src/com/jtelaa/da2/director/botmgmt/info/InfoResponseClient.java) | Java | 58 | 18 | 31 | 107 |
+| [DA2/src/com/jtelaa/da2/director/config.properties](/DA2/src/com/jtelaa/da2/director/config.properties) | Properties | 2 | 0 | 0 | 2 |
+| [DA2/src/com/jtelaa/da2/director/logserver/LogReceiver.java](/DA2/src/com/jtelaa/da2/director/logserver/LogReceiver.java) | Java | 6 | 6 | 10 | 22 |
+| [DA2/src/com/jtelaa/da2/director/logserver/Logger.java](/DA2/src/com/jtelaa/da2/director/logserver/Logger.java) | Java | 24 | 5 | 28 | 57 |
+| [DA2/src/com/jtelaa/da2/directorapp/Main.java](/DA2/src/com/jtelaa/da2/directorapp/Main.java) | Java | 65 | 10 | 29 | 104 |
+| [DA2/src/com/jtelaa/da2/directorapp/README.md](/DA2/src/com/jtelaa/da2/directorapp/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/directorapp/config.properties](/DA2/src/com/jtelaa/da2/directorapp/config.properties) | Properties | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/directorapp/gui/GUI.java](/DA2/src/com/jtelaa/da2/directorapp/gui/GUI.java) | Java | 5 | 2 | 7 | 14 |
+| [DA2/src/com/jtelaa/da2/hypervisor_interface/Main.java](/DA2/src/com/jtelaa/da2/hypervisor_interface/Main.java) | Java | 23 | 12 | 14 | 49 |
+| [DA2/src/com/jtelaa/da2/hypervisor_interface/README.md](/DA2/src/com/jtelaa/da2/hypervisor_interface/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/hypervisor_interface/config.properties](/DA2/src/com/jtelaa/da2/hypervisor_interface/config.properties) | Properties | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/hypervisor_interface/util/CLI.java](/DA2/src/com/jtelaa/da2/hypervisor_interface/util/CLI.java) | Java | 12 | 4 | 8 | 24 |
+| [DA2/src/com/jtelaa/da2/lib/README.md](/DA2/src/com/jtelaa/da2/lib/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/bot/Bot.java](/DA2/src/com/jtelaa/da2/lib/bot/Bot.java) | Java | 34 | 34 | 29 | 97 |
+| [DA2/src/com/jtelaa/da2/lib/bot/MgmtMessages.java](/DA2/src/com/jtelaa/da2/lib/bot/MgmtMessages.java) | Java | 18 | 14 | 16 | 48 |
+| [DA2/src/com/jtelaa/da2/lib/cli/Cases.java](/DA2/src/com/jtelaa/da2/lib/cli/Cases.java) | Java | 74 | 79 | 27 | 180 |
+| [DA2/src/com/jtelaa/da2/lib/cli/LocalCLI.java](/DA2/src/com/jtelaa/da2/lib/cli/LocalCLI.java) | Java | 87 | 67 | 57 | 211 |
+| [DA2/src/com/jtelaa/da2/lib/cli/README.md](/DA2/src/com/jtelaa/da2/lib/cli/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/config/ConfigHandler.java](/DA2/src/com/jtelaa/da2/lib/config/ConfigHandler.java) | Java | 81 | 74 | 53 | 208 |
+| [DA2/src/com/jtelaa/da2/lib/config/README.md](/DA2/src/com/jtelaa/da2/lib/config/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/console/ConsoleBanners.java](/DA2/src/com/jtelaa/da2/lib/console/ConsoleBanners.java) | Java | 19 | 79 | 27 | 125 |
+| [DA2/src/com/jtelaa/da2/lib/console/ConsoleColors.java](/DA2/src/com/jtelaa/da2/lib/console/ConsoleColors.java) | Java | 75 | 24 | 19 | 118 |
+| [DA2/src/com/jtelaa/da2/lib/console/README.md](/DA2/src/com/jtelaa/da2/lib/console/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/control/Command.java](/DA2/src/com/jtelaa/da2/lib/control/Command.java) | Java | 156 | 183 | 108 | 447 |
+| [DA2/src/com/jtelaa/da2/lib/control/ComputerControl.java](/DA2/src/com/jtelaa/da2/lib/control/ComputerControl.java) | Java | 49 | 48 | 34 | 131 |
+| [DA2/src/com/jtelaa/da2/lib/control/Messages.java](/DA2/src/com/jtelaa/da2/lib/control/Messages.java) | Java | 7 | 10 | 8 | 25 |
+| [DA2/src/com/jtelaa/da2/lib/control/QueuedCommandReceiver.java](/DA2/src/com/jtelaa/da2/lib/control/QueuedCommandReceiver.java) | Java | 43 | 36 | 28 | 107 |
+| [DA2/src/com/jtelaa/da2/lib/control/QueuedCommandSender.java](/DA2/src/com/jtelaa/da2/lib/control/QueuedCommandSender.java) | Java | 44 | 12 | 24 | 80 |
+| [DA2/src/com/jtelaa/da2/lib/control/QueuedResponseReceiver.java](/DA2/src/com/jtelaa/da2/lib/control/QueuedResponseReceiver.java) | Java | 28 | 11 | 19 | 58 |
+| [DA2/src/com/jtelaa/da2/lib/control/QueuedResponseSender.java](/DA2/src/com/jtelaa/da2/lib/control/QueuedResponseSender.java) | Java | 45 | 11 | 23 | 79 |
+| [DA2/src/com/jtelaa/da2/lib/control/README.md](/DA2/src/com/jtelaa/da2/lib/control/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/crypto/EncryptionUtils.java](/DA2/src/com/jtelaa/da2/lib/crypto/EncryptionUtils.java) | Java | 104 | 205 | 57 | 366 |
+| [DA2/src/com/jtelaa/da2/lib/crypto/README.md](/DA2/src/com/jtelaa/da2/lib/crypto/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/crypto/SystemCrypto.java](/DA2/src/com/jtelaa/da2/lib/crypto/SystemCrypto.java) | Java | 40 | 27 | 23 | 90 |
+| [DA2/src/com/jtelaa/da2/lib/files/FileUtil.java](/DA2/src/com/jtelaa/da2/lib/files/FileUtil.java) | Java | 119 | 92 | 79 | 290 |
+| [DA2/src/com/jtelaa/da2/lib/files/ObjectUtils.java](/DA2/src/com/jtelaa/da2/lib/files/ObjectUtils.java) | Java | 24 | 20 | 15 | 59 |
+| [DA2/src/com/jtelaa/da2/lib/files/README.md](/DA2/src/com/jtelaa/da2/lib/files/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/files/excel/ExcelFile.java](/DA2/src/com/jtelaa/da2/lib/files/excel/ExcelFile.java) | Java | 100 | 106 | 82 | 288 |
+| [DA2/src/com/jtelaa/da2/lib/log/Log.java](/DA2/src/com/jtelaa/da2/lib/log/Log.java) | Java | 56 | 53 | 40 | 149 |
+| [DA2/src/com/jtelaa/da2/lib/log/LogSender.java](/DA2/src/com/jtelaa/da2/lib/log/LogSender.java) | Java | 22 | 18 | 16 | 56 |
+| [DA2/src/com/jtelaa/da2/lib/log/README.md](/DA2/src/com/jtelaa/da2/lib/log/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/mail/Mail.java](/DA2/src/com/jtelaa/da2/lib/mail/Mail.java) | Java | 66 | 59 | 40 | 165 |
+| [DA2/src/com/jtelaa/da2/lib/mail/MailSender.java](/DA2/src/com/jtelaa/da2/lib/mail/MailSender.java) | Java | 73 | 40 | 38 | 151 |
+| [DA2/src/com/jtelaa/da2/lib/mail/MessageGateways.java](/DA2/src/com/jtelaa/da2/lib/mail/MessageGateways.java) | Java | 81 | 37 | 36 | 154 |
+| [DA2/src/com/jtelaa/da2/lib/mail/README.md](/DA2/src/com/jtelaa/da2/lib/mail/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/misc/MiscUtil.java](/DA2/src/com/jtelaa/da2/lib/misc/MiscUtil.java) | Java | 38 | 1 | 20 | 59 |
+| [DA2/src/com/jtelaa/da2/lib/misc/README.md](/DA2/src/com/jtelaa/da2/lib/misc/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/net/NetTools.java](/DA2/src/com/jtelaa/da2/lib/net/NetTools.java) | Java | 71 | 64 | 43 | 178 |
+| [DA2/src/com/jtelaa/da2/lib/net/OneTimeConnection.java](/DA2/src/com/jtelaa/da2/lib/net/OneTimeConnection.java) | Java | 49 | 16 | 24 | 89 |
+| [DA2/src/com/jtelaa/da2/lib/net/Ports.java](/DA2/src/com/jtelaa/da2/lib/net/Ports.java) | Java | 4 | 7 | 5 | 16 |
+| [DA2/src/com/jtelaa/da2/lib/net/README.md](/DA2/src/com/jtelaa/da2/lib/net/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/net/StateCodes.java](/DA2/src/com/jtelaa/da2/lib/net/StateCodes.java) | Java | 10 | 2 | 7 | 19 |
+| [DA2/src/com/jtelaa/da2/lib/net/SysPorts.java](/DA2/src/com/jtelaa/da2/lib/net/SysPorts.java) | Java | 16 | 21 | 15 | 52 |
+| [DA2/src/com/jtelaa/da2/lib/net/client/Client.java](/DA2/src/com/jtelaa/da2/lib/net/client/Client.java) | Java | 86 | 28 | 38 | 152 |
+| [DA2/src/com/jtelaa/da2/lib/net/client/ClientUDP.java](/DA2/src/com/jtelaa/da2/lib/net/client/ClientUDP.java) | Java | 98 | 85 | 54 | 237 |
+| [DA2/src/com/jtelaa/da2/lib/net/server/Server.java](/DA2/src/com/jtelaa/da2/lib/net/server/Server.java) | Java | 78 | 25 | 41 | 144 |
+| [DA2/src/com/jtelaa/da2/lib/net/server/ServerUDP.java](/DA2/src/com/jtelaa/da2/lib/net/server/ServerUDP.java) | Java | 95 | 79 | 58 | 232 |
+| [DA2/src/com/jtelaa/da2/lib/user/README.md](/DA2/src/com/jtelaa/da2/lib/user/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/lib/user/ldap/LDAP.java](/DA2/src/com/jtelaa/da2/lib/user/ldap/LDAP.java) | Java | 47 | 19 | 25 | 91 |
+| [DA2/src/com/jtelaa/da2/lib/user/local/Login.java](/DA2/src/com/jtelaa/da2/lib/user/local/Login.java) | Java | 3 | 2 | 4 | 9 |
+| [DA2/src/com/jtelaa/da2/lib/user/local/User.java](/DA2/src/com/jtelaa/da2/lib/user/local/User.java) | Java | 32 | 3 | 17 | 52 |
+| [DA2/src/com/jtelaa/da2/lib/user/local/UserHandler.java](/DA2/src/com/jtelaa/da2/lib/user/local/UserHandler.java) | Java | 40 | 42 | 28 | 110 |
+| [DA2/src/com/jtelaa/da2/scheduler/Main.java](/DA2/src/com/jtelaa/da2/scheduler/Main.java) | Java | 23 | 12 | 12 | 47 |
+| [DA2/src/com/jtelaa/da2/scheduler/README.md](/DA2/src/com/jtelaa/da2/scheduler/README.md) | Markdown | 0 | 0 | 1 | 1 |
+| [DA2/src/com/jtelaa/da2/scheduler/config.properties](/DA2/src/com/jtelaa/da2/scheduler/config.properties) | Properties | 0 | 0 | 1 | 1 |
+
+[summary](results.md)
