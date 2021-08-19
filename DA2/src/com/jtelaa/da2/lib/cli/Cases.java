@@ -10,9 +10,21 @@ import com.jtelaa.da2.lib.control.Command;
  * @author Joseph
  */
 
- // TDOD comment
-
 public class Cases {
+
+    public static boolean checkCase(Command command, String[] options) {
+        // Sort through all options to see if command applues
+        for (String option : options) {
+            // If equal
+            if (command.command().equalsIgnoreCase(option)) {
+                return true;
+
+            }
+        }
+
+        // Default
+        return false;
+    }
 
     /**
      * Case for exit (exit or end)
@@ -22,13 +34,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean exit(Command command) {
-        if (command.command(0).equals("exit") || command.command(0).equals("end")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean exit(Command command) { return checkCase(command, new String[] {"exit", "end"}); }
 
     /**
      * Case for command (command, cmd or -cmd)
@@ -38,13 +44,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean command(Command command) {
-        if (command.command(0).equals("command") || command.command(0).equals("cmd") || command.command(0).equals("-cmd")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean command(Command command) { return checkCase(command, new String[] {"command", "cmd"}); }
 
     /**
      * Case for shutdown (shutdown, shut, off, or -off)
@@ -54,13 +54,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean shutdown(Command command) {
-        if (command.command(0).equals("shutdown") || command.command(0).equals("shut") || command.command(0).equals("off") || command.command(0).equals("-off")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean shutdown(Command command) { return checkCase(command, new String[] {"shutdown", "shut", "off", "-off"}); }
 
     /**
      * Case for help (help, -h, or -?)
@@ -70,13 +64,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean help(Command command) {
-        if (command.command(0).equals("help") || command.command(0).equals("-h") || command.command(0).equals("-?")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean help(Command command) { return checkCase(command, new String[] {"help", "-h", "-?"}); }
 
     /**
      * Case for director (director, direc, d, or -d)
@@ -86,13 +74,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean director(Command command) {
-        if (command.command(0).equals("director") || command.command(0).equals("direc") || command.command(0).equals("d") || command.command(0).equals("-d")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean director(Command command) { return checkCase(command, new String[] {"director", "-d"}); }
 
     /**
      * Case for hypervisor (hypervisor, hyp, -hyp)
@@ -102,15 +84,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean hypervisor(Command command) {
-        if (command.command(0).equals("hypervisor") || command.command(0).equals("hyp") || command.command(0).equals("-hyp")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // TODO Continue Commenting
+    public static boolean hypervisor(Command command) { return checkCase(command, new String[] {"hypervisor", "-hyp"}); }
 
     /**
      * Case for exit (exit or end)
@@ -120,13 +94,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean scheduler(Command command) {
-        if (command.command(0).equals("scheduler") || command.command(0).equals("sched")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean scheduler(Command command) { return checkCase(command, new String[] {"scheduler", "-sch"}); }
 
     /**
      * Case for exit (exit or end)
@@ -136,13 +104,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean querygen(Command command) {
-        if (command.command(0).equals("querygen") || command.command(0).equals("gen") || command.command(0).equals("qry")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean querygen(Command command) { return checkCase(command, new String[] {"querygen", "gen", "-gen"}); }
 
     /**
      * Case for exit (exit or end)
@@ -152,13 +114,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean bot(Command command) {
-        if (command.command(0).equals("bot") || command.command(0).equals("bt")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean bot(Command command) { return checkCase(command, new String[] {"bot", "-bot"}); }
 
     /**
      * Case for exit (exit or end)
@@ -168,12 +124,6 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean plugin(Command command) {
-        if (command.command(0).equals("plugin") || command.command(0).equals("plug")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean plugin(Command command) { return checkCase(command, new String[] {"plugin", "-plugin"}); }
 
 }
