@@ -2,6 +2,7 @@ package com.jtelaa.bwbot.bw_manager;
 
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
 
 /**
@@ -41,6 +42,7 @@ public class Main {
         Log.loadConfig(my_config);
         Log.openClient(my_config.getLogIP());
 
-        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/da2/redemption_manager/misc/Redemption.txt"));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/da2/redemption_manager/misc/Rewards.txt", ConsoleColors.CYAN_BOLD_BRIGHT));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/da2/redemption_manager/misc/Redemption.txt", ConsoleColors.PURPLE));
     }
 }
