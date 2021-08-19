@@ -154,6 +154,15 @@ public class ConfigHandler {
         }
     }
 
+    /**
+     * Returns contents of properties file
+     */
+
+    public String toString() {
+        return config.toString();
+        
+    }
+
     /** */
     public Properties get() { return config; }
 
@@ -170,8 +179,14 @@ public class ConfigHandler {
     /** */
     public boolean isTrue(String key) { return config.getProperty(key).equalsIgnoreCase("true"); }
     /** */
+    public boolean isTrue(String key, boolean def) { return config.getProperty(key, def+"").equalsIgnoreCase("true"); }
+    /** */
     public boolean isTrue(String key, String def) { return config.getProperty(key, def).equalsIgnoreCase("true"); }
 
+    /** Run a local cli */
+    public boolean runLocalCLI() { return isTrue("local_cli", true); }
+    /** Run a local cli */
+    public boolean runRemoteCLI() { return isTrue("remote_cli", false); }
 
     // Logging Verbosity
     /** */
