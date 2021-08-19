@@ -4,8 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.jtelaa.da2.lib.config.ConfigHandler;
-import com.jtelaa.da2.lib.net.SysPorts;
-import com.jtelaa.da2.lib.net.client.ClientUDP;
+import com.jtelaa.da2.lib.console.ConsoleColors;
 
 /**
  * Logging capability
@@ -24,9 +23,6 @@ public class Log {
     /** The logging verbostiy */
     public volatile static boolean log_verbose;
 
-    public volatile static ClientUDP logging_client;
-    public volatile static boolean log_established = false;
-
     public volatile static Queue<String> logging_queue;
     private volatile static LogSender sender;
 
@@ -42,18 +38,20 @@ public class Log {
     }
 
     public synchronized static void openClient(String logging_server_ip) {
-        if (!log_verbose) { return; } // Stop if log is not verbose
+        // Stop if log is not verbose
+        if (!log_verbose) { 
+            sendSysMessage("Local Logging Only");
+            return; 
 
-        // Start logging client
-        logging_client = new ClientUDP(logging_server_ip, SysPorts.LOG);
-        log_established = logging_client.startClient();
+        } 
 
         // Create the queue
         logging_queue = new LinkedList<String>();
         
         // Start the log sender
-        sender = new LogSender();
+        sender = new LogSender(logging_server_ip);
         sender.start();
+
     }
 
     /**
@@ -70,6 +68,47 @@ public class Log {
     }
 
     /**
+     * Sends message to the log and system console <p>
+     * This checks the verbosity of both
+     * 
+     * @param message Message to send
+     * @param color Color to use
+     */
+
+    public synchronized static void sendMessage(String message, ConsoleColors color) {
+        if (app_verbose) { sendManSysMessage(message, color); }   // System message
+        if (log_verbose) { sendManLogMessage(message, color); }   // Logging message
+
+    }
+
+    /**
+     * Sends exception's message to the log and system console <p>
+     * This checks the verbosity of both
+     * 
+     * @param log_prefix String to add to begining of exception message
+     * @param e Exception to send
+     */
+
+    public synchronized static void sendMessage(String log_prefix, Exception e) {
+        sendMessage(log_prefix + ":\n" + e.getMessage());
+
+    }
+
+     /**
+     * Sends exception's message to the log and system console <p>
+     * This checks the verbosity of both
+     * 
+     * @param log_prefix String to add to begining of exception message
+     * @param e Exception to send
+     * @param color Color to use
+     */
+
+    public synchronized static void sendMessage(String log_prefix, Exception e, ConsoleColors color) {
+        sendMessage(log_prefix + ":\n" + e.getMessage(), color);
+
+    }
+
+    /**
      * Sends exception's message to the log and system console <p>
      * This checks the verbosity of both
      * 
@@ -82,6 +121,19 @@ public class Log {
     }
 
     /**
+     * Sends exception's message to the log and system console <p>
+     * This checks the verbosity of both
+     * 
+     * @param e Exception to send
+     * @param color Color to use
+     */
+
+    public synchronized static void sendMessage(Exception e, ConsoleColors color) {
+        sendMessage(e.getMessage(), color);
+
+    }
+
+    /**
      * Sends system message no matter what the verbosity is
      * 
      * @param message Message to send
@@ -89,6 +141,19 @@ public class Log {
 
     public synchronized static boolean sendManSysMessage(String message) {
         System.out.println(message);
+        return true;
+
+    }
+
+    /**
+     * Sends system message no matter what the verbosity is
+     * 
+     * @param message Message to send
+     * @param color Color to use
+     */
+
+    public synchronized static boolean sendManSysMessage(String message, ConsoleColors color) {
+        System.out.println(color.getColor() + message + ConsoleColors.RESET.getColor());
         return true;
 
     }
@@ -106,6 +171,44 @@ public class Log {
     }
 
     /**
+     * Sends system message depending on verbosity
+     * 
+     * @param message Message to send
+     * @param color Color to use
+     */
+
+    public synchronized static boolean sendSysMessage(String message, ConsoleColors color) {
+        if (app_verbose) { System.out.println(color.getColor() + message + ConsoleColors.RESET.getColor()); }
+        return app_verbose;
+
+    }
+
+    /**
+     * Sends system message depending on verbosity
+     * 
+     * @param message Message to send
+     */
+
+    public synchronized static boolean sendSysMessageNoNewLine(String message) {
+        if (app_verbose) { System.out.print(message); }
+        return app_verbose;
+
+    }
+
+    /**
+     * Sends system message depending on verbosity
+     * 
+     * @param message Message to send
+     * @param color Color to use
+     */
+
+    public synchronized static boolean sendSysMessageNoNewLine(String message, ConsoleColors color) {
+        if (app_verbose) { System.out.print(color.getColor() + message + ConsoleColors.RESET.getColor()); }
+        return app_verbose;
+
+    }
+
+    /**
      * Sends logging message no matter what the verbosity is <b>
      * Will not attempt to send unless the log is established <b>
      * This adds the message to the queue
@@ -114,8 +217,28 @@ public class Log {
      */
 
     public synchronized static boolean sendManLogMessage(String message) {
-        if (log_established || sender.isAlive()) { 
+        if (sender.log_established || sender.isAlive()) { 
             logging_queue.add(message); 
+            return true; 
+        
+        }
+        
+        return false;
+
+    }
+
+    /**
+     * Sends logging message no matter what the verbosity is <b>
+     * Will not attempt to send unless the log is established <b>
+     * This adds the message to the queue
+     * 
+     * @param message Message to send
+     * @param color Color to use
+     */
+
+    public synchronized static boolean sendManLogMessage(String message, ConsoleColors color) {
+        if (sender.log_established || sender.isAlive()) { 
+            logging_queue.add(color.getColor() + message + ConsoleColors.RESET.getColor()); 
             return true; 
         
         }
@@ -138,12 +261,35 @@ public class Log {
 
     }
 
+    /**
+     * Sends logging message depending on verbosity <b>
+     * Will not attempt to send unless the log is established <b>
+     * This adds the message to the queue
+     * 
+     * @param message Message to send
+     * @param color Color to use
+     */
+
+    public synchronized static boolean sendLogMessage(String message, ConsoleColors color) {
+        if (log_verbose) { sendManLogMessage(color.getColor() + message + ConsoleColors.RESET.getColor()); }
+        return log_verbose;
+
+    }
+
     /** Closes the logging client */
 
-    public synchronized static void closeLog() { 
-        logging_client.closeClient(); 
-        sender.stopSender();
-    
+    public synchronized static void closeLog() {
+        try {
+            if (sender.log_established) { 
+                sender.stopSender();
+
+            }
+
+        } catch (NullPointerException e) {
+            return;
+
+        }
+        
     }
 
 } 

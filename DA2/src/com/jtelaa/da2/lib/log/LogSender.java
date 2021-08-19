@@ -2,6 +2,8 @@ package com.jtelaa.da2.lib.log;
 
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
+import com.jtelaa.da2.lib.net.SysPorts;
+import com.jtelaa.da2.lib.net.client.ClientUDP;
 
 /**
  * New process for sending logging messages
@@ -14,12 +16,42 @@ import com.jtelaa.da2.lib.net.NetTools;
 
 public class LogSender extends Thread {
 
+    /** Logging client */
+    private ClientUDP logging_client;
+
+    /** Is the loggin client established */
+    public boolean log_established = false;
+
+    /** Local ip (For logging purposes) */
+    private String local_ip;
+
+    /** Local ip (For logging purposes) */
+    private String logging_server_ip;
+
+    /**
+     * Constructor
+     * 
+     * @param logging_server_ip Log server ip to use
+     */
+
+    public LogSender(String logging_server_ip) {
+        this.logging_server_ip = logging_server_ip;
+
+    }
+
     public void run() {
         // Wait until ready
         while (!run) {
             MiscUtil.waitasec();
             
         }
+
+        // Store local ip
+        local_ip = NetTools.getLocalIP();
+
+        // Start logging client
+        logging_client = new ClientUDP(logging_server_ip, SysPorts.LOG);
+        log_established = logging_client.startClient();
 
         while (run) {
             sendMessage();
@@ -30,7 +62,11 @@ public class LogSender extends Thread {
     private volatile boolean run = true;
 
     /** Stops the command receiver */
-    public synchronized void stopSender() { run = false; }
+    public synchronized void stopSender() { 
+        logging_client.closeClient();
+        run = false; 
+
+    }
 
     /** Checks if the receier is ready */
     public synchronized boolean senderReady() { return run; }
@@ -45,10 +81,10 @@ public class LogSender extends Thread {
         if (message == null) { return; }
 
         // Add local ip to message
-        message = NetTools.getLocalIP() + ">" + message;
+        message = local_ip + ">" + message;
 
         // Add message to queue
-        Log.logging_client.sendMessage(message);
+        logging_client.sendMessage(message);
 
     }
     
