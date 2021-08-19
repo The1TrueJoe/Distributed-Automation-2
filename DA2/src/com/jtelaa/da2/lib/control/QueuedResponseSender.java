@@ -57,6 +57,8 @@ public class QueuedResponseSender extends Thread {
     // TODO Implement
 
     private void sendMessage() {
+        if (!(response_server_queue.size() > 0 && response_queue.size() > 0)) { return; }
+
         String server = response_server_queue.poll();
         String message = response_queue.poll();
 
@@ -66,7 +68,7 @@ public class QueuedResponseSender extends Thread {
             
         }
 
-        cmd_tx = new ClientUDP(server, SysPorts.RESPONSE);
+        cmd_tx = new ClientUDP(server, SysPorts.RESPONSE, "Response Sender: ");
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(message);

@@ -25,6 +25,9 @@ public class ClientUDP {
 
     /* Client */
 
+    /** Prefix to add to log messages (optional) */
+    private String log_prefix;
+
     /** Server ip */
     private String server_ip;
     /** Server port */
@@ -44,17 +47,8 @@ public class ClientUDP {
      */
 
     public ClientUDP(String server_ip, int port) { 
-        // If the server ip is invalid
-        if (NetTools.isValid(server_ip)) {     
-            this.server_ip = server_ip; 
-            this.port = port;                      
-            
-        } else {
-            // Use local ip if the server is invalid
-            Log.sendMessage(server_ip + " is invalid");
-            server_ip = NetTools.getLocalIP();
-
-        }
+        this(server_ip, port, "");
+        
     }
 
     /**
@@ -65,14 +59,43 @@ public class ClientUDP {
      */
 
     public ClientUDP(String server_ip, Ports port) { 
+        this(server_ip, port.getPort(), "");
+
+    }
+
+    /**
+     * Constructor
+     * 
+     * @param server_ip IP to contact
+     * @param port Port to contact
+     * @param logPrefix Prefix to add to log messages
+     */
+
+    public ClientUDP(String server_ip, Ports port, String logPrefix) {
+        this(server_ip, port.getPort(), logPrefix);
+
+    }
+
+    /**
+     * Constructor
+     * 
+     * @param server_ip IP to contact
+     * @param port Port to contact
+     * @param logPrefix Prefix to add to log messages
+     */
+
+    public ClientUDP(String server_ip, int port, String logPrefix) { 
+        // Log prefix
+        this.log_prefix = logPrefix;
+
         // If the server ip is invalid
         if (NetTools.isValid(server_ip)) {     
             this.server_ip = server_ip; 
-            this.port = port.getPort();                      
+            this.port = port;                      
             
         } else {
             // Use local ip if the server is invalid
-            Log.sendMessage(server_ip + " is invalid");
+            Log.sendMessage(log_prefix + server_ip + " is invalid");
             server_ip = NetTools.getLocalIP();
 
         }
@@ -93,19 +116,19 @@ public class ClientUDP {
     public boolean startClient() {
         try {
             // Start
-            Log.sendMessage("Starting server at port " + port);
+            Log.sendMessage(log_prefix + "Starting server at port " + port);
             
             // Reset buffer and create new socker
             buffer = null;
             socket = new DatagramSocket();
 
             // Send success message
-            Log.sendMessage("Client open. Will send messages to " + server_ip + ":" + port);
+            Log.sendMessage(log_prefix + "Client open. Will send messages to " + server_ip + ":" + port);
             return true;
 
         } catch (IOException e) {
             // Send error message
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            Log.sendMessage(log_prefix, e);
             return false;
 
         }
@@ -122,19 +145,19 @@ public class ClientUDP {
     public boolean sendMessage(String message) {
         try {
             // Log
-            Log.sendMessage("Sending UDP: " + message + " to: " + server_ip + ":" + port + "\n");
+            Log.sendMessage(log_prefix + "Sending UDP: " + message + " to: " + server_ip + ":" + port + "\n");
 
             // Set buffer and send
             buffer = message.getBytes();
             socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
 
             // Send success
-            Log.sendMessage("Done");
+            Log.sendMessage(log_prefix + "Done");
             return true;
         
         } catch (Exception e) {
             // Send error
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            Log.sendMessage(log_prefix, e);
             return false;
 
         }
@@ -164,19 +187,19 @@ public class ClientUDP {
     public boolean sendObject(Serializable object) {
         try {
             // Send log message
-            Log.sendMessage("Sending UDP Object: " + object + " to: " + server_ip + ":" + port + "\n");
+            Log.sendMessage(log_prefix + "Sending UDP Object: " + object + " to: " + server_ip + ":" + port + "\n");
 
             // Set buffer with serialized object and send
             buffer = SerializationUtils.serialize(object);
             socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
 
             // Send success
-            Log.sendMessage("Done");
+            Log.sendMessage(log_prefix + "Done");
             return true;
         
         } catch (Exception e) {
             // end error
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            Log.sendMessage(log_prefix + "Failed: \n" + e.getStackTrace());
             return false;
 
         }
@@ -195,12 +218,12 @@ public class ClientUDP {
             socket.close();
 
             // Send success
-            Log.sendMessage("Closed");
+            Log.sendMessage(log_prefix + "Closed");
             return true;
 
         } catch (Exception e) {
             // Send error
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            Log.sendMessage(log_prefix, e);
             return false;
 
         }

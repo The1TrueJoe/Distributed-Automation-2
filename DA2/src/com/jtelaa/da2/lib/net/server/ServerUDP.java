@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.net.Ports;
 
@@ -20,6 +21,12 @@ import org.junit.Test;
  */
 
 public class ServerUDP {
+
+    /** Console Color */
+    private ConsoleColors colors;
+
+    /** Prefix to add to log messages (optional) */
+    private String log_prefix;
 
     /** Port opened by the server */
     private int port;
@@ -39,7 +46,12 @@ public class ServerUDP {
      * @param port Port to open
      */
 
-    public ServerUDP(int port) { this.port = port; }
+    public ServerUDP(int port) { 
+        log_prefix = "";
+        this.port = port; 
+        colors = ConsoleColors.WHITE;
+
+    }
 
     /** 
      * Constructor
@@ -47,8 +59,64 @@ public class ServerUDP {
      * @param port Port to open
      */
     
-    public ServerUDP(Ports port) { this.port = port.getPort(); }
+    public ServerUDP(Ports port) { 
+        log_prefix = "";
+        this.port = port.getPort(); 
+        colors = ConsoleColors.WHITE;
+    
+    }
 
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     */
+
+    public ServerUDP(int port, String log_prefix) { 
+        this.port = port; 
+        this.log_prefix = log_prefix;
+        colors = ConsoleColors.WHITE;
+    
+    }
+
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     */
+    
+    public ServerUDP(Ports port, String log_prefix) { 
+        this.port = port.getPort(); 
+        this.log_prefix = log_prefix;
+        colors = ConsoleColors.WHITE;
+    
+    }
+
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     */
+
+    public ServerUDP(int port, String log_prefix, ConsoleColors colors) { 
+        this.port = port; 
+        this.log_prefix = log_prefix;
+        this.colors = colors;
+    
+    }
+
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     */
+    
+    public ServerUDP(Ports port, String log_prefix, ConsoleColors colors) { 
+        this.port = port.getPort(); 
+        this.log_prefix = log_prefix;
+        this.colors = colors;
+    
+    }
     
     /**
      * Starts the server <p>
@@ -60,19 +128,19 @@ public class ServerUDP {
     public boolean startServer() {
         try {
             // Start
-            Log.sendMessage("Starting server at port " + port);
+            Log.sendMessage(log_prefix + "Starting server at port " + port, colors);
 
             // Reset buffer and create new socker
             recieve_buffer = null;
             socket = new DatagramSocket();
 
             // Send success message
-            Log.sendMessage("Server Opened");
+            Log.sendMessage(log_prefix + "Server Opened", colors);
             return true;
 
         } catch (IOException e) {
             // Send error message
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            Log.sendMessage(log_prefix, e, colors);
             return false;
 
         }
@@ -99,11 +167,11 @@ public class ServerUDP {
             clientAddress = socket.getInetAddress();
 
             // Log reception
-            Log.sendMessage("Received: " + message + " From: " + getClientAddress());
+            Log.sendMessage(log_prefix +"Received: " + message + " From: " + getClientAddress(), colors);
 
         } catch (IOException e) {
             // Send error
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            Log.sendMessage(log_prefix, e);
             message = "";
 
         }
@@ -133,11 +201,11 @@ public class ServerUDP {
             clientAddress = socket.getInetAddress();
 
             // Log reception
-            Log.sendMessage("Received UDP Object: " + object + " From: " + getClientAddress());
+            Log.sendMessage(log_prefix + "Received UDP Object: " + object + " From: " + getClientAddress(), colors);
 
         } catch (IOException e) {
             // Send error
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            Log.sendMessage(log_prefix, e, colors);
             object = new String("");
 
         }
@@ -186,12 +254,12 @@ public class ServerUDP {
             socket.close();
 
             // Send success
-            Log.sendMessage("Closed");
+            Log.sendMessage(log_prefix + "Closed", colors);
             return true;
 
         } catch (Exception e) {
             // Send error
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            Log.sendMessage(log_prefix, e, colors);
             return false;
 
         }

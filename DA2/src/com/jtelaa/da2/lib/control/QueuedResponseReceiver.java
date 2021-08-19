@@ -25,7 +25,7 @@ public class QueuedResponseReceiver extends Thread {
     public synchronized String getMessage() { return response_queue.poll(); }
 
     public void run() {
-        cmd_rx = new ServerUDP(SysPorts.RESPONSE);
+        cmd_rx = new ServerUDP(SysPorts.RESPONSE, "Response Receiver: ");
 
         while (!run) {
             MiscUtil.waitasec();

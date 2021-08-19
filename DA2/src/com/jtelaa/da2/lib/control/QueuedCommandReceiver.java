@@ -1,5 +1,6 @@
 package com.jtelaa.da2.lib.control;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 import com.jtelaa.da2.lib.log.Log;
@@ -19,6 +20,8 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 public class QueuedCommandReceiver extends Thread {
 
+    private static String log_prefix = "CMD Receiver: ";
+
     /** Command queue FIFO */
     private volatile static Queue<Command> command_queue;
 
@@ -26,15 +29,27 @@ public class QueuedCommandReceiver extends Thread {
     private ServerUDP cmd_rx;
 
     /** Gets the next command to be executed */
-    public synchronized Command getLatest() { return command_queue.poll(); }
+    public synchronized Command getLatest() { 
+        if (command_queue.size() > 0) {
+            return command_queue.poll(); 
+
+        } else {
+            return new Command("");
+
+        }
+        
+    }
 
     /** Gets the next command to be executed */
-    public synchronized Command getMessage() { return command_queue.poll(); }
+    public synchronized Command getMessage() { return getLatest(); }
 
     public void run() {
         // Open UDP server
-        Log.sendMessage("Starting command receiver");
-        cmd_rx = new ServerUDP(SysPorts.CMD);
+        Log.sendMessage(log_prefix + "Starting");
+        cmd_rx = new ServerUDP(SysPorts.CMD, log_prefix);
+
+        // Setup queue
+        command_queue = new LinkedList<>();
 
         while (!run) {
             MiscUtil.waitasec();
@@ -54,7 +69,7 @@ public class QueuedCommandReceiver extends Thread {
         }
 
         // Server setup complete
-        Log.sendMessage("Command receiver done");
+        Log.sendMessage(log_prefix + "done");
         while (run) {                       
             String response = cmd_rx.getMessage();
 

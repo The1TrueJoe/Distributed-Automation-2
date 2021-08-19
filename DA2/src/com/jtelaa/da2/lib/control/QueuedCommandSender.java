@@ -44,11 +44,13 @@ public class QueuedCommandSender extends Thread {
         }
 
         while (run) {
-            command = command_queue.poll();
+            if (command_queue.size() > 0) {
+                command = command_queue.poll();
 
-            if (command != null && command.isValid()) {
-                sendMessage(command);
+                if (command != null && command.isValid()) {
+                    sendMessage(command);
                 
+                }
             }
         }
     }
@@ -67,7 +69,7 @@ public class QueuedCommandSender extends Thread {
         String message = command_to_send.command();
         String server = command_to_send.destination();
 
-        cmd_tx = new ClientUDP(server, SysPorts.CMD);
+        cmd_tx = new ClientUDP(server, SysPorts.CMD, "Command Sender: ");
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(message);

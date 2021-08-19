@@ -6,6 +6,8 @@ import java.util.Queue;
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.bot.Bot;
+import com.jtelaa.da2.lib.console.ConsoleColors;
+import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
@@ -21,11 +23,12 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
  */
 
 public class QueryServer extends Thread {
+    
+    /** */
+    private static String log_prefix = "Query Server: ";
 
-    /** Query queue */
-    private volatile static Queue<Query> query_queue;
     /** Bot queue */
-    private volatile static Queue<Bot> bot_queue;
+    public volatile static Queue<Bot> bot_queue;
 
     /** UDP Client  */
     private ClientUDP cmd_tx;
@@ -35,12 +38,15 @@ public class QueryServer extends Thread {
      * Many queries are added. They will be served to the bots as needed.
      * 
      * @param query Search query to enque
+     * 
+     * @deprecated No lpnger needed on this class
      */
 
+    @Deprecated
     public synchronized static void addQuery(Query query) {
-        if (query_queue.size() < QueryGenerator.MAX_QUERY_QUEUE_SIZE) {
+        if (QueryGenerator.query_queue.size() < QueryGenerator.MAX_QUERY_QUEUE_SIZE) {
             // Add to queue if the que is under specified size
-            query_queue.add(query);
+            QueryGenerator.query_queue.add(query);
 
         } 
     }
@@ -50,9 +56,11 @@ public class QueryServer extends Thread {
      * where it could accept another query
      * 
      * @return if the query queue size is less than the max
+     * @deprecated No longer necessary
      */
 
-    public synchronized static boolean readyForQuery() { return query_queue.size() < QueryGenerator.MAX_QUERY_QUEUE_SIZE; }
+    @Deprecated
+    public synchronized static boolean readyForQuery() { return QueryGenerator.query_queue.size() > QueryGenerator.MAX_QUERY_QUEUE_SIZE; }
 
     /**
      * Adds a bot into the queue <p>
@@ -70,8 +78,10 @@ public class QueryServer extends Thread {
     }
 
     public void run() {
+        // Ready
+        Log.sendMessage("Query Server: Ready", ConsoleColors.GREEN);
+
         // Setup lists
-        query_queue = new LinkedList<>();
         bot_queue = new LinkedList<>();
 
         // Constantly fill requests
@@ -102,21 +112,25 @@ public class QueryServer extends Thread {
         } 
 
         // If no queries, make a default one
-        if (query_queue.size() == 0 && bot_queue.size() > 0) {
-            query_queue.add(new Query("google"));       // Default search query
+        if (QueryGenerator.query_queue.size() == 0 && bot_queue.size() > 0) {
+            QueryGenerator.query_queue.add(new Query("google"));       // Default search query
         }
 
         // Pick top off queue
-        Query query_to_send = query_queue.poll();
+        Query query_to_send = QueryGenerator.query_queue.poll();
         Bot bot_to_serve = bot_queue.poll();
 
+        // Notification
+        Log.sendMessage(log_prefix + "Serving " + bot_to_serve.getIP(), ConsoleColors.YELLOW);
+
         // Setup client
-        cmd_tx = new ClientUDP(bot_to_serve.getIP(), BWPorts.QUERY_RECEIVE.getPort());
+        cmd_tx = new ClientUDP(bot_to_serve.getIP(), BWPorts.QUERY_RECEIVE.getPort(), log_prefix);
 
         // Send and then close
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(query_to_send.getQuery());
             cmd_tx.closeClient();
+            Log.sendMessage(log_prefix + "Done serving " + bot_to_serve.getIP(), ConsoleColors.YELLOW);
 
         }
     }
