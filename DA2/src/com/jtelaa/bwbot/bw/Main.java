@@ -69,7 +69,7 @@ public class Main extends Thread {
         Log.openClient("127.0.0.1");
 
         // Startup
-        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/misc/Rewards.txt", ConsoleColors.BLUE_BOLD_BRIGHT));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/misc/Rewards.txt", ConsoleColors.CYAN_BOLD_BRIGHT));
         Log.sendMessage("Bing Rewards Plugin Enabled");
 
         /* Obfuscate external ip  */
@@ -119,7 +119,6 @@ public class Main extends Thread {
         // Get Account
         if (first_time) {
             AcctInfo.requestAccount();
-            AcctInfo.setupAccount();
         
         } 
 

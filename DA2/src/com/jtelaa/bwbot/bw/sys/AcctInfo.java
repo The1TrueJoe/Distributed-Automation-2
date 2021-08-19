@@ -65,7 +65,6 @@ public class AcctInfo {
 
     }
 
-
     /**
      * Looks throught page for the tag
      * 
@@ -102,19 +101,7 @@ public class AcctInfo {
     }
 
     /**
-     * Sets up the account on the local machine
-     * 
-     * <p> (Account info is already specified)
-     */
-
-    public static void setupAccount() {
-
-        // TODO add account setup
-
-    }
-
-    /**
-     * 
+     * Loads account info from the properties file
      */
 
     public static void loadAccount() {
@@ -132,7 +119,7 @@ public class AcctInfo {
     }
 
     /**
-     * 
+     * Send a request message for an account
      */
 
     public static void requestAccount() {
@@ -170,36 +157,6 @@ public class AcctInfo {
             MiscUtil.waitasec();
 
         } while (response.contains(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage()));
-    }
-
-    /**
-     * Looks throught page for the gift card and redeems it
-     * 
-     * <pre>
-     * {@code 
-     *  <button id="redeem-checkout-review-confirm" class="btn-primary card-button-height padding-left-24 padding-right-24">
-     *  <div class="text-body margin-top-5 spacer-32-bottom x-hidden-focus"> Order ID: 7b584876-0491-4aac-ac33-4ad4ada1e537 </div>
-     * }
-     * </pre>
-     * 
-     * @return orderid
-     */
-
-    public String redeemGiftCard(Card card) {
-        String url = card.getTag();
-
-        // TODO add redemption system
-
-        BWControls.openChrome(url);
-
-        return "";
-
-    }
-
-    /** */
-
-    public String getGiftCardCode() {
-        return "";
     }
     
 }
