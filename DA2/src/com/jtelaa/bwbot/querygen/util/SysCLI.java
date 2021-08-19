@@ -161,9 +161,7 @@ public class SysCLI extends LocalCLI {
             return response;
 
         } else if (Cases.checkCase(cmd, new String[] {"title"})) {
-            Log.sendSysMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-            Log.sendSysMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-            Log.sendSysMessage("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            Log.sendSysMessage(ConsoleColors.CLEAR.getEscape() + ConsoleColors.LINES.getEscape());
             Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/Rewards.txt", ConsoleColors.CYAN_BOLD));
             Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/QueryGen.txt", ConsoleColors.YELLOW));
             
