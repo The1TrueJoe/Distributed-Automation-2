@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.files.FileUtil;
+import com.jtelaa.da2.lib.log.Log;
 
 /**
  * Random search query generator
@@ -17,6 +18,12 @@ import com.jtelaa.da2.lib.files.FileUtil;
  */
 
 public class SearchHandler {
+
+    /** Path of lists */
+    private static final String PATH = "com/jtelaa/bwbot/querygen/searches/searchdata/";
+
+    /** Logging prefix */
+    private static String log_prefix = "Search Handler: ";
 
     /**
      * Test that prints out searches
@@ -62,7 +69,7 @@ public class SearchHandler {
 
         // Populate lists
         for (int i = 0; i < searches.length; i++) {
-            searches[i] = new Query(search_list.get(rand.nextInt(search_list.size()-1)));
+            searches[i] = new Query(search_list.get(rand.nextInt(search_list.size()-1)).toLowerCase());
         
         }
 
@@ -78,14 +85,45 @@ public class SearchHandler {
      */
 
     private synchronized static ArrayList<String> pickList() {
+        // Get list
         Random rand = new Random();
+        String name = pickList(rand.nextInt(15));
 
-        // Path of lists
-        final String PATH = "com/jtelaa/da2/querygen/searches/searchdata/";
+        // Read file
+        ArrayList<String> lines = FileUtil.listLinesInternalFile(name);
+
+        // Show file is empty
+        if (lines.size() < 1) {
+            
+
+            int i = -1;
+
+            do {
+                Log.sendMessage(log_prefix + "File " + name + " is empty");
+
+                i++;
+                lines = FileUtil.listLinesInternalFile(pickList(i));
+
+                if (i > 20) {
+                    Log.sendMessage(log_prefix + " All files empty (Will use list of default)");
+                    lines = ManualSearches.searches();
+
+                }
+
+            } while (lines.size() < 1);
+
+        }
+
+        // Return list + path
+        return lines;
+
+    }
+
+    public synchronized static String pickList(int num) {
         String name;
 
         // Find random list
-        switch (rand.nextInt(15)) {
+        switch (num) {
             case 1:
                 name = ("Searches2009.txt");
             case 2:
@@ -111,8 +149,7 @@ public class SearchHandler {
 
         }
 
-        // Return list + path
-        return FileUtil.listLinesInternalFile(PATH + name);
+        return PATH + name;
 
     }
     

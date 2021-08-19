@@ -1,9 +1,11 @@
 package com.jtelaa.bwbot.querygen.searches;
 
+import java.util.ArrayList;
+
 /**
  * List of manual searches
  * 
- * @deprecated Can still be used but has less randomness (May be undeprecated in future)
+ * Can still be used but has less randomness (May be deprecated in future)
  * 
  * @since 1
  * @author Joseph
@@ -11,7 +13,28 @@ package com.jtelaa.bwbot.querygen.searches;
 
 public class ManualSearches {
 
-    @Deprecated
+    /**
+     * Manual searches
+     * 
+     * @return searches as an arraylist
+     */
+
+    public synchronized static ArrayList<String> searches() {
+        ArrayList<String> searches = new ArrayList<String>();
+
+        for (String search : searches) {
+            searches.add(search);
+
+        }
+
+        return searches;
+        
+    }
+
+    /**
+     * Manual searches
+     */
+
     public volatile static String[] searches = {
         "youtube", "facebook", "twitter", "instagram",
         "snapchat", "wikipedia", "tumblr", "amazon", 
