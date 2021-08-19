@@ -1,12 +1,15 @@
 package com.jtelaa.da2.lib.cli;
 
 import com.jtelaa.da2.lib.misc.MiscUtil;
+import com.jtelaa.da2.lib.net.NetTools;
+
 import com.jtelaa.da2.lib.bot.MgmtMessages;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.QueuedCommandReceiver;
 import com.jtelaa.da2.lib.control.QueuedCommandSender;
 import com.jtelaa.da2.lib.control.QueuedResponseReceiver;
 import com.jtelaa.da2.lib.control.QueuedResponseSender;
+import com.jtelaa.da2.lib.log.Log;
 
 /**
  * Class that contains the necessary parts for a CLI
@@ -22,11 +25,14 @@ public abstract class LocalCLI extends Thread {
     /** Abstract method for running the thread */
     public abstract void run();
 
-    /** Abstract method for containing the command structure */
+    /** Abstract method for containing the command structure (Make syncronized in inherited class) */
     public abstract String terminal(Command command);
 
     /** Boolean that controls wether or not the thread runs */
     public volatile boolean run;
+
+    /** Tells the internal logic to start */
+    public synchronized void runCLI() { run = true; }
 
     /** Tells the thread to stop (Waits untilt the iteration on the while loop is complete) */
     public synchronized void stopCLI() { run = false; }
@@ -68,34 +74,48 @@ public abstract class LocalCLI extends Thread {
         // Open rx
         openOnewayRX();
 
+        String local_ip = NetTools.getLocalIP();
         Command command;
 
-        // While run
-        while (run) {
+        cli_enabled = false;
+
+        while (!cli_enabled && run) {
             if (cmd_rx.getLatest().equals(enable_message) || enable_message.equals(MgmtMessages.NONE)) {
-                command = cmd_rx.getLatest();
-                
-                if (command.isValid()) { 
-                    if (command.isHeadless()) {
-                        resp_tx.add(command.origin(), terminal(command));
-                    
-                    } else {
-                        terminal(command);
+                // Notification
+                Log.sendSysMessage("Remote CLI Ready");
 
-                    }
-
-                } else {
-                    MiscUtil.waitasec(.25);
-
-                }
+                cli_enabled = true;
 
             } else {
                 MiscUtil.waitasec();
-
+                
             }
         }
 
-        
+        // While run
+        while (run && cli_enabled) {
+            command = cmd_rx.getLatest();
+ 
+            // If command is valid
+            if (command.isValid()) { 
+                // If it is headless
+                if (command.isHeadless()) {
+                    resp_tx.add(command.origin(), terminal(command));
+                
+                // Otherwise
+                } else {
+                    // If the origin is the local pc
+                    if (command.origin().equals("127.0.0.1") || command.origin().equals(local_ip)) {
+                        Log.sendSysMessage(terminal(command));
+
+                        // Else
+                    } else {
+                        Log.sendMessage(terminal(command));
+
+                    }
+                } 
+            }
+        }
     }
 
     /**
