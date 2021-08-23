@@ -12,6 +12,7 @@ import com.jtelaa.da2.lib.log.Log;
  */
 
 // TODO Commment
+// TODO Complete
 
 public class AccountMgr {
 
@@ -50,18 +51,36 @@ public class AccountMgr {
         // Read file
         ArrayList<Object> lines = FileUtil.readObjectFromFile(file);
 
-        // Check if lines contain a account object
-        if (!Account.class.isInstance(lines.get(0))) {
-            Log.sendMessage(new Exception("File does not contain Account objects!"));
+        // If the latest account was not set set a default value
+        if (AccountGen.last_created_account.isBlank()) {
+            AccountGen.last_created_account.setID(-1);
+
         }
 
         // Reset loaded accounts
         accounts = new ArrayList<Account>();
 
         // Load and cast all lines as accounts
-        for (Object line : lines) {
-            accounts.add((Account) line);
+        for (int i = 0; i < lines.size(); i++) {
+            Object line = lines.get(i);
+
+            // If the line is an account
+            if (Account.class.isInstance(line)) {
+                // Cast the account and add it
+                Account account = (Account) line;
+                accounts.add(account);
+
+                // If the account was created more recently, change the generator listing
+                if (account.getID() > AccountGen.last_created_account.getID()) {
+                    AccountGen.last_created_account = account;
+
+                }
             
+            } else {
+                // Send error
+                Log.sendMessage("Line " + i + " of " + file.getAbsolutePath() + " is not an account");
+
+            }
         }
 
     }

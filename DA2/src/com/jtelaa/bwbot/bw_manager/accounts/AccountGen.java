@@ -19,12 +19,10 @@ import com.jtelaa.da2.lib.misc.MiscUtil;
  * @see com.jtelaa.bwbot.bwlib.Account
  */
 
-// TODO Comment
-
 public class AccountGen {
 
     /** The account last created by the generator */
-    public volatile static Account last_created_account; // TODO Load in program initialization
+    public volatile static Account last_created_account = new Account();
 
     /** Random */
     private static Random rng;
