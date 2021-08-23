@@ -87,7 +87,7 @@ public class Main {
 
         // Remote CLI
         if (my_config.runRemoteCLI()) {
-            Log.sendMessage("Remote CLI Allowed");
+            Log.sendMessage("Remote Cli Enabled");
             rem_cli = new RemoteCLI();
             rem_cli.start();
 
