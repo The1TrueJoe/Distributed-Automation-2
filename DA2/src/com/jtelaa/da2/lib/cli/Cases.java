@@ -12,6 +12,28 @@ import com.jtelaa.da2.lib.control.Command;
 
 public class Cases {
 
+     /**
+     * Checks to see if the command matches a certain case
+     * 
+     * @param command Command to check
+     * @param options Case to check against
+     * 
+     * @return if the command matches
+     */
+
+    public static boolean checkCase(Command command, String options) {
+        return checkCase(command, new String[] { options });
+    }
+
+    /**
+     * Checks to see if the command matches a certain case
+     * 
+     * @param command Command to check
+     * @param options Cases to check against
+     * 
+     * @return if the command matches
+     */
+
     public static boolean checkCase(Command command, String[] options) {
         // Sort through all options to see if command applues
         for (String option : options) {
