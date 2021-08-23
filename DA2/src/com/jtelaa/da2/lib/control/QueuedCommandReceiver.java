@@ -6,7 +6,9 @@ import java.util.Queue;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.SysPorts;
+import com.jtelaa.da2.lib.net.ports.ManualPort;
+import com.jtelaa.da2.lib.net.ports.Ports;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
@@ -19,6 +21,15 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
  */
 
 public class QueuedCommandReceiver extends Thread {
+
+    public QueuedCommandReceiver(int port) { this(new ManualPort(port)); }
+
+    public QueuedCommandReceiver(Ports port) { this.port = port; }
+
+    public QueuedCommandReceiver() { this(default_port); }
+
+    private Ports port;
+    public static volatile Ports default_port = SysPorts.CMD;
 
     private static String log_prefix = "CMD Receiver: ";
 
@@ -46,7 +57,7 @@ public class QueuedCommandReceiver extends Thread {
     public void run() {
         // Open UDP server
         Log.sendMessage(log_prefix + "Starting");
-        cmd_rx = new ServerUDP(SysPorts.CMD, log_prefix);
+        cmd_rx = new ServerUDP(port, log_prefix);
 
         // Setup queue
         command_queue = new LinkedList<>();

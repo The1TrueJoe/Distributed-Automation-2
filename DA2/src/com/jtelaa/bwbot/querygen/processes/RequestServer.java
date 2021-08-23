@@ -22,7 +22,7 @@ public class RequestServer extends Thread {
 
     public void run() {
         // Setup server
-        ServerUDP server = new ServerUDP(BWPorts.QUERY_REQUEST.getPort(), "Query Request Server: ", ConsoleColors.GREEN);
+        ServerUDP server = new ServerUDP(BWPorts.QUERY_REQUEST, "Query Request Server: ", ConsoleColors.GREEN);
         
         // Bot address var
         String bot_address;

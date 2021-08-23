@@ -6,8 +6,10 @@ import java.util.Queue;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
+import com.jtelaa.da2.lib.net.ports.ManualPort;
+import com.jtelaa.da2.lib.net.ports.Ports;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 
 /**
  * Sends responses in batches <p>
@@ -19,6 +21,15 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
  // TODO comment
 
 public class QueuedResponseSender extends Thread {
+
+    public QueuedResponseSender(int port) { this(new ManualPort(port)); }
+
+    public QueuedResponseSender(Ports port) { this.port = port; }
+
+    public QueuedResponseSender() { this(default_port); }
+
+    private Ports port;
+    public static volatile Ports default_port = SysPorts.RESPONSE;
     
     private volatile static Queue<String> response_queue;
     private volatile static Queue<String> response_server_queue;
@@ -68,7 +79,7 @@ public class QueuedResponseSender extends Thread {
             
         }
 
-        cmd_tx = new ClientUDP(server, SysPorts.RESPONSE, "Response Sender: ");
+        cmd_tx = new ClientUDP(server, port, "Response Sender: ");
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(message);

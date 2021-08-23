@@ -2,8 +2,9 @@ package com.jtelaa.da2.lib.log;
 
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
+import com.jtelaa.da2.lib.net.ports.Ports;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 
 /**
  * New process for sending logging messages
@@ -28,6 +29,20 @@ public class LogSender extends Thread {
     /** Local ip (For logging purposes) */
     private String logging_server_ip;
 
+    /** Logging port */
+    private Ports logging_port;
+
+    /**
+     * Default Constructor
+     * (Port = Default, IP = localhost)
+     */
+
+    public LogSender() {
+        logging_server_ip = "127.0.0.1";
+        logging_port = SysPorts.LOG;
+
+    }
+
     /**
      * Constructor
      * 
@@ -36,6 +51,20 @@ public class LogSender extends Thread {
 
     public LogSender(String logging_server_ip) {
         this.logging_server_ip = logging_server_ip;
+        logging_port = SysPorts.LOG;
+
+    }
+
+    /**
+     * Constructor
+     * 
+     * @param logging_server_ip Log server ip to use
+     * @param logging_port Alternative logging port
+     */
+
+    public LogSender(String logging_server_ip, Ports logging_port) {
+        this.logging_server_ip = logging_server_ip;
+        this.logging_port = logging_port;
 
     }
 
@@ -50,7 +79,7 @@ public class LogSender extends Thread {
         local_ip = NetTools.getLocalIP();
 
         // Start logging client
-        logging_client = new ClientUDP(logging_server_ip, SysPorts.LOG);
+        logging_client = new ClientUDP(logging_server_ip, logging_port);
         log_established = logging_client.startClient();
 
         while (run) {

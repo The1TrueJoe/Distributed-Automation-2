@@ -1,6 +1,6 @@
 package com.jtelaa.bwbot.bwlib;
 
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.ports.Ports;
 
 /**
  * Enumeration type containing port numbers for the BW system plugin

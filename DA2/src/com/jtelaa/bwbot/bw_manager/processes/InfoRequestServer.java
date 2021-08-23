@@ -21,7 +21,7 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 public class InfoRequestServer extends Thread {
 
     public void run() {
-        ServerUDP server = new ServerUDP(BWPorts.INFO_REQUEST.getPort());
+        ServerUDP server = new ServerUDP(BWPorts.INFO_REQUEST);
 
         while (!run) {
             MiscUtil.waitasec();

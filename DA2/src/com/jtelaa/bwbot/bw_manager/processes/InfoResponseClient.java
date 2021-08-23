@@ -94,7 +94,7 @@ public class InfoResponseClient extends Thread {
     }
 
     private void sendCommand(Command command) {
-        cmd_tx = new ClientUDP(command.destination(), BWPorts.INFO_RECEIVE.getPort());
+        cmd_tx = new ClientUDP(command.destination(), BWPorts.INFO_RECEIVE);
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(command.command());

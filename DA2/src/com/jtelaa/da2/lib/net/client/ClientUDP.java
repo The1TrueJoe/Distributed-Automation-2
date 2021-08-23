@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import com.jtelaa.da2.lib.control.Messages;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.ports.Ports;
 
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.Test;
@@ -44,8 +44,13 @@ public class ClientUDP {
      * 
      * @param server_ip IP to contact
      * @param port Port to contact
+     * 
+     * @deprecated juse use the Ports object instead (ManualPort for a specefied port)
+     * @see com.jtelaa.da2.lib.net.ports.Ports
+     * @see com.jtelaa.da2.lib.net.ports.ManualPort
      */
 
+    @Deprecated
     public ClientUDP(String server_ip, int port) { 
         this(server_ip, port, "");
         
@@ -82,8 +87,13 @@ public class ClientUDP {
      * @param server_ip IP to contact
      * @param port Port to contact
      * @param logPrefix Prefix to add to log messages
+     * 
+     * @deprecated juse use the Ports object instead (ManualPort for a specefied port)
+     * @see com.jtelaa.da2.lib.net.ports.Ports
+     * @see com.jtelaa.da2.lib.net.ports.ManualPort
      */
 
+    @Deprecated
     public ClientUDP(String server_ip, int port, String logPrefix) { 
         // Log prefix
         this.log_prefix = logPrefix;

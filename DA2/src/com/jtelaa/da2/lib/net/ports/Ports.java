@@ -1,4 +1,4 @@
-package com.jtelaa.da2.lib.net;
+package com.jtelaa.da2.lib.net.ports;
 
 /**
  * Simple abstraction interface for port enums

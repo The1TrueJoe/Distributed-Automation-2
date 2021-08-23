@@ -3,7 +3,9 @@ package com.jtelaa.da2.lib.control;
 import java.util.Queue;
 
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.SysPorts;
+import com.jtelaa.da2.lib.net.ports.ManualPort;
+import com.jtelaa.da2.lib.net.ports.Ports;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
@@ -17,6 +19,15 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 public class QueuedResponseReceiver extends Thread {
 
+    public QueuedResponseReceiver(int port) { this.port = new ManualPort(port); }
+
+    public QueuedResponseReceiver(Ports port) { this.port = port; }
+
+    public QueuedResponseReceiver() { this(default_port); }
+
+    private Ports port;
+    public static volatile Ports default_port = SysPorts.RESPONSE;
+
     private volatile static Queue<String> response_queue;
 
     private ServerUDP cmd_rx;
@@ -25,7 +36,7 @@ public class QueuedResponseReceiver extends Thread {
     public synchronized String getMessage() { return response_queue.poll(); }
 
     public void run() {
-        cmd_rx = new ServerUDP(SysPorts.RESPONSE, "Response Receiver: ");
+        cmd_rx = new ServerUDP(port, "Response Receiver: ");
 
         while (!run) {
             MiscUtil.waitasec();

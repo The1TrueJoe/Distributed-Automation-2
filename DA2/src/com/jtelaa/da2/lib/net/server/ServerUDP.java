@@ -7,7 +7,7 @@ import java.net.InetAddress;
 
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.ports.Ports;
 
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.Test;
@@ -44,8 +44,13 @@ public class ServerUDP {
      * Constructor
      * 
      * @param port Port to open
+     * 
+     * @deprecated juse use the Ports object instead (ManualPort for a specefied port)
+     * @see com.jtelaa.da2.lib.net.ports.Ports
+     * @see com.jtelaa.da2.lib.net.ports.ManualPort
      */
 
+    @Deprecated
     public ServerUDP(int port) { 
         log_prefix = "";
         this.port = port; 
@@ -70,8 +75,13 @@ public class ServerUDP {
      * Constructor
      * 
      * @param port Port to open
+     * 
+     * @deprecated juse use the Ports object instead (ManualPort for a specefied port)
+     * @see com.jtelaa.da2.lib.net.ports.Ports
+     * @see com.jtelaa.da2.lib.net.ports.ManualPort
      */
 
+    @Deprecated
     public ServerUDP(int port, String log_prefix) { 
         this.port = port; 
         this.log_prefix = log_prefix;
@@ -96,8 +106,13 @@ public class ServerUDP {
      * Constructor
      * 
      * @param port Port to open
+     * 
+     * @deprecated juse use the Ports object instead (ManualPort for a specefied port)
+     * @see com.jtelaa.da2.lib.net.ports.Ports
+     * @see com.jtelaa.da2.lib.net.ports.ManualPort
      */
 
+    @Deprecated
     public ServerUDP(int port, String log_prefix, ConsoleColors colors) { 
         this.port = port; 
         this.log_prefix = log_prefix;

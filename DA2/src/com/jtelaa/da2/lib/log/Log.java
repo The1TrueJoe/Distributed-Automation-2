@@ -5,6 +5,8 @@ import java.util.Queue;
 
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleColors;
+import com.jtelaa.da2.lib.net.ports.Ports;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 
 /**
  * Logging capability
@@ -23,7 +25,10 @@ public class Log {
     /** The logging verbostiy */
     public volatile static boolean log_verbose;
 
+    /** Log Queue */
     public volatile static Queue<String> logging_queue;
+
+    /** Log Sender Process */
     private volatile static LogSender sender;
 
     /**
@@ -37,7 +42,25 @@ public class Log {
 
     }
 
+    /**
+     * Opens the logging client to send messages to servers
+     * 
+     * @param logging_port IP of server
+     */
+
     public synchronized static void openClient(String logging_server_ip) {
+        openClient(logging_server_ip, SysPorts.LOG);
+
+    }
+
+    /**
+     * Opens the logging client to send messages to servers
+     * 
+     * @param logging_server_ip IP of server
+     * @param logging_port Port to use
+     */
+
+    public synchronized static void openClient(String logging_server_ip, Ports logging_port) {
         // Stop if log is not verbose
         if (!log_verbose) { 
             sendSysMessage("Local Logging Only");
@@ -49,7 +72,7 @@ public class Log {
         logging_queue = new LinkedList<String>();
         
         // Start the log sender
-        sender = new LogSender(logging_server_ip);
+        sender = new LogSender(logging_server_ip, logging_port);
         sender.start();
 
     }
