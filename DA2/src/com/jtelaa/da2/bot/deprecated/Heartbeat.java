@@ -1,24 +1,27 @@
-package com.jtelaa.da2.bot.util;
+package com.jtelaa.da2.bot.deprecated;
 
 import com.jtelaa.da2.bot.main.Main;
 import com.jtelaa.da2.lib.bot.MgmtMessages;
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 
 /**
  * Sends out a signal to show the bot is alive
  * 
  * @since 2
  * @author Joseph
+ * 
+ * @deprecated NEW Heartbeat will be based off of ICMP
  */
 
- // TODO comment
-
+ @Deprecated
 public class Heartbeat extends Thread {
 
+    /** Heartbeat Interval */
     public static int HEARTBEAT_INTERVAL = 60000;
 
+    /** Client */
     private ClientUDP heart;
     
     public void run() {
@@ -26,6 +29,7 @@ public class Heartbeat extends Thread {
         heart = new ClientUDP(Main.me.getHearbeatIP(), SysPorts.HEARTBEAT);
         heart.startClient();
 
+        // Send beats
         while (run) {
             heart.sendMessage(MgmtMessages.BEAT.getMessage() + " " + Main.me.getID());
             MiscUtil.waitamoment(HEARTBEAT_INTERVAL);
