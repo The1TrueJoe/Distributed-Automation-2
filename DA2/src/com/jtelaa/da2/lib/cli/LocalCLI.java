@@ -2,7 +2,7 @@ package com.jtelaa.da2.lib.cli;
 
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-
+import com.jtelaa.da2.lib.net.ports.Ports;
 import com.jtelaa.da2.lib.bot.MgmtMessages;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.QueuedCommandReceiver;
@@ -70,9 +70,12 @@ public abstract class LocalCLI extends Thread {
      * @param enable_message Message to listen for before enabling CLI
      */
 
-    public void runRX(MgmtMessages enable_message) {
+    public void runRX(MgmtMessages enable_message) { runRX(enable_message, QueuedCommandReceiver.default_port); }
+
+    public void runRX(MgmtMessages enable_message, Ports port) {
+
         // Open rx
-        openOnewayRX();
+        openOnewayRX(port);
 
         String local_ip = NetTools.getLocalIP();
         Command command;
@@ -82,7 +85,7 @@ public abstract class LocalCLI extends Thread {
         while (!cli_enabled && run) {
             if (cmd_rx.getLatest().equals(enable_message) || enable_message.equals(MgmtMessages.NONE)) {
                 // Notification
-                Log.sendSysMessage("Remote CLI Ready");
+                Log.sendSysMessage("CLI Ready");
 
                 cli_enabled = true;
 
@@ -126,6 +129,7 @@ public abstract class LocalCLI extends Thread {
 
     public void addCommandRX(String command) {
         cmd_rx.add(command);
+
     }
 
     /**
@@ -136,6 +140,7 @@ public abstract class LocalCLI extends Thread {
 
     public void addCommandRX(Command command) {
         cmd_rx.add(command);
+
     }
 
     /**
@@ -144,45 +149,23 @@ public abstract class LocalCLI extends Thread {
 
     public void runTX() {
         openOnewayTX();
-    }
-
-    /**
-     * Enables the servers and clients
-     * <p> Automatically run in the open methods
-     */
-
-    private void enable() { 
-        run = true;
-
-        cmd_rx = new QueuedCommandReceiver();
-        resp_tx = new QueuedResponseSender();
-        resp_rx = new QueuedResponseReceiver();
-        cmd_tx = new QueuedCommandSender();
 
     }
 
     /**
-     * Opens all of the servers and clients
-     */
-
-    public void open() {
-        enable();
-
-        cmd_rx.start();
-        resp_rx.start();
-        resp_tx.start();
-        cmd_tx.start();
-    }
-
-    /**
-     * Opens servers and clients for cmd reception
+     * Opens cmd receiver
      */
 
     public void openOnewayRX() {
-        enable();
-
+        cmd_rx = new QueuedCommandReceiver();
         cmd_rx.start();
-        resp_tx.start();
+        
+    }
+
+    public void openOnewayRX(Ports port) {
+        cmd_rx = new QueuedCommandReceiver(port);
+        cmd_rx.start();
+        
     }
 
     /**
@@ -190,23 +173,15 @@ public abstract class LocalCLI extends Thread {
      */
 
     public void openOnewayTX() {
-        enable();
-
-        resp_rx.start();
+        cmd_tx = new QueuedCommandSender();
         cmd_tx.start();
+        
     }
-    
 
-    /**
-     * Closes all of the clients and servers
-     */
-
-    public void close() {
-        cmd_rx.stopReceiver();
-        cmd_tx.stopSender();
-        cmd_rx.stopReceiver();
-        cmd_tx.stopSender();
-
+    public void openOnewayTX(Ports port) {
+        cmd_tx = new QueuedCommandSender(port);
+        cmd_tx.start();
+        
     }
 
     /**
@@ -215,7 +190,7 @@ public abstract class LocalCLI extends Thread {
 
     public void closeOnewayRX() {
         cmd_rx.stopReceiver();
-        resp_tx.stopSender();
+        
     }
 
     /**
@@ -223,8 +198,8 @@ public abstract class LocalCLI extends Thread {
      */
 
     public void closeOnewayTX() {
-        resp_rx.stopReceiver();
         cmd_tx.stopSender();
+
     }
 
 }
