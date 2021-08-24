@@ -1,12 +1,13 @@
 package com.jtelaa.da2.bot.main;
 
 import com.jtelaa.da2.bot.plugin.Plugins;
-import com.jtelaa.da2.bot.util.CLI;
-import com.jtelaa.da2.bot.util.Heartbeat;
 import com.jtelaa.da2.bot.util.LogRepeater;
+import com.jtelaa.da2.bot.util.RemoteCLI;
+import com.jtelaa.da2.bot.util.SysCLI;
 import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 
@@ -15,14 +16,14 @@ import com.jtelaa.da2.lib.misc.MiscUtil;
 
 public class Main {
 
+    /** The remote cli local object */ 
+    public static RemoteCLI rem_cli;
+
+    /** The system cli local object */ 
+    public static SysCLI sys_cli;
+
     // The bots local object
     public static Bot me;
-
-    // The cli local object
-    public static CLI cli;
-
-    // Heartbeat Processes
-    private static Heartbeat beat;
 
     public static void main(String[] args) {
         // Default configuration file location
@@ -54,27 +55,46 @@ public class Main {
         // Send welcome message
         Log.sendSysMessage(ConsoleBanners.botBanner());
         Log.sendMessage("Welcome to the DA2 Bot Client! I am bot " + me.getID());
-        
-        // Start heartbeat
-        if (me.hasHeartBeat()) { beat = new Heartbeat(); } 
+
+        // TODO Add Enrollment
 
         // Add plugins
         Plugins.importPlugins(me.getConfig().getProperty("plugin_path", "plugins.txt"));
+        Plugins.startAll();
         
-        // Start CLI
-        cli = new CLI();
-        cli.start();
+        // Done
+        Log.sendMessage("Main: Done", ConsoleColors.GREEN);
 
-        // Wait
-        MiscUtil.waitasec();
+        // Remote CLI
+        if (me.getConfig().runRemoteCLI()) {
+            Log.sendMessage("Remote CLI Allowed");
+            rem_cli = new RemoteCLI();
+            rem_cli.start();
 
-        // While CLI is available
-        while (cli.cli_enabled) {
+        } else {
+            Log.sendMessage("No Remote CLI");
 
         }
 
+        // Local CLI
+        if (me.getConfig().runLocalCLI()) {
+            Log.sendMessage("Local CLI Allowed");
+            sys_cli = new SysCLI();
+            sys_cli.start();
+
+        } else {
+            Log.sendMessage("No Local CLI");
+
+        }
+
+        Log.sendMessage("Waiting 45s for CLI bootup");
+        MiscUtil.waitasec(45);
+        Log.sendMessage("Done waiting");
+
+        if (me.getConfig().runLocalCLI()) { sys_cli.runCLI(); }
+        if (me.getConfig().runRemoteCLI()) { rem_cli.runCLI(); }
+
         // Stop
-        beat.stopHeart();
         Log.closeLog();
         repeater.stopRepeater();
 
