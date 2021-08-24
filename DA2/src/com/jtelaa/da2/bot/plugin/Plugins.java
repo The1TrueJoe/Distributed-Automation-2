@@ -3,9 +3,8 @@ package com.jtelaa.da2.bot.plugin;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.jtelaa.da2.lib.control.Command;
-import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.files.FileUtil;
+import com.jtelaa.da2.lib.log.Log;
 
 /**
  * Plugin managment
@@ -27,8 +26,7 @@ public class Plugins {
      */
 
     public static void importPlugins(String path) {
-        ArrayList<String> lines = FileUtil.listLinesFile(path);
-        for (String line : lines) { plugins.add(new Plugin(line)); }
+        importPlugins(new File(path));
 
     }
 
@@ -39,6 +37,12 @@ public class Plugins {
      */
 
     public static void importPlugins(File file) {
+        if (!file.exists()) { 
+            Log.sendMessage("Plugin File Does Not Exist");
+            return;
+
+        }
+
         ArrayList<String> lines = FileUtil.listLinesFile(file);
         for (String line : lines) { plugins.add(new Plugin(line)); }
         
@@ -80,6 +84,12 @@ public class Plugins {
      */
 
     public static void startAll() {
+        if (plugins.size() == 0) {
+            Log.sendMessage("No Plugins Detected");
+            return;
+
+        }
+
         for (Plugin plugin : plugins) {
             plugin.start();
 
@@ -105,72 +115,5 @@ public class Plugins {
 
     }
     
-}
-
-/**
- * Simple object for plugin managment
- */
-
-class Plugin {
-
-    /** Plugin path */
-    private String path;
-
-    /** Plugin path */
-    private String name;
-
-    /**
-     * Constructor for plugin object
-     */
-
-    public Plugin() { path = ""; }
-
-    /**
-     * Constructor for plugin object
-     * 
-     * @param path Plugin path
-     */
-
-    public Plugin(String path) { this.path = path; }
-
-    /**
-     * Constructor for plugin object
-     * 
-     * @param path Plugin path
-     * @param name Plugin name
-     */
-
-    public Plugin(String path, String name) { this.path = path; }
-
-    /** 
-     * Change the plugin name 
-     * 
-     * @param name Name to change 
-     */
-
-    public void changeName(String name) { this.name = name; }
-
-    /** @return plugin path */
-    public String getPath() { return path; }
-
-    /** @return plugin path */
-    public String getName() { return name; }
-
-    /** @return full command */
-    public String toString() { return "java -jar " + path; }
-
-    /** @return full command */
-    public Command getCommand() { return new Command(this.toString()); }
-
-    /** Runs command to start the plugin */
-    public String start() { return ComputerControl.sendCommand(new Command(this.toString())); }
-
-    /** 
-     * Checks if the plugins are equal
-     * 
-     * @param plugin Plugin to compare to
-     */
-
-    public boolean equals(Plugin plugin) { return this.getPath().equalsIgnoreCase(plugin.getPath()); }
     
 }
