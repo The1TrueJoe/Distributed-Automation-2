@@ -4,23 +4,31 @@ import java.util.ArrayList;
 
 import com.jtelaa.da2.director.Main;
 import com.jtelaa.da2.lib.bot.Bot;
-import com.jtelaa.da2.lib.bot.MgmtMessages;
+import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
  * Heartbeat Server
  * 
  * @since 2
+ * @version 2
+ * 
  * @author Joseph
  */
 
 public class HeartbeatServer extends Thread {
 
+    /** Logging prefix */
+    private String log_prefix = "Heartbeat: ";
+
     /** If the server is operating in child mode */
     private volatile boolean child_mode = false;
+
+    /** If the server is operating in child mode */
+    private volatile boolean parent_mode = false;
 
     /** Master Heartbeat Server (If the server is operating in child mode) */
     private volatile String master_ip;
@@ -52,15 +60,19 @@ public class HeartbeatServer extends Thread {
         active_bots = new ArrayList<Bot>();
         Object message;
 
-        // Server
-        ServerUDP server = new ServerUDP(SysPorts.HEARTBEAT);
-
         // Time since last update (Child Mode)
         long last_update_time = System.currentTimeMillis();
 
+        double duplicate_search_multiplier = 100;
+        long dup_last_update_time = System.currentTimeMillis();
+
         // Client to master server
-        ClientUDP client = new ClientUDP(master_ip, SysPorts.HEARTBEAT_MASTER); 
+        ClientUDP client = new ClientUDP(master_ip, SysPorts.HEARTBEAT_MASTER, log_prefix);
         if (child_mode) { client.startClient(); }
+
+        // Client to master server
+        ServerUDP server = new ServerUDP(SysPorts.HEARTBEAT_MASTER, log_prefix);
+        if (parent_mode) { server.startServer(); }
 
         while (!run) {
             MiscUtil.waitasec();
@@ -68,44 +80,20 @@ public class HeartbeatServer extends Thread {
         }
 
         while(run) {
-            // Get the message
-            message = server.getObject();
-
-            // If in child mode an the object is correct
-            if (child_mode && MultipleBeats.class.isInstance(message)) {
-                // Get ids
-                MultipleBeats beats = (MultipleBeats) message;
-                int[] ids = beats.ids;
-
-                // Mark all ids as alive
-                for (int id : ids) {
-                    markAlive(id);
-
-                }
-
-            // If not in child mode (Object likely a string)
-            } else  {
-                // If it is a beat message
-                if (MgmtMessages.BEAT.equals(message)) {
-                    // Cast the message as a String
-                    String message_str = (String) message;
-                
-                    // Get bot & mark alive
-                    int id = Integer.parseInt(message_str.substring(MgmtMessages.BEAT.getMessage().length()));
-                    markAlive(id);
-                
-                } else {
-                    // Check if all bots are recently alive
-                    update();
-                
-                }
-
-            }
-
-            // If child mode
             if (child_mode) {
                 // If it is the correct time
                 if (System.currentTimeMillis() - last_update_time >= HEARTBEAT_INTERVAL) {
+                    // Check for life
+                    for (Bot bot : Main.bt_mgmt.getAllBots()) {
+                        if (bot.isReachable()) {
+                            markAlive(bot.getID());
+
+                        } else {
+                            active_bots.remove(bot);
+
+                        }
+                    }
+
                     // Create array of ids
                     int[] ids = new int[active_bots.size()];
 
@@ -118,11 +106,51 @@ public class HeartbeatServer extends Thread {
                     // Send list to master
                     client.sendObject(new MultipleBeats(ids));
 
-                    // Update time
-                    last_update_time = System.currentTimeMillis();
+                } else {
+                    MiscUtil.waitasec();
+
                 }
 
+            } else if (parent_mode) {
+                // Get the message
+                message = server.getObject();
+
+                // If in child mode an the object is correct
+                if (MultipleBeats.class.isInstance(message)) {
+                    // Get ids
+                    MultipleBeats beats = (MultipleBeats) message;
+                    int[] ids = beats.ids;
+
+                    // Mark all ids as alive
+                    for (int id : ids) {
+                       markAlive(id);
+
+                    }
+                }
+
+
             }
+
+            // Update time
+            last_update_time = System.currentTimeMillis();
+
+            // Check for duplicates 
+            if (dup_last_update_time > System.currentTimeMillis() - (duplicate_search_multiplier * HEARTBEAT_INTERVAL)) {
+                Log.sendMessage("Searching for duplicates");
+                int result = removeDuplicates();
+
+                if (result > 0 && duplicate_search_multiplier < Integer.MAX_VALUE - 1000) { 
+                    duplicate_search_multiplier += 10; 
+                
+                } else if (result > 5 && duplicate_search_multiplier > Integer.MIN_VALUE + 1000) {
+                    duplicate_search_multiplier -= 10;
+
+                }
+
+                dup_last_update_time = System.currentTimeMillis();
+
+            }
+
             
         }
 
@@ -172,13 +200,17 @@ public class HeartbeatServer extends Thread {
      */
 
     public void markAlive(int id) {
-        // Get bot
-        Bot bot = Main.bt_mgmt.getBot(id);
+        Bot current_bot = Main.bt_mgmt.getBot(id);
 
-        // Update bot and mark it alive
-        bot.last_seen = System.currentTimeMillis();
-        active_bots.add(bot);
+        if (active_bots.contains(current_bot)) {
+            // Get bot and update time
+            int index = active_bots.indexOf(current_bot);
+            active_bots.get(index).last_seen = System.currentTimeMillis();
 
+        } else {
+            active_bots.add(current_bot);
+
+        }
     }
 
     /**
@@ -186,16 +218,51 @@ public class HeartbeatServer extends Thread {
      */
 
     public void update() {
-        // Last time it could be seen if it missed two beats
-        long earliest_alive = System.currentTimeMillis() - (2 * HEARTBEAT_INTERVAL);
+        // Last time it could be seen if it missed five beats
+        long earliest_alive = System.currentTimeMillis() - (5 * HEARTBEAT_INTERVAL);
 
         // Check all bots
         for (Bot bot : active_bots) {
+            // See when the earlies time seen was
             if (bot.last_seen < earliest_alive) {
                 active_bots.remove(bot);
 
             }
         }
+
+        
+    }
+
+    /**
+     * Search for and remove duplicates in the active_bots
+     * 
+     * @return Number of duplicates
+     */
+
+    public int removeDuplicates() {
+        // all ids to remove duplicates
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        for (Bot bot : active_bots) { ids.add(bot.getID()); }
+
+        int num_of_duplicates = 0;
+
+        for (int current_index = 0; current_index < ids.size(); current_index++) {
+            int current_id = ids.get(current_index);
+
+            for (int i = 0; i < ids.size(); i++) {
+                if (i != current_index && ids.get(i) == current_id) {
+                    if (active_bots.get(current_index).last_seen > active_bots.get(i).last_seen) {
+                        num_of_duplicates++;
+                        active_bots.remove(i);
+
+                    }
+                }
+            }
+        }
+
+        Log.sendMessage(log_prefix + num_of_duplicates + " Duplicates Found and Removed");
+        return num_of_duplicates;
+
     }
 
     /**
