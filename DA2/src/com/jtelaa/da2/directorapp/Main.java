@@ -3,10 +3,10 @@ package com.jtelaa.da2.directorapp;
 import java.util.Scanner;
 
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.SysPorts;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.Client;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 import com.jtelaa.da2.lib.net.server.Server;
 import com.jtelaa.da2.directorapp.gui.GUI;
 
