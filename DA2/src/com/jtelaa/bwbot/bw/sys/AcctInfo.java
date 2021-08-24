@@ -9,11 +9,9 @@ import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 import com.jtelaa.bwbot.bw.Main;
-import com.jtelaa.bwbot.bw.util.BWControls;
 import com.jtelaa.bwbot.bwlib.Account;
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
-import com.jtelaa.bwbot.bwlib.Card;
 import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
@@ -40,8 +38,11 @@ public class AcctInfo {
     public static Account me;
 
     /** */
-    public static void setup() {
+    public static void setup(boolean first_time) {
         bw_mgr_ip = Main.config.getProperty("bw_mgr_ip");
+
+        if (first_time) { requestAccount(); }
+        loadAccount();
 
     }
 
@@ -51,13 +52,14 @@ public class AcctInfo {
 
     public static void announceAccount() {
         // Setup client
-        ClientUDP pt_announce = new ClientUDP(bw_mgr_ip, BWPorts.ACCOUNT_ANNOUNCE.getPort());
+        ClientUDP pt_announce = new ClientUDP(bw_mgr_ip, BWPorts.ACCOUNT_ANNOUNCE);
         pt_announce.startClient();
         
         // Recalculate points
         me.newPoints(getPointCount());
 
         // Send account
+        Log.sendMessage("Announcing Account Info.....");
         pt_announce.sendObject(me);
 
         // Close
@@ -125,11 +127,11 @@ public class AcctInfo {
     public static void requestAccount() {
 
         // Server to send account data
-        ServerUDP acct_response = new ServerUDP(BWPorts.ACCOUNT_ANNOUNCE.getPort());
+        ServerUDP acct_response = new ServerUDP(BWPorts.ACCOUNT_ANNOUNCE);
         acct_response.startServer();
 
         // Client to accept requests
-        ClientUDP acct_request = new ClientUDP(bw_mgr_ip, BWPorts.INFO_REQUEST.getPort());
+        ClientUDP acct_request = new ClientUDP(bw_mgr_ip, BWPorts.INFO_REQUEST);
         acct_request.startClient();
 
         // Send an account request
@@ -142,6 +144,7 @@ public class AcctInfo {
             // Get and check response
             response = acct_response.getMessage();
             if (response.contains(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage())) {
+                // Get the account
                 me = (Account) acct_response.getObject();
                 
                 // Store account info
@@ -151,12 +154,14 @@ public class AcctInfo {
                 Main.config.setProperty("last_name", me.getPassword());
                 Main.config.setProperty("birthday", me.getBirthDay().getTimeInMillis() + "");
                 
+
+
                 return;
             }
 
             MiscUtil.waitasec();
 
-        } while (response.contains(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage()));
+        } while (!response.contains(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage()));
     }
     
 }

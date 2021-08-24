@@ -10,7 +10,9 @@ import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
-import com.jtelaa.da2.lib.net.server.Server;
+import com.jtelaa.da2.lib.net.ports.ManualPort;
+import com.jtelaa.da2.lib.net.ports.Ports;
+import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
  * System for searching using Bing
@@ -109,7 +111,7 @@ public class SearchSystem {
         for (; current_count < max; current_count++) {
             // Request Search
             Log.sendMessage("Requesting search " + current_count);
-            query = requestQuery(query_ip, BWPorts.QUERY_REQUEST.getPort(), BWPorts.QUERY_RECEIVE.getPort());
+            query = requestQuery(query_ip);
             
             // Run search, wait, and the close
             BWControls.openBing(query);
@@ -154,6 +156,8 @@ public class SearchSystem {
      * Sends a request for a query
      * 
      * @return The search query
+     * 
+     * @param ip IP to contact
      */
 
     public static Query requestQuery(String ip) {
@@ -165,22 +169,42 @@ public class SearchSystem {
      * Sends a request for a query
      * 
      * @return The search query
+     * 
+     * @param request Request port
+     * @param receive Receive port
+     * 
+     * @deprecated Use port object
      */
 
+    @Deprecated
     public static Query requestQuery(String ip, int request, int receive) {
+        return requestQuery(ip, new ManualPort(request), new ManualPort(receive));
+
+    }
+
+    /**
+     * Sends a request for a query
+     * 
+     * @return The search query
+     * 
+     * @param request Request port
+     * @param receive Receive port
+     */
+
+    public static Query requestQuery(String ip, Ports request, Ports receive) {
         // Local var setup
         String response = "";
 
         // Setup request client
-        ClientUDP send = new ClientUDP(ip, request);
+        ClientUDP send = new ClientUDP(ip, receive);
         send.startClient();
 
         // Send & close
-        send.sendMessage(BWMessages.QUERY_REQUEST_MESSAGE.getMessage());
+        send.sendMessage(BWMessages.QUERY_REQUEST_MESSAGE);
         send.closeClient();
 
         // Start server
-        Server get = new Server(receive);
+        ServerUDP get = new ServerUDP(request);
         get.startServer();
         
         // Wait for responses

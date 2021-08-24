@@ -29,5 +29,11 @@ public class Redeem {
         return "";
 
     }
+
+    public static void setup() {
+    }
+
+    public static void redeemCard(Card card) {
+    }
     
 }
