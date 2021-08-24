@@ -25,6 +25,9 @@ public class Bot implements Serializable {
     /** Bot ip */
     private String ip;
 
+    /** Bot ip */
+    private String owner_phone_number;
+
     /** Config handler */
     private ConfigHandler config;
 
@@ -35,27 +38,7 @@ public class Bot implements Serializable {
      */
 
     public Bot(String ip) {
-        this.config = new ConfigHandler();
-        ip = config.getIP();
-        id = config.getID();
-
-    }
-
-    /**
-     * Constructor 
-     * 
-     * @param ip Bot ip
-     * @param id Bot id
-     */
-
-    public Bot(String ip, int id) {
-        this.config = new ConfigHandler();
-
         this.ip = ip;
-        config.setIP(ip);
-
-        this.id = id;
-        config.setID(id);
 
     }
 
@@ -69,6 +52,7 @@ public class Bot implements Serializable {
         this.config = config;
         ip = config.getIP();
         id = config.getID();
+        owner_phone_number = config.getProperty("phone-number", "704-351-7396");
 
     }
 
@@ -80,6 +64,9 @@ public class Bot implements Serializable {
 
     /** @return bot id */
     public int getID() { return id; }
+
+    /** @return get owner number */
+    public String getOwnerNumber() { return owner_phone_number; }
 
     /** @return bot config */
     public ConfigHandler getConfig() { return config; }
