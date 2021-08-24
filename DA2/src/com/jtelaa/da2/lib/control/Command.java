@@ -3,7 +3,7 @@ package com.jtelaa.da2.lib.control;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.jtelaa.da2.director.botmgmt.MgmtMessages;
+import com.jtelaa.da2.lib.bot.MgmtMessages;
 import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.lib.misc.MiscUtil;
@@ -46,9 +46,6 @@ public class Command implements Serializable {
     /** Index of the argument key in the command (For the external mgmt) */
     public static final int ARG_3 = 5;
     
-
-    private Command[] split;
-    
     private String command;
     private String dest_ip;
     private String org_ip;
@@ -67,8 +64,6 @@ public class Command implements Serializable {
         org_ip = NetTools.getLocalIP();
         isHeadless = true;
 
-        split = split(" ");
-
     }
 
     /**
@@ -83,8 +78,6 @@ public class Command implements Serializable {
 
         org_ip = NetTools.getLocalIP();
         isHeadless = true;
-
-        split = split(" ");
 
     }
 
@@ -102,8 +95,6 @@ public class Command implements Serializable {
 
         org_ip = NetTools.getLocalIP();
 
-        split = split(" ");
-
     }
 
     /**
@@ -120,8 +111,6 @@ public class Command implements Serializable {
 
         isHeadless = true;
 
-        split = split(" ");
-
     }
 
     /**
@@ -134,8 +123,6 @@ public class Command implements Serializable {
         this.command = new_command;
         this.dest_ip = command.destination();
         this.org_ip = command.origin();
-
-        split = split(" ");
 
     }
 
@@ -152,8 +139,6 @@ public class Command implements Serializable {
         this.dest_ip = dest_ip;
         this.org_ip = org_ip;
         this.isHeadless = isHeadless;
-
-        split = split(" ");
 
     }
 
@@ -211,6 +196,8 @@ public class Command implements Serializable {
      */
 
     public Command[] split(String regex) { 
+        if (command.equals(regex) || !MiscUtil.notBlank(command)) { return new Command[] {new Command("")}; }
+
         String[] tmps = command.split(regex);
         Command[] cmds = new Command[tmps.length]; 
 
@@ -271,15 +258,23 @@ public class Command implements Serializable {
 
     public Command[] getSubCommands(int begin_index, int end_index, String regex) {
         Command[] commands = split(regex);
-        ArrayList<Command> sub_commands = new ArrayList<Command>();
+        if (commands.length == 1) { return commands; }
 
+        int size = end_index - begin_index;
+        if (size < 0) { size = 0; }
+
+        Command[] sub_commands = new Command[size];
+
+        int x = 0;
         for (int i = 0; i < commands.length; i++) {
             if (i >= begin_index && i < end_index) {
-                sub_commands.add(commands[i]);
+                sub_commands[x] = commands[i];
+                x++;
+
             }
         }
 
-        return (Command[]) sub_commands.toArray();
+        return sub_commands;
     }
 
     /**
@@ -289,7 +284,7 @@ public class Command implements Serializable {
      */
 
     public Command getModifier(int index) {
-        return split[index];
+        return split(" ")[index];
     }
 
     /**
@@ -300,17 +295,29 @@ public class Command implements Serializable {
      */
 
     public Command modifyforSys() {
-        String cmd = this.command;
-        String[] tmp_split = cmd.split(" ");
+        Command[] split = split(" ");
+        int start_index = Command.SYSTEM_COMMAND;
 
-        for (String tmp : tmp_split) {
-            if (Cases.command(new Command(this, tmp))) {
-                cmd = cmd.substring(cmd.indexOf(tmp + (tmp.length() - 1)));
-                return new Command(this, cmd);
+        if (!Cases.command(split[start_index])) {
+            for (int i = 0; i < split.length; i++) {
+                if (Cases.command(split[i])) {
+                    start_index = i;
+
+                }
             }
         }
 
-        return this;
+        Command[] sys_commands = getSubCommands(start_index);
+        String new_command = "";
+
+        for (Command sys_command : sys_commands) {
+            new_command += sys_command + " ";
+
+        }
+
+        new_command = new_command.substring(0, new_command.length()-1);
+        return new Command(new_command);
+        
     }
 
     /**
@@ -397,6 +404,13 @@ public class Command implements Serializable {
      * @return
      */
     public String command() { return command; }
+
+    /**
+     * @param index
+     * 
+     * @return
+     */
+    public Command command(int index) { return split(" ")[index]; }
 
     /**
      * 

@@ -3,47 +3,127 @@ package com.jtelaa.bwbot.querygen.searches;
 import java.util.Random;
 import java.util.ArrayList;
 
-import com.jtelaa.bwbot.bw.sys.SearchSystem;
-import com.jtelaa.bwbot.querygen.util.Query;
+import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.files.FileUtil;
+import com.jtelaa.da2.lib.log.Log;
 
-// TODO comment
+/**
+ * Random search query generator
+ * 
+ * @since 2
+ * @author Joseph
+ * 
+ * @see com.jtelaa.bwbot.bwlib.Query
+ * @see com.jtelaa.bwbot.querygen.processes.QueryGenerator
+ */
 
 public class SearchHandler {
 
+    /** Path of lists */
+    private static final String PATH = "com/jtelaa/bwbot/querygen/searches/searchdata/";
+
+    /** Logging prefix */
+    private static String log_prefix = "Search Handler: ";
+
+    /**
+     * Test that prints out searches
+     * 
+     * @param args Arguments
+     */ 
     public static void main(String[] args) {
         while (true) {
-            System.out.println(SearchSystem.BING_URL + getRandomSearch());
+            System.out.println(Query.BING_URL + getRandomSearch());
+
         }
     }
 
+    /**
+     * Generates random searches
+     * 
+     * @return new Query
+     */
 
     public synchronized static Query getRandomSearch() { 
         Random rand = new Random();
-        Query[] searches = loadSearches(100);
+
+        // Generate an array and pick at a random index
+        Query[] searches = getRandomSearches(100);
         return searches[rand.nextInt(searches.length-1)]; 
+
     }
+
+    /**
+     * Generates an array of random searches
+     * 
+     * @param count Size of the array
+     * 
+     * @return Array of random searches
+     */
     
-    public synchronized static Query[] loadSearches(int count) {
-        Query[] searches = new Query[count];
-        ArrayList<String> search_list = pickList();
+    public synchronized static Query[] getRandomSearches(int count) {
         Random rand = new Random();
 
+        // Setup lists
+        Query[] searches = new Query[count];
+        ArrayList<String> search_list = pickList();
+
+        // Populate lists
         for (int i = 0; i < searches.length; i++) {
-            searches[i] = new Query(search_list.get(rand.nextInt(search_list.size()-1)));
+            searches[i] = new Query(search_list.get(rand.nextInt(search_list.size()-1)).toLowerCase());
         
         }
 
+        // Return
         return searches;
+
     }
 
-    private synchronized static ArrayList<String> pickList() {
-        Random rand = new Random();
+    /**
+     * Pick a list of popular searches
+     * 
+     * @return List of popular searches
+     */
 
-        final String PATH = "com/jtelaa/da2/querygen/searches/searchdata/";
+    private synchronized static ArrayList<String> pickList() {
+        // Get list
+        Random rand = new Random();
+        String name = pickList(rand.nextInt(15));
+
+        // Read file
+        ArrayList<String> lines = FileUtil.listLinesInternalFile(name);
+
+        // Show file is empty
+        if (lines.size() < 1) {
+            
+
+            int i = -1;
+
+            do {
+                Log.sendMessage(log_prefix + "File " + name + " is empty");
+
+                i++;
+                lines = FileUtil.listLinesInternalFile(pickList(i));
+
+                if (i > 20) {
+                    Log.sendMessage(log_prefix + " All files empty (Will use list of default)");
+                    lines = ManualSearches.searches();
+
+                }
+
+            } while (lines.size() < 1);
+
+        }
+
+        // Return list + path
+        return lines;
+
+    }
+
+    public synchronized static String pickList(int num) {
         String name;
 
-        switch (rand.nextInt(15)) {
+        // Find random list
+        switch (num) {
             case 1:
                 name = ("Searches2009.txt");
             case 2:
@@ -69,7 +149,8 @@ public class SearchHandler {
 
         }
 
-        return FileUtil.listLinesInternalFile(PATH + name);
+        return PATH + name;
+
     }
     
 }

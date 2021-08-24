@@ -23,7 +23,8 @@ public class ConfigHandler {
     private Properties config;
 
     /**
-     * 
+     * Constructor
+     * <p> Creates a new config file
      */
 
     public ConfigHandler() {
@@ -32,8 +33,9 @@ public class ConfigHandler {
     }
 
     /**
+     * Constructor
      * 
-     * @param properties
+     * @param properties Properties file
      */
 
     public ConfigHandler(Properties properties) {
@@ -42,8 +44,9 @@ public class ConfigHandler {
     }
 
     /**
+     * Constructor
      * 
-     * @param path
+     * @param path Path of properties file
      */
 
     public ConfigHandler(String path) {
@@ -53,9 +56,10 @@ public class ConfigHandler {
     }
 
     /**
+     * Constructor
      * 
-     * @param path
-     * @param internal
+     * @param path Path of properties file
+     * @param internal Wether or not the file is internal
      */
 
     public ConfigHandler(String path, boolean internal) {
@@ -71,7 +75,9 @@ public class ConfigHandler {
     }
 
     /**
+     * Constructor
      * 
+     * @param config_file File object of properties file
      */
 
     public ConfigHandler(File config_file) {
@@ -148,6 +154,15 @@ public class ConfigHandler {
         }
     }
 
+    /**
+     * Returns contents of properties file
+     */
+
+    public String toString() {
+        return config.toString();
+        
+    }
+
     /** */
     public Properties get() { return config; }
 
@@ -164,8 +179,14 @@ public class ConfigHandler {
     /** */
     public boolean isTrue(String key) { return config.getProperty(key).equalsIgnoreCase("true"); }
     /** */
+    public boolean isTrue(String key, boolean def) { return config.getProperty(key, def+"").equalsIgnoreCase("true"); }
+    /** */
     public boolean isTrue(String key, String def) { return config.getProperty(key, def).equalsIgnoreCase("true"); }
 
+    /** Run a local cli */
+    public boolean runLocalCLI() { return isTrue("local_cli", true); }
+    /** Run a local cli */
+    public boolean runRemoteCLI() { return isTrue("remote_cli", false); }
 
     // Logging Verbosity
     /** */

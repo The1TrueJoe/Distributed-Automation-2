@@ -1,11 +1,14 @@
 package com.jtelaa.da2.lib.control;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.ports.ManualPort;
+import com.jtelaa.da2.lib.net.ports.Ports;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
@@ -19,6 +22,17 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 public class QueuedCommandReceiver extends Thread {
 
+    public QueuedCommandReceiver(int port) { this(new ManualPort(port)); }
+
+    public QueuedCommandReceiver(Ports port) { this.port = port; }
+
+    public QueuedCommandReceiver() { this(default_port); }
+
+    private Ports port;
+    public static volatile Ports default_port = SysPorts.CMD;
+
+    private static String log_prefix = "CMD Receiver: ";
+
     /** Command queue FIFO */
     private volatile static Queue<Command> command_queue;
 
@@ -26,15 +40,32 @@ public class QueuedCommandReceiver extends Thread {
     private ServerUDP cmd_rx;
 
     /** Gets the next command to be executed */
-    public synchronized Command getLatest() { return command_queue.poll(); }
+    public synchronized Command getLatest() { 
+        if (command_queue.size() > 0) {
+            return command_queue.poll(); 
+
+        } else {
+            return new Command("");
+
+        }
+        
+    }
 
     /** Gets the next command to be executed */
-    public synchronized Command getMessage() { return command_queue.poll(); }
+    public synchronized Command getMessage() { return getLatest(); }
 
     public void run() {
         // Open UDP server
-        Log.sendMessage("Starting command receiver");
-        cmd_rx = new ServerUDP(Ports.CMD.getPort());
+        Log.sendMessage(log_prefix + "Starting");
+        cmd_rx = new ServerUDP(port, log_prefix);
+
+        // Setup queue
+        command_queue = new LinkedList<>();
+
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
 
         // Check if the server is ready
         if (!cmd_rx.startServer()) { 
@@ -49,7 +80,7 @@ public class QueuedCommandReceiver extends Thread {
         }
 
         // Server setup complete
-        Log.sendMessage("Command receiver done");
+        Log.sendMessage(log_prefix + "done");
         while (run) {                       
             String response = cmd_rx.getMessage();
 

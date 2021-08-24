@@ -1,12 +1,21 @@
 package com.jtelaa.bwbot.bw;
 
 import com.jtelaa.bwbot.bw.sys.AcctInfo;
+import com.jtelaa.bwbot.bw.sys.Redeem;
 import com.jtelaa.bwbot.bw.sys.SearchSystem;
+import com.jtelaa.bwbot.bwlib.BWMessages;
+import com.jtelaa.bwbot.bwlib.BWPorts;
+import com.jtelaa.da2.bot.util.RemoteCLI;
+import com.jtelaa.da2.bot.util.SysCLI;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
-import com.jtelaa.da2.lib.control.Command;
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
+import com.jtelaa.da2.lib.misc.MiscUtil;
+import com.jtelaa.da2.lib.net.NetTools;
+import com.jtelaa.da2.lib.net.client.ClientUDP;
+import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
  * The bing rewards automation system
@@ -15,52 +24,49 @@ import com.jtelaa.da2.lib.log.Log;
  * @author Joseph
  */
 
-// TODO comment
+public class Main {
 
-public class Main extends Thread {
+    /** The remote cli local object */ 
+    public static RemoteCLI rem_cli;
+
+    /** The system cli local object */ 
+    public static SysCLI sys_cli;
 
     /** Local config handler */
     public static ConfigHandler config;
 
-    /** Arguments */
-    private volatile String[] args;
+    /** Main bot objcect */
+    publci staic
 
-    /**
-     * Adds aguments to the process
-     * 
-     * @param args
-     */
+    /** First time run */
+    public static boolean first_time;
     
-    public synchronized void args(String[] args) { this.args = args; }
+    public static void main(String[] args) {
 
-    /**
-     * Adds aguments to the process
-     * 
-     * @param command
-     */
+        /* Args and first time setup */
 
-    public synchronized void args(Command command) { args = Command.toString(command.getSubCommands(Command.LOCAL_ARG1)); }
-
-    public void run() {
-        // Is this process terminal
+        // Set conditions to check
         boolean terminal_process = true;
+        first_time = false;
 
         // Default configuration file location
         String config_file_location = "bwconfig.properties";
-
-        // Check for first time setup
-        boolean first_time = false;
+        
+        // Check through all args
         for (String arg : args) {
+            // Check for first time setup
             if (arg.equalsIgnoreCase("setup")) {
-                config_file_location = "com/jtelaa/da2/bot/plugin/bw/config.properties";
+                config_file_location = "com/jtelaa/bwbot/bw/bwconfig.properties";
                 config = new ConfigHandler(config_file_location, true);
                 first_time = true;
                 break;
 
+            // Check if terminal process
             } if (arg.equalsIgnoreCase("shutdown")) {
                 terminal_process = true;
 
-            } else if (arg.equalsIgnoreCase(" no shutdown")) {
+            // Check if terminal process specified
+            } else if (arg.equalsIgnoreCase("no shutdown")) {
                 terminal_process = false;
                 
             }
@@ -69,28 +75,96 @@ public class Main extends Thread {
         // Load normally if not first time
         if (!first_time) { config = new ConfigHandler(config_file_location, false); }
 
+        /* Log  */
+
         // Load Log config and start client
+        Log.loadConfig(config);
         Log.openClient("127.0.0.1");
 
         // Startup
-        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/da2/bot/plugin/bw/misc/Rewards.txt"));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/misc/Rewards.txt", ConsoleColors.CYAN_BOLD_BRIGHT));
         Log.sendMessage("Bing Rewards Plugin Enabled");
 
-        // Announce Account
-        if (first_time) {
-            AcctInfo.requestAccount();
-            AcctInfo.setupAccount();
+        /* Obfuscate external ip  */
+
+        // Get original external ip
+        String external_ip = NetTools.getExternalIP();
+
+        // Set defualt gatway based on config file
+        NetTools.setDefaultGateway(config.getProperty("default_gateway"));
+
+        // Do if the gateway did no obfuscate ip
+        if (!NetTools.getExternalIP().equals(external_ip)) {
+            do {
+                // Server to send account data
+                ServerUDP msg_response = new ServerUDP(BWPorts.INFO_RECEIVE);
+                msg_response.startServer();
+
+                // Client to accept response
+                // TODO Specify default bw mgr ip
+                ClientUDP msg_request = new ClientUDP(config.getProperty("bw_mgr_ip", "127.0.0.1"), BWPorts.INFO_REQUEST);
+                msg_request.startClient();
+
+                // Send a gateway request
+                msg_request.sendMessage(BWMessages.GATEWAY_REQUEST_MESSAGE);
+
+                // Wait
+                MiscUtil.waitasec(.1);
+
+                // Get message
+                String message = msg_response.getMessage();
+
+                // Validate and set default gateway
+                if (NetTools.isValid(message)) {
+                    NetTools.setDefaultGateway(message);
+
+                }
+            
+            } while (!NetTools.getExternalIP().equals(external_ip));
+        }
+
+        /* Setup account */
+
+        // Setup local systems
+        AcctInfo.setup(first_time);
+        Redeem.setup();
+        SearchSystem.setup();
         
-        } 
+        /* Search process */
         
-        AcctInfo.setup();
+        // Announce current account
         AcctInfo.announceAccount();
 
+        // Done
+        Log.sendMessage("Main: Done", ConsoleColors.GREEN);
+
+        // Remote CLI
+        if (config.runRemoteCLI()) {
+            Log.sendMessage("Remote CLI Allowed");
+            rem_cli = new RemoteCLI();
+            rem_cli.start();
+
+        } else {
+            Log.sendMessage("No Remote CLI");
+
+        }
+
+        Log.sendMessage("Local CLI disabled due to running as plugin");
+
+        Log.sendMessage("Waiting 45s for CLI bootup");
+        MiscUtil.waitasec(45);
+        Log.sendMessage("Done waiting");
+
+        if (config.runLocalCLI()) { sys_cli.runCLI(); }
+        if (config.runRemoteCLI()) { rem_cli.runCLI(); }
+
         // Start the searches
-        SearchSystem.startSearch();
+        SearchSystem.start();
 
         // Announce Points
         AcctInfo.announceAccount();
+
+        /* Terminal process */
 
         if (terminal_process) {
             // Shutdown

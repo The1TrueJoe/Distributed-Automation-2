@@ -7,7 +7,10 @@ package com.jtelaa.da2.lib.console;
  */
 
 public enum ConsoleColors {
-    // Reset
+    /** Clear Console */
+    CLEAR("\033[H033[2J"), // Clear
+
+    /** Resets color (Include after color)*/ 
     RESET("\033[0m"), // Text Reset
 
     // Regular Colors
@@ -78,9 +81,16 @@ public enum ConsoleColors {
     BLUE_BACKGROUND_BRIGHT("\033[0;104m"),// BLUE
     PURPLE_BACKGROUND_BRIGHT("\033[0;105m"),// PURPLE
     CYAN_BACKGROUND_BRIGHT("\033[0;106m"), // CYAN
-    WHITE_BACKGROUND_BRIGHT("\033[0;107m")  // WHITE
+    WHITE_BACKGROUND_BRIGHT("\033[0;107m"),  // WHITE
 
-    ;
+    /** Prints a bunch of new lines */
+    LINES(
+        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    ),
+
+    LINES_SHORT(
+        "\n\n\n\n\n\n\n\n\n"
+    );
     
     /** */
     private final char[] escape;

@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.jtelaa.bwbot.bw_manager.accounts.Accounts;
-import com.jtelaa.bwbot.bw_manager.util.BWMessages;
-import com.jtelaa.bwbot.bw_manager.util.BWPorts;
-import com.jtelaa.da2.director.botmgmt.Bot;
+import com.jtelaa.bwbot.bw_manager.accounts.AccountGen;
+import com.jtelaa.bwbot.bwlib.BWMessages;
+import com.jtelaa.bwbot.bwlib.BWPorts;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.files.ObjectUtils;
 import com.jtelaa.da2.lib.log.Log;
@@ -44,6 +44,11 @@ public class InfoResponseClient extends Thread {
     public void run() {
         request_queue = new LinkedList<>();
 
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
+
         while (run) {
             fillRequest();
         }
@@ -78,7 +83,7 @@ public class InfoResponseClient extends Thread {
             try {
                 command.forward();
                 sendCommand(command.changeCommand(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage()));
-                sendCommand(command.changeCommand(ObjectUtils.objtoString(Accounts.generateAccount())));
+                sendCommand(command.changeCommand(ObjectUtils.objtoString(AccountGen.generateAccount())));
             
             } catch (IOException e) {
                 Log.sendMessage(e.getMessage());
@@ -89,7 +94,7 @@ public class InfoResponseClient extends Thread {
     }
 
     private void sendCommand(Command command) {
-        cmd_tx = new ClientUDP(command.destination(), BWPorts.INFO_RECEIVE.getPort());
+        cmd_tx = new ClientUDP(command.destination(), BWPorts.INFO_RECEIVE);
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(command.command());

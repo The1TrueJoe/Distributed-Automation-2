@@ -2,29 +2,33 @@ package com.jtelaa.da2.bot.util;
 
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.Ports;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
- * Receives logs and repeates them
+ * Receives logs from and repeates them to the main server
  * 
  * @since 2
  * @author Joseph
  */
 
- // TODO comment
-
 public class LogRepeater extends Thread {
 
+    /** Local logging server */
     private ServerUDP cmd_rx;
 
     public void run() {
-        cmd_rx = new ServerUDP(Ports.RESPONSE.getPort());
+        // Server
+        cmd_rx = new ServerUDP(SysPorts.LOG_2);
 
+        // Start Server
         if (cmd_rx.startServer()) {
+            // While run
             while (run) {
+                // Response
                 String response = cmd_rx.getMessage();
 
+                // If not blank, send
                 if (MiscUtil.notBlank(response)) {
                     Log.sendMessage(response);
                 
@@ -41,7 +45,5 @@ public class LogRepeater extends Thread {
 
    /** Checks if the receier is ready */
    public synchronized boolean repeaterReady() { return run; }
-   // TODO Implement
-
     
 }

@@ -10,9 +10,43 @@ import com.jtelaa.da2.lib.control.Command;
  * @author Joseph
  */
 
- // TDOD comment
-
 public class Cases {
+
+     /**
+     * Checks to see if the command matches a certain case
+     * 
+     * @param command Command to check
+     * @param options Case to check against
+     * 
+     * @return if the command matches
+     */
+
+    public static boolean checkCase(Command command, String options) {
+        return checkCase(command, new String[] { options });
+    }
+
+    /**
+     * Checks to see if the command matches a certain case
+     * 
+     * @param command Command to check
+     * @param options Cases to check against
+     * 
+     * @return if the command matches
+     */
+
+    public static boolean checkCase(Command command, String[] options) {
+        // Sort through all options to see if command applues
+        for (String option : options) {
+            // If equal
+            if (command.command().equalsIgnoreCase(option)) {
+                return true;
+
+            }
+        }
+
+        // Default
+        return false;
+    }
 
     /**
      * Case for exit (exit or end)
@@ -22,13 +56,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean exit(Command command) {
-        if (command.command().equalsIgnoreCase("exit") || command.command().equalsIgnoreCase("end")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean exit(Command command) { return checkCase(command, new String[] {"exit", "end"}); }
 
     /**
      * Case for command (command, cmd or -cmd)
@@ -38,13 +66,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean command(Command command) {
-        if (command.command().equalsIgnoreCase("command") || command.command().equalsIgnoreCase("cmd") || command.command().equalsIgnoreCase("-cmd")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean command(Command command) { return checkCase(command, new String[] {"command", "cmd"}); }
 
     /**
      * Case for shutdown (shutdown, shut, off, or -off)
@@ -54,13 +76,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean shutdown(Command command) {
-        if (command.command().equalsIgnoreCase("shutdown") || command.command().equalsIgnoreCase("shut") || command.command().equalsIgnoreCase("off") || command.command().equalsIgnoreCase("-off")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean shutdown(Command command) { return checkCase(command, new String[] {"shutdown", "shut", "off", "-off"}); }
 
     /**
      * Case for help (help, -h, or -?)
@@ -70,13 +86,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean help(Command command) {
-        if (command.command().equalsIgnoreCase("help") || command.command().equalsIgnoreCase("-h") || command.command().equalsIgnoreCase("-?")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean help(Command command) { return checkCase(command, new String[] {"help", "-h", "-?"}); }
 
     /**
      * Case for director (director, direc, d, or -d)
@@ -86,13 +96,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean director(Command command) {
-        if (command.command().equalsIgnoreCase("director") || command.command().equalsIgnoreCase("direc") || command.command().equalsIgnoreCase("d") || command.command().equalsIgnoreCase("-d")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean director(Command command) { return checkCase(command, new String[] {"director", "-d"}); }
 
     /**
      * Case for hypervisor (hypervisor, hyp, -hyp)
@@ -102,15 +106,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean hypervisor(Command command) {
-        if (command.command().equalsIgnoreCase("hypervisor") || command.command().equalsIgnoreCase("hyp") || command.command().equalsIgnoreCase("-hyp")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // TODO Continue Commenting
+    public static boolean hypervisor(Command command) { return checkCase(command, new String[] {"hypervisor", "-hyp"}); }
 
     /**
      * Case for exit (exit or end)
@@ -120,13 +116,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean scheduler(Command command) {
-        if (command.command().equalsIgnoreCase("scheduler") || command.command().equalsIgnoreCase("sched")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean scheduler(Command command) { return checkCase(command, new String[] {"scheduler", "-sch"}); }
 
     /**
      * Case for exit (exit or end)
@@ -136,13 +126,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean querygen(Command command) {
-        if (command.command().equalsIgnoreCase("querygen") || command.command().equalsIgnoreCase("gen") || command.command().equalsIgnoreCase("qry")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean querygen(Command command) { return checkCase(command, new String[] {"querygen", "gen", "-gen"}); }
 
     /**
      * Case for exit (exit or end)
@@ -152,13 +136,7 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean bot(Command command) {
-        if (command.command().equalsIgnoreCase("bot") || command.command().equalsIgnoreCase("bt")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean bot(Command command) { return checkCase(command, new String[] {"bot", "-bot"}); }
 
     /**
      * Case for exit (exit or end)
@@ -168,28 +146,6 @@ public class Cases {
      * @return if case is applicable
      */
 
-    public static boolean plugin(Command command) {
-        if (command.command().equalsIgnoreCase("plugin") || command.command().equalsIgnoreCase("plug")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    public static boolean plugin(Command command) { return checkCase(command, new String[] {"plugin", "-plugin"}); }
 
-    /**
-     * Case for exit (exit or end)
-     * 
-     * @param command Command
-     * 
-     * @return if case is applicable
-     */
-
-    public static boolean rewards_plugin(Command command) {
-        if (command.command().equalsIgnoreCase("bing") || command.command().equalsIgnoreCase("rewards") || command.command().equalsIgnoreCase("rw")) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
 }

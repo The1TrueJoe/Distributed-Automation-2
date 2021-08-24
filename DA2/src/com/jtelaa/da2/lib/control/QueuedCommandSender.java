@@ -3,9 +3,12 @@ package com.jtelaa.da2.lib.control;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.NetTools;
-import com.jtelaa.da2.lib.net.Ports;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
+import com.jtelaa.da2.lib.net.ports.ManualPort;
+import com.jtelaa.da2.lib.net.ports.Ports;
+import com.jtelaa.da2.lib.net.ports.SysPorts;
 
 /**
  * Sends commands in batches <p>
@@ -18,6 +21,15 @@ import com.jtelaa.da2.lib.net.client.ClientUDP;
  // TODO comment
 
 public class QueuedCommandSender extends Thread {
+
+    public QueuedCommandSender(int port) { this(new ManualPort(port)); }
+
+    public QueuedCommandSender(Ports port) { this.port = port; }
+
+    public QueuedCommandSender() { this(default_port); }
+
+    private Ports port;
+    public static volatile Ports default_port = SysPorts.CMD;
     
     private volatile static Queue<Command> command_queue;
 
@@ -37,12 +49,19 @@ public class QueuedCommandSender extends Thread {
         command_queue = new LinkedList<>();
         Command command;
 
-        while (run) {
-            command = command_queue.poll();
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
 
-            if (command != null && command.isValid()) {
-                sendMessage(command);
+        while (run) {
+            if (command_queue.size() > 0) {
+                command = command_queue.poll();
+
+                if (command != null && command.isValid()) {
+                    sendMessage(command);
                 
+                }
             }
         }
     }
@@ -61,7 +80,7 @@ public class QueuedCommandSender extends Thread {
         String message = command_to_send.command();
         String server = command_to_send.destination();
 
-        cmd_tx = new ClientUDP(server, Ports.CMD.getPort());
+        cmd_tx = new ClientUDP(server, port, "Command Sender: ");
 
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(message);

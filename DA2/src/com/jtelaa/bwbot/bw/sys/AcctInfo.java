@@ -9,10 +9,10 @@ import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 import com.jtelaa.bwbot.bw.Main;
-import com.jtelaa.bwbot.bw_manager.accounts.Account;
-import com.jtelaa.bwbot.bw_manager.redemptions.CardType;
-import com.jtelaa.bwbot.bw_manager.util.BWMessages;
-import com.jtelaa.bwbot.bw_manager.util.BWPorts;
+import com.jtelaa.bwbot.bwlib.Account;
+import com.jtelaa.bwbot.bwlib.BWMessages;
+import com.jtelaa.bwbot.bwlib.BWPorts;
+import com.jtelaa.bwbot.bwlib.Query;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
@@ -29,17 +29,20 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 public class AcctInfo {
 
     /** */
-    public static final String OUTLOOK_EMAIL_ADDRESS = "https://outlook.live.com/mail/0/inbox";
+    public static final String OUTLOOK_EMAIL_URL = "https://outlook.live.com/mail/0/inbox";
 
     /** */
-    public static String pt_mgr_ip;
+    public static String bw_mgr_ip;
 
     /** */
     public static Account me;
 
     /** */
-    public static void setup() {
-        pt_mgr_ip = Main.config.getProperty("pt_mgr_ip");
+    public static void setup(boolean first_time) {
+        bw_mgr_ip = Main.config.getProperty("bw_mgr_ip");
+
+        if (first_time) { requestAccount(); }
+        loadAccount();
 
     }
 
@@ -48,14 +51,21 @@ public class AcctInfo {
      */
 
     public static void announceAccount() {
-        ClientUDP pt_announce = new ClientUDP(pt_mgr_ip, BWPorts.INFO_ANNOUNCE.getPort());
+        // Setup client
+        ClientUDP pt_announce = new ClientUDP(bw_mgr_ip, BWPorts.ACCOUNT_ANNOUNCE);
         pt_announce.startClient();
         
+        // Recalculate points
         me.newPoints(getPointCount());
-        pt_announce.sendObject(me);
-        pt_announce.closeClient();
-    }
 
+        // Send account
+        Log.sendMessage("Announcing Account Info.....");
+        pt_announce.sendObject(me);
+
+        // Close
+        pt_announce.closeClient();
+
+    }
 
     /**
      * Looks throught page for the tag
@@ -70,7 +80,7 @@ public class AcctInfo {
     public static int getPointCount() {
         try {
             final WebClient webClient = new WebClient(BrowserVersion.CHROME);
-            final HtmlPage page = webClient.getPage(SearchSystem.BING_URL + "rewards");
+            final HtmlPage page = webClient.getPage(Query.BING_URL + "rewards");
             
             final List<DomElement> spans = page.getElementsByTagName("span");
             for (DomElement element : spans) {
@@ -93,19 +103,7 @@ public class AcctInfo {
     }
 
     /**
-     * Sets up the account on the local machine
-     * 
-     * <p> (Account info is already specified)
-     */
-
-    public static void setupAccount() {
-
-        // TODO add account setup
-
-    }
-
-    /**
-     * 
+     * Loads account info from the properties file
      */
 
     public static void loadAccount() {
@@ -123,17 +121,17 @@ public class AcctInfo {
     }
 
     /**
-     * 
+     * Send a request message for an account
      */
 
     public static void requestAccount() {
 
         // Server to send account data
-        ServerUDP acct_response = new ServerUDP(BWPorts.INFO_RECEIVE.getPort());
+        ServerUDP acct_response = new ServerUDP(BWPorts.ACCOUNT_ANNOUNCE);
         acct_response.startServer();
 
         // Client to accept requests
-        ClientUDP acct_request = new ClientUDP(pt_mgr_ip, BWPorts.INFO_REQUEST.getPort());
+        ClientUDP acct_request = new ClientUDP(bw_mgr_ip, BWPorts.INFO_REQUEST);
         acct_request.startClient();
 
         // Send an account request
@@ -143,52 +141,27 @@ public class AcctInfo {
         me = new Account();
 
         do {
+            // Get and check response
             response = acct_response.getMessage();
             if (response.contains(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage())) {
+                // Get the account
                 me = (Account) acct_response.getObject();
                 
+                // Store account info
                 Main.config.setProperty("user_name", me.getUsername());
                 Main.config.setProperty("password", me.getPassword());
                 Main.config.setProperty("first_name", me.getPassword());
                 Main.config.setProperty("last_name", me.getPassword());
                 Main.config.setProperty("birthday", me.getBirthDay().getTimeInMillis() + "");
                 
+
+
                 return;
             }
 
             MiscUtil.waitasec();
 
-        } while (response.contains(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage()));
-    }
-
-    /**
-     * Looks throught page for the gift card and redeems it
-     * 
-     * <pre>
-     * {@code 
-     *  <button id="redeem-checkout-review-confirm" class="btn-primary card-button-height padding-left-24 padding-right-24">
-     *  <div class="text-body margin-top-5 spacer-32-bottom x-hidden-focus"> Order ID: 7b584876-0491-4aac-ac33-4ad4ada1e537 </div>
-     * }
-     * </pre>
-     * 
-     * @return orderid
-     */
-
-    public String redeemGiftCard(CardType card) {
-        String url = card.getTag();
-
-        // TODO add redemption system
-
-        SearchSystem.openChrome(url);
-
-        return "";
-
-    }
-
-    /** */
-
-    public String getGiftCardCode() {
-        return "";
+        } while (!response.contains(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage()));
     }
     
 }

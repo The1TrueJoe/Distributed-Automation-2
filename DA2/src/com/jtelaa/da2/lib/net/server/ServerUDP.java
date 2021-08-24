@@ -4,45 +4,161 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
+import com.jtelaa.da2.lib.net.ports.Ports;
 
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.Test;
 
-// TODO comment
+
+/**
+ * Network server for receiving UDP messages
+ * 
+ * @since 2
+ * @author Joseph
+ */
 
 public class ServerUDP {
 
+    /** Console Color */
+    private ConsoleColors colors;
+
+    /** Prefix to add to log messages (optional) */
+    private String log_prefix;
+
+    /** Port opened by the server */
     private int port;
 
+    /** Receive buffer */
     private byte[] recieve_buffer;
     
+    /** Address of client */
     private InetAddress clientAddress;
 
+    /** Socket used */
     private DatagramSocket socket;
 
-    public ServerUDP(int port) { this.port = port; }
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     * 
+     * @deprecated juse use the Ports object instead (ManualPort for a specefied port)
+     * @see com.jtelaa.da2.lib.net.ports.Ports
+     * @see com.jtelaa.da2.lib.net.ports.ManualPort
+     */
 
+    @Deprecated
+    public ServerUDP(int port) { 
+        log_prefix = "";
+        this.port = port; 
+        colors = ConsoleColors.WHITE;
+
+    }
+
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     */
+    
+    public ServerUDP(Ports port) { 
+        log_prefix = "";
+        this.port = port.getPort(); 
+        colors = ConsoleColors.WHITE;
+    
+    }
+
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     * 
+     * @deprecated juse use the Ports object instead (ManualPort for a specefied port)
+     * @see com.jtelaa.da2.lib.net.ports.Ports
+     * @see com.jtelaa.da2.lib.net.ports.ManualPort
+     */
+
+    @Deprecated
+    public ServerUDP(int port, String log_prefix) { 
+        this.port = port; 
+        this.log_prefix = log_prefix;
+        colors = ConsoleColors.WHITE;
+    
+    }
+
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     */
+    
+    public ServerUDP(Ports port, String log_prefix) { 
+        this.port = port.getPort(); 
+        this.log_prefix = log_prefix;
+        colors = ConsoleColors.WHITE;
+    
+    }
+
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     * 
+     * @deprecated juse use the Ports object instead (ManualPort for a specefied port)
+     * @see com.jtelaa.da2.lib.net.ports.Ports
+     * @see com.jtelaa.da2.lib.net.ports.ManualPort
+     */
+
+    @Deprecated
+    public ServerUDP(int port, String log_prefix, ConsoleColors colors) { 
+        this.port = port; 
+        this.log_prefix = log_prefix;
+        this.colors = colors;
+    
+    }
+
+    /** 
+     * Constructor
+     * 
+     * @param port Port to open
+     */
+    
+    public ServerUDP(Ports port, String log_prefix, ConsoleColors colors) { 
+        this.port = port.getPort(); 
+        this.log_prefix = log_prefix;
+        this.colors = colors;
+    
+    }
     
     /**
      * Starts the server <p>
      * Close when finished
+     * 
+     * @return success
      */
 
     public boolean startServer() {
         try {
-            Log.sendMessage("Starting Server....\n");
-            socket = new DatagramSocket(port);
+            // Start
+            Log.sendMessage(log_prefix + "Starting server at port " + port, colors);
 
+            // Reset buffer and create new socker
+            recieve_buffer = null;
+            socket = new DatagramSocket();
+
+            // Send success message
+            Log.sendMessage(log_prefix + "Server Opened", colors);
             return true;
 
-        } catch (SocketException e) {
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
-
+        } catch (IOException e) {
+            // Send error message
+            Log.sendMessage(log_prefix, e, colors);
             return false;
-        }       
+
+        }
     }
 
     /**
@@ -52,24 +168,31 @@ public class ServerUDP {
      */
 
     public String getMessage() {
+        // New receive buffer and message
         recieve_buffer = new byte[65535];
         String message;
         
         try {
+            // Receive packet
             DatagramPacket packet = new DatagramPacket(recieve_buffer, recieve_buffer.length);
             socket.receive(packet);
             message = convertMessage(recieve_buffer);
+
+            // Store client
             clientAddress = socket.getInetAddress();
 
-            Log.sendMessage("Received: " + message + " From: " + getClientAddress());
+            // Log reception
+            Log.sendMessage(log_prefix +"Received: " + message + " From: " + getClientAddress(), colors);
 
         } catch (IOException e) {
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            // Send error
+            Log.sendMessage(log_prefix, e);
             message = "";
 
         }
 
-         return message;
+        // Return
+        return message;
     }
 
     /**
@@ -79,67 +202,87 @@ public class ServerUDP {
      */
 
     public Object getObject() {
+        // New receive buffer and message
         recieve_buffer = new byte[65535];
         Object object;
         
         try {
+            // Receive packet
             DatagramPacket packet = new DatagramPacket(recieve_buffer, recieve_buffer.length);
             socket.receive(packet);
             object = SerializationUtils.deserialize(recieve_buffer);
+
+            // Store client
             clientAddress = socket.getInetAddress();
 
-            Log.sendMessage("Received UDP Object: " + object + " From: " + getClientAddress());
+            // Log reception
+            Log.sendMessage(log_prefix + "Received UDP Object: " + object + " From: " + getClientAddress(), colors);
 
         } catch (IOException e) {
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
+            // Send error
+            Log.sendMessage(log_prefix, e, colors);
             object = new String("");
 
         }
 
-         return object;
+        // Return
+        return object;
     }
 
     /**
      * Converts the message from a byte array into a string
      * 
      * @param bytes Byte array received from the datagram
+     * 
      * @return Message as a string
      */
 
     private String convertMessage(byte[] bytes) {
-        if (bytes == null) { return null; }
+        // Check if valid array
+        if (bytes == null || bytes.length <= 0) { return "null"; }
 
+        // Prepare string building
         StringBuilder string = new StringBuilder();
         int index = 0;
 
+        // Build string
         while (bytes[index] != 0) {
             string.append((char) bytes[index]);
             index++;
 
         }
 
+        // Return string
         return string.toString();
 
     }
 
     /**
      * Closes the client and output streams
+     * 
+     * @return success
      */
 
     public boolean closeServer() {
         try {    
+            // Close
             socket.close();
-            Log.sendMessage("Closed");
 
+            // Send success
+            Log.sendMessage(log_prefix + "Closed", colors);
             return true;
 
         } catch (Exception e) {
-            Log.sendMessage("Failed: \n" + e.getStackTrace());
-
+            // Send error
+            Log.sendMessage(log_prefix, e, colors);
             return false;
 
         }
     }
+
+    /**
+     * Test by receiving packets and printing them
+     */
 
     @Test
     public static void test() {
@@ -155,12 +298,17 @@ public class ServerUDP {
         }
     }
 
+    /** @return port opened by server */
     public int getPort() { return port; }
 
+    /** @return socket to be used outside of class */
     public DatagramSocket getSocket() { return socket; }
 
+    /** @return client InetAddress object */
     public InetAddress getClient() { return clientAddress; }
+    /** @return client IP address */
     public String getClientAddress() { return clientAddress.getHostAddress(); }
+    /** @return client hostname */
     public String getClientName() { return clientAddress.getHostName(); }
     
 }

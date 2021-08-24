@@ -1,7 +1,7 @@
 package com.jtelaa.bwbot.bw_manager.processes;
 
-import com.jtelaa.bwbot.bw_manager.util.BWPorts;
-import com.jtelaa.da2.director.botmgmt.Bot;
+import com.jtelaa.bwbot.bwlib.BWPorts;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
@@ -12,16 +12,22 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
  * @since 2
  * @author Joseph
  * 
- * @see com.jtelaa.da2.bot.plugin.bw.util.BWMessages
+ * @see com.jtelaa.bwbot.bwlib.bw.util.BWMessages
  * @see com.jtelaa.bwbot.bw_manager.processes.InfoResponseClient
  */
 
  // TODO comment
+ // TODO complete
 
 public class InfoRequestServer extends Thread {
 
     public void run() {
-        ServerUDP server = new ServerUDP(BWPorts.INFO_REQUEST.getPort());
+        ServerUDP server = new ServerUDP(BWPorts.INFO_REQUEST);
+
+        while (!run) {
+            MiscUtil.waitasec();
+            
+        }
         
         if (server.startServer()) {
             while (run) {
