@@ -1,9 +1,12 @@
 package com.jtelaa.bwbot.bw;
 
 import com.jtelaa.bwbot.bw.sys.AcctInfo;
+import com.jtelaa.bwbot.bw.sys.Redeem;
 import com.jtelaa.bwbot.bw.sys.SearchSystem;
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
+import com.jtelaa.da2.bot.util.RemoteCLI;
+import com.jtelaa.da2.bot.util.SysCLI;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
@@ -21,13 +24,23 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
  * @author Joseph
  */
 
-public class Main extends Thread {
+public class Main {
+
+    /** The remote cli local object */ 
+    public static RemoteCLI rem_cli;
+
+    /** The system cli local object */ 
+    public static SysCLI sys_cli;
 
     /** Local config handler */
     public static ConfigHandler config;
 
+    /** Main bot objcect */
+    publci staic
+
     /** First time run */
     public static boolean first_time;
+    
     public static void main(String[] args) {
 
         /* Args and first time setup */
@@ -89,7 +102,7 @@ public class Main extends Thread {
 
                 // Client to accept response
                 // TODO Specify default bw mgr ip
-                ClientUDP msg_request = new ClientUDP(config.getProperty("bw_mgr_ip", "10.0.0.1"), BWPorts.INFO_REQUEST);
+                ClientUDP msg_request = new ClientUDP(config.getProperty("bw_mgr_ip", "127.0.0.1"), BWPorts.INFO_REQUEST);
                 msg_request.startClient();
 
                 // Send a gateway request
@@ -113,19 +126,37 @@ public class Main extends Thread {
         /* Setup account */
 
         // Setup local systems
-        AcctInfo.setup();
+        AcctInfo.setup(first_time);
+        Redeem.setup();
         SearchSystem.setup();
         
-        // Get Account
-        if (first_time) {
-            AcctInfo.requestAccount();
-        
-        } 
-
         /* Search process */
         
         // Announce current account
         AcctInfo.announceAccount();
+
+        // Done
+        Log.sendMessage("Main: Done", ConsoleColors.GREEN);
+
+        // Remote CLI
+        if (config.runRemoteCLI()) {
+            Log.sendMessage("Remote CLI Allowed");
+            rem_cli = new RemoteCLI();
+            rem_cli.start();
+
+        } else {
+            Log.sendMessage("No Remote CLI");
+
+        }
+
+        Log.sendMessage("Local CLI disabled due to running as plugin");
+
+        Log.sendMessage("Waiting 45s for CLI bootup");
+        MiscUtil.waitasec(45);
+        Log.sendMessage("Done waiting");
+
+        if (config.runLocalCLI()) { sys_cli.runCLI(); }
+        if (config.runRemoteCLI()) { rem_cli.runCLI(); }
 
         // Start the searches
         SearchSystem.start();
