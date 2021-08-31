@@ -7,26 +7,33 @@ import com.jtelaa.da2.lib.mail.Mail;
 
 public class Request implements Serializable {
 
+    /** Constant to calculate the redemption time */
     public static volatile double CARD_TO_DAY_RATIO = (1/6);
 
-    /** */
-    private int value;
+    /** Value of the request */
+    public int value;
 
-    /** */
-    private String unit; 
+    /** Units of the card */
+    public String unit; 
 
-    /** */
-    private Card[] card;
+    /** Array of cards */
+    public Card[] card;
 
-    /** */
-    private BWUser user;
+    /** User to use */
+    public BWUser user;
 
-    /** */
-    private Mail mail;
+    /** Mail message to send */
+    public Mail mail;
 
-    /** */
-    private double timedays;
+    /** Redemption time */
+    public double timedays;
 
+    /**
+     * 
+     * @param value
+     * @param name
+     * @param user
+     */
 
     public Request(int value, String name, BWUser user) {
         Card card;
@@ -43,7 +50,7 @@ public class Request implements Serializable {
         String addon = "";
         String mail_message = (
             "Request (" + System.currentTimeMillis() + ")\n" + 
-            "   User: " + user.getName() + "\n" +
+            "   User: " + user.name + "\n" +
             "   Value: " + value + " in " + name + "\n" + 
             "   Cost: " + Card.calculatePointCost(example.getUnit(), value)
 
@@ -56,9 +63,9 @@ public class Request implements Serializable {
             current_total += card.getValue();
             current_total_points += card.getCost();
 
-            if (current_total_points >= user.getEntitledPoints() + (user.getEntitledPoints() * .1)) {
+            if (current_total_points >= user.entitled_points + (user.entitled_points * .1)) {
                 addon = (
-                    "\n\n" + current_total_points + " is over entitlement of " + user.getEntitledPoints() +
+                    "\n\n" + current_total_points + " is over entitlement of " + user.entitled_points +
                     " new value will be " + current_total + " in " + name
 
                 );
@@ -86,29 +93,45 @@ public class Request implements Serializable {
         user.subtractEntitledPoints(current_total_points);
         user.addRedeemedPoints(current_total_points);
 
-        mail = new Mail(user.getAddress(), "", mail_message);
+        mail = new Mail(user.mail, "", mail_message);
 
     }
 
+    /**
+     * 
+     * @param card
+     * @param user
+     */
 
-    public Request(Card card) {
-        this.card = new Card[] { card } ;
-
-        this.value = card.getValue();
-        this.unit = card.getUnit();
+    public Request(Card card, BWUser user) {
+        this(card.getValue(), card.getTag(), user);
         
     }
 
+    /**
+     * 
+     * @return
+     */
+
     public Mail getMail() { return mail; }
+
+    /**
+     * 
+     * @return
+     */
 
     public Card getCard() { return card[0]; }
 
+    /**
+     * 
+     * @return
+     */
 
     public Request[] split() {
         Request[] requests = new Request[card.length];
 
         for (int i = 0; i < requests.length; i++) {
-            requests[i] = new Request(card[i]);
+            requests[i] = new Request(card[i], user);
 
         }
 

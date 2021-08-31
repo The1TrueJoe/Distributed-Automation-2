@@ -20,16 +20,16 @@ public class Bot implements Serializable {
     public long last_seen;
 
     /** Bot id */
-    private int id;
+    public int id;
 
     /** Bot ip */
-    private String ip;
+    public String ip;
 
     /** Bot ip */
-    private String owner_phone_number;
+    public String owner_phone_number;
 
     /** Config handler */
-    private ConfigHandler config;
+    public ConfigHandler config;
 
     /**
      * Constructor
