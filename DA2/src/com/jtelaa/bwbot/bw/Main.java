@@ -7,6 +7,7 @@ import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.da2.bot.util.RemoteCLI;
 import com.jtelaa.da2.bot.util.SysCLI;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
@@ -36,7 +37,7 @@ public class Main {
     public static ConfigHandler config;
 
     /** Main bot objcect */
-    publci staic
+    public static Bot me;
 
     /** First time run */
     public static boolean first_time;
@@ -85,6 +86,40 @@ public class Main {
         Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/misc/Rewards.txt", ConsoleColors.CYAN_BOLD_BRIGHT));
         Log.sendMessage("Bing Rewards Plugin Enabled");
 
+        // Request Bot (first time only)
+        if (first_time) {
+            // Server to receive bot info
+            ServerUDP msg_response = new ServerUDP(BWPorts.INFO_RECEIVE);
+            msg_response.startServer();
+
+            // Client to send request
+            ClientUDP msg_request = new ClientUDP("127.0.0.1", BWPorts.INFO_REQUEST);
+            msg_request.startClient();
+
+            // Set default
+            me = new Bot("127.0.0.1");
+
+            // Prep message
+            Object message;
+
+            do {
+                // Send message 
+                msg_request.sendMessage(BWMessages.BOT_REQUEST_MESSAGE);
+
+                // Wait
+                MiscUtil.waitasec(.1);
+
+                // Get message
+                message = msg_response.getObject();
+
+            // Check if can cast
+            } while (!Bot.class.isInstance(message));
+
+            // Cast and apply
+            me = (Bot) message;
+
+        }
+
         /* Obfuscate external ip  */
 
         // Get original external ip
@@ -95,16 +130,16 @@ public class Main {
 
         // Do if the gateway did no obfuscate ip
         if (!NetTools.getExternalIP().equals(external_ip)) {
+            // Server to send account data
+            ServerUDP msg_response = new ServerUDP(BWPorts.INFO_RECEIVE);
+            msg_response.startServer();
+
+            // Client to accept response
+            // TODO Specify default bw mgr ip
+            ClientUDP msg_request = new ClientUDP(config.getProperty("bw_mgr_ip", "127.0.0.1"), BWPorts.INFO_REQUEST);
+            msg_request.startClient();
+
             do {
-                // Server to send account data
-                ServerUDP msg_response = new ServerUDP(BWPorts.INFO_RECEIVE);
-                msg_response.startServer();
-
-                // Client to accept response
-                // TODO Specify default bw mgr ip
-                ClientUDP msg_request = new ClientUDP(config.getProperty("bw_mgr_ip", "127.0.0.1"), BWPorts.INFO_REQUEST);
-                msg_request.startClient();
-
                 // Send a gateway request
                 msg_request.sendMessage(BWMessages.GATEWAY_REQUEST_MESSAGE);
 
@@ -121,6 +156,10 @@ public class Main {
                 }
             
             } while (!NetTools.getExternalIP().equals(external_ip));
+
+            msg_response.closeServer();
+            msg_request.closeClient();
+            
         }
 
         /* Setup account */
