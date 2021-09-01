@@ -9,11 +9,15 @@
     172.16.1.101: Mgmt iDRAC
 
 172.16.2.x: DA2 Infrastructure
+    172.16.2.1: Director (Prospective)
     172.16.2.2: Border Server
 
 172.16.3.x: BW Infrastructure
+    172.16.3.1: Point Manager (Prosepective)
     172.16.3.101: QueryGen IP
 
+172.16.4.x: VPN Gateways
+    172.16.4.1: System Defualt (Prospective)
 
 
 Ports
