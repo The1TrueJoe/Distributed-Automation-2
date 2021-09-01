@@ -44,7 +44,7 @@ public class SearchSystem {
 
     public static void setup() {
         // Load IP
-        query_ip = Main.config.getProperty("qry_gen_ip");
+        query_ip = Main.config.getProperty("qry_gen_ip", Main.DEFAULT_QUERY_GENERATOR);
 
         // Calc Max Searches
         populateSearchMax();
