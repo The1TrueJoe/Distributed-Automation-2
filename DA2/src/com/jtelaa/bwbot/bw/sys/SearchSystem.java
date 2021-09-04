@@ -7,6 +7,8 @@ import com.jtelaa.bwbot.bw.util.BWControls;
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.bwbot.bwlib.Query;
+import com.jtelaa.da2.lib.console.ConsoleBanners;
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.client.ClientUDP;
@@ -222,6 +224,27 @@ public class SearchSystem {
 
         // Return the query
         return new Query(response, false);
+
+    }
+
+
+    public static void main(String[] args) {
+        // Setup log
+        Log.app_verbose = true;
+        Log.log_verbose = false;
+
+        // Send welcome
+        Log.sendMessage("Starting query request test");
+        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/misc/Rewards.txt", ConsoleColors.CYAN_BOLD_BRIGHT));
+        
+        // IP
+        query_ip = Main.DEFAULT_QUERY_GENERATOR;
+
+        // Run 100 searches
+        for (int i = 0; i < 100; i++) {
+            Log.sendMessage(requestQuery().toString());
+        }
+
 
     }
 
