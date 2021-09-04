@@ -60,7 +60,7 @@ public class Main {
         Log.clearHistory();
 
         // Startup
-        Log.sendSysMessage("Starting.....\n");
+        Log.sendSysMessage("Main: Starting.....\n");
         Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/bannners/Rewards.txt", ConsoleColors.CYAN_BOLD));
         Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/bannners/QueryGen.txt", ConsoleColors.YELLOW));
         Log.sendSysMessage("\n\n\n");
@@ -71,17 +71,17 @@ public class Main {
 
         // Request server setup
         RequestServer req_srv = new RequestServer();
-        Log.sendMessage("Starting request server", ConsoleColors.GREEN);
+        Log.sendMessage("Main: Starting request server", ConsoleColors.GREEN);
         req_srv.start();
         
         // Query server setup
         QueryServer qry_serv = new QueryServer();
-        Log.sendMessage("Starting query server", ConsoleColors.GREEN);
+        Log.sendMessage("Main: Starting query server", ConsoleColors.GREEN);
         qry_serv.start();
 
         // Query generator setup
         QueryGenerator qry_gen = new QueryGenerator();
-        Log.sendMessage("Starting query generator", ConsoleColors.GREEN);
+        Log.sendMessage("Main: Starting query generator", ConsoleColors.GREEN);
         qry_gen.start();
 
         // Done
@@ -89,29 +89,29 @@ public class Main {
 
         // Remote CLI
         if (my_config.runRemoteCLI()) {
-            Log.sendMessage("Remote Cli Enabled");
+            Log.sendMessage("CLI: Remote Cli Enabled");
             rem_cli = new RemoteCLI();
             rem_cli.start();
 
         } else {
-            Log.sendMessage("No Remote CLI");
+            Log.sendMessage("CLI: No Remote CLI");
 
         }
 
         // Local CLI
         if (my_config.runLocalCLI()) {
-            Log.sendMessage("Local CLI Allowed");
+            Log.sendMessage("CLI: Local CLI Allowed");
             sys_cli = new SysCLI();
             sys_cli.start();
 
         } else {
-            Log.sendMessage("No Local CLI");
+            Log.sendMessage("CLI: No Local CLI");
 
         }
 
-        Log.sendMessage("Waiting 45s for CLI bootup");
+        Log.sendMessage("CLI: Waiting 45s for CLI bootup");
         MiscUtil.waitasec(45);
-        Log.sendMessage("Done waiting");
+        Log.sendMessage("CLI: Done waiting");
 
         if (my_config.runLocalCLI()) { sys_cli.runCLI(); }
         if (my_config.runRemoteCLI()) { rem_cli.runCLI(); }
