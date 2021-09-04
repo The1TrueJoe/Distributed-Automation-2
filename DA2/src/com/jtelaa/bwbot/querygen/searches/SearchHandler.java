@@ -20,7 +20,11 @@ import com.jtelaa.da2.lib.log.Log;
 public class SearchHandler {
 
     /** Path of lists */
-    private static final String PATH = "com/jtelaa/bwbot/querygen/searches/searchdata/";
+    //private static final String PATH = "com/jtelaa/bwbot/querygen/searches/searchdata/";
+    // TODO Make internal again
+
+    /** Path of lists */
+    private static final String PATH = "/QueryGen/sys/rsc/searches/";
 
     /** Logging prefix */
     private static String log_prefix = "Search Handler: ";
