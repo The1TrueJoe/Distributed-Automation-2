@@ -16,14 +16,16 @@ echo "Building QueryGenerator Code."
 cd /QueryGen/
 sudo rm QueryGen.jar
 
-# Make system directory (Temporary)
-sudo mkdir sys
-sudo mkdir sys/rsc
-sudo cp -r dev/Distributed-Automation-2/DA2/src/rsc/ sys/
-
 # Change directory to to the code and update
 cd dev/Distributed-Automation-2/
 sudo git pull
+
+# Make system directory (Temporary)
+cd ../..
+sudo mkdir sys
+sudo mkdir sys/rsc
+sudo cp -r dev/Distributed-Automation-2/DA2/src/rsc/ sys/
+cd dev/Distributed-Automation-2/
 
 # Build code using the java compiler
 cd DA2/src/
