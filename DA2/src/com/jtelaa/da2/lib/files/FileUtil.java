@@ -64,7 +64,7 @@ public class FileUtil {
             //InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
 
             JarFile jarFile = new JarFile("QueryGen.jar");
-            JarEntry entry = jarFile.getJarEntry(path); //"TextFile/myTextFile.txt"
+            JarEntry entry = jarFile.getJarEntry("TextFile/" + path);
             InputStreamReader inputStreamReader = new InputStreamReader(jarFile.getInputStream(entry));
 
             BufferedReader in = new BufferedReader(inputStreamReader);
