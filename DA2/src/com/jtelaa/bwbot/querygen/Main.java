@@ -44,7 +44,7 @@ public class Main {
             if (arg.equalsIgnoreCase("setup")) {
                 config_file_location = "sys/rsc/config/querygen/config.properties";
                 System.out.println("Pre-Load: Loaded internal config");
-                my_config = new ConfigHandler(config_file_location, true);
+                my_config = new ConfigHandler(config_file_location, false);
                 first_time = true;
 
                 break;
@@ -61,8 +61,8 @@ public class Main {
 
         // Startup
         Log.sendSysMessage("Main: Starting.....\n");
-        Log.sendSysMessage(ConsoleBanners.otherBanner("sys/rsc/banners/Rewards.txt", ConsoleColors.CYAN_BOLD));
-        Log.sendSysMessage(ConsoleBanners.otherBanner("sys/rsc/banners/QueryGen.txt", ConsoleColors.YELLOW));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("/QueryGen/sys/rsc/banners/Rewards.txt", ConsoleBanners.EXTERNAL, ConsoleColors.CYAN_BOLD));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("/QueryGen/sys/rsc/banners/QueryGen.txt", ConsoleBanners.EXTERNAL, ConsoleColors.YELLOW));
         Log.sendSysMessage("\n\n\n");
 
         // Start logging client
