@@ -4,7 +4,7 @@
 # Written by Joseph Telaak
 
 # Display title
-cat /QueryGen/dev/Distributed-Automation-2/DA2/src/com/jtelaa/bwbot/querygen/misc/QueryGen.txt
+cat /QueryGen/dev/Distributed-Automation-2/DA2/src/rsc/banners/QueryGen.txt
 
 # Display message
 echo ''
