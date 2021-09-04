@@ -10,6 +10,9 @@
 # Output
 DA2/src/output/
 
+# Manifest
+DA2/src/manifest.txt
+
 # Eclipe
 .project
 .classpath
