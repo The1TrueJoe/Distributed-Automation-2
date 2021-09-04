@@ -147,7 +147,7 @@ public class ServerUDP {
 
             // Reset buffer and create new socker
             recieve_buffer = null;
-            socket = new DatagramSocket();
+            socket = new DatagramSocket(port);
 
             // Send success message
             Log.sendMessage(log_prefix + "Server Opened", colors);
