@@ -79,12 +79,21 @@ public class Log {
     }
 
     /**
+     * Clear history
+     */
+
+    public synchronized static void clearHistory() {
+        // Clear history
+        history = new ArrayList<String>();
+
+    }
+
+    /**
      * Opens the logging connector so admine can interface with the application if it running in the background
      */
 
     public synchronized static void openConnector() {
         // Start the connector
-        history = new ArrayList<String>();
         connector = new LocalLogConnector();
         connector.start();
 

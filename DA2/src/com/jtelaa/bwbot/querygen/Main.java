@@ -57,6 +57,7 @@ public class Main {
 
         // Start Logging
         Log.loadConfig(my_config, args);
+        Log.clearHistory();
 
         // Startup
         Log.sendSysMessage("Starting.....\n");
