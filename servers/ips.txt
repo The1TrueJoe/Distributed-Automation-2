@@ -11,6 +11,7 @@
 172.16.2.x: DA2 Infrastructure
     172.16.2.1: Director (Prospective)
     172.16.2.2: Border Server
+    172.16.2.3: Database (Prosepective)
 
 172.16.3.x: BW Infrastructure
     172.16.3.1: Point Manager (Prosepective)
