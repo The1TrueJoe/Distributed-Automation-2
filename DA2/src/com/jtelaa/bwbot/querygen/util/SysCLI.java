@@ -21,7 +21,7 @@ public class SysCLI extends LocalCLI {
     private Scanner keyboard;
 
     public SysCLI() {
-        if (Main.my_config.runLocalCLI()) {
+        if (Main.my_config.getProperty("local_cli", "true").equalsIgnoreCase("true")) {
             // Use remote cli instance
             cli = new RemoteCLI(false);
 
@@ -41,7 +41,7 @@ public class SysCLI extends LocalCLI {
 
     @Override
     public void run() {
-        if (Main.my_config.runLocalCLI()) {
+        if (Main.my_config.getProperty("local_cli", "true").equalsIgnoreCase("true")) {
             // Setup
             Log.sendMessage("Preparing Local CLI");
             String type;

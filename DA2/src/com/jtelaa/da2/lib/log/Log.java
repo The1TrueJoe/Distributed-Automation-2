@@ -2,6 +2,7 @@ package com.jtelaa.da2.lib.log;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Properties;
 import java.util.Queue;
 
 import com.jtelaa.da2.lib.config.ConfigHandler;
@@ -36,6 +37,10 @@ public class Log {
     /** Local log connection */
     private volatile static LocalLogConnector connector;
 
+
+    @Deprecated
+    public synchronized static void loadConfig(ConfigHandler config) {}
+
     /**
      * Load the config from the configuration file <p>
      * <b> Make sure to load config file first!! </b>
@@ -43,9 +48,9 @@ public class Log {
      * @param config Config handler
      */
 
-    public synchronized static void loadConfig(ConfigHandler config) {
-        app_verbose = config.runAppVerbose();
-        log_verbose = config.runLogVerbose();
+    public synchronized static void loadConfig(Properties config) {
+        app_verbose = config.getProperty("app_verbose", "true").equalsIgnoreCase("true");
+        log_verbose = config.getProperty("log_verbose", "true").equalsIgnoreCase("true");
 
     }
 
@@ -63,7 +68,7 @@ public class Log {
      * @param args System args
      */
 
-    public synchronized static void loadConfig(ConfigHandler config, String[] args) {
+    public synchronized static void loadConfig(Properties config, String[] args) {
         // Load config
         loadConfig(config);
 

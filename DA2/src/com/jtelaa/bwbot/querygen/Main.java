@@ -1,11 +1,13 @@
 package com.jtelaa.bwbot.querygen;
 
+import java.util.Properties;
+
 import com.jtelaa.bwbot.querygen.processes.QueryGenerator;
 import com.jtelaa.bwbot.querygen.processes.QueryServer;
 import com.jtelaa.bwbot.querygen.processes.RequestServer;
 import com.jtelaa.bwbot.querygen.util.RemoteCLI;
 import com.jtelaa.bwbot.querygen.util.SysCLI;
-import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
@@ -25,6 +27,9 @@ import com.jtelaa.da2.lib.misc.MiscUtil;
 
 public class Main {
 
+    /** Default Director IP */
+    public static final String DEFAULT_DIRECTOR_IP = "172.16.2.2";
+
     /** The remote cli local object */ 
     public static RemoteCLI rem_cli;
 
@@ -32,7 +37,7 @@ public class Main {
     public static SysCLI sys_cli;
     
     /** Local configuration handler */
-    public static ConfigHandler my_config;
+    public static Properties my_config;
 
     public static void main(String[] args) {
         // Default configuration file location
@@ -43,10 +48,12 @@ public class Main {
         for (String arg : args) {
             if (arg.equalsIgnoreCase("setup")) {
                 System.out.println("Running in setup mode");
+
+                my_config = PropertiesUtils.importConfig(config_file_location);
                 config_file_location = "/QueryGen/sys/rsc/config/querygen/config.properties";
-                System.out.println("Pre-Load: Loaded internal config");
-                my_config = new ConfigHandler(config_file_location, false);
                 first_time = true;
+
+                System.out.println("Pre-Load: Loaded internal config");
 
                 break;
 
@@ -54,7 +61,7 @@ public class Main {
         }
 
         // Load normally if not first time
-        if (!first_time) { my_config = new ConfigHandler(config_file_location, false); }
+        if (!first_time) { my_config = PropertiesUtils.importConfig("config.properties"); }
 
         // Start Logging
         Log.loadConfig(my_config, args);
@@ -67,7 +74,7 @@ public class Main {
         Log.sendSysMessage("\n\n\n");
 
         // Start logging client
-        Log.openClient(my_config.getLogIP());
+        Log.openClient(my_config.getProperty("log_ip", DEFAULT_DIRECTOR_IP));
         Log.openConnector();
 
         // Request server setup
@@ -89,7 +96,7 @@ public class Main {
         Log.sendMessage("Main: Done", ConsoleColors.GREEN);
 
         // Remote CLI
-        if (my_config.runRemoteCLI()) {
+        if (my_config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) {
             Log.sendMessage("CLI: Remote Cli Enabled");
             rem_cli = new RemoteCLI();
             rem_cli.start();
@@ -100,7 +107,7 @@ public class Main {
         }
 
         // Local CLI
-        if (my_config.runLocalCLI()) {
+        if (my_config.getProperty("local_cli", "true").equalsIgnoreCase("true")) {
             Log.sendMessage("CLI: Local CLI Allowed");
             sys_cli = new SysCLI();
             sys_cli.start();
@@ -114,8 +121,8 @@ public class Main {
         MiscUtil.waitasec(45);
         Log.sendMessage("CLI: Done waiting");
 
-        if (my_config.runLocalCLI()) { sys_cli.runCLI(); }
-        if (my_config.runRemoteCLI()) { rem_cli.runCLI(); }
+        if (my_config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) { rem_cli.runCLI(); }
+        if (my_config.getProperty("local_cli", "true").equalsIgnoreCase("true")) { sys_cli.runCLI(); }
 
         /*
 
