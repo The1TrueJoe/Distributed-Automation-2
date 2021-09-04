@@ -4,6 +4,9 @@
 *.ipr
 *.iws
 
+# Java
+*.class
+
 # Eclipe
 .project
 .classpath
