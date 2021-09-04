@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.files.FileUtil;
@@ -84,6 +85,35 @@ public class SQL {
 
     public static synchronized String getQuery(String path) {
         return getQuery(new File(path));
+
+    }
+
+    /**
+     * Replaces the indentifiers in a template query
+     * 
+     * @param query Query to alter
+     * @param replace Map of <identifier, value> to replace in the original query
+     * 
+     * @return New modified query
+     */
+
+    public static synchronized String replace(String query, Map<String, String> replace) {
+        String[] words = query.split(" ");
+
+        for (int i = 0; i < words.length; i++) {
+            if (replace.containsKey(words[i])) {
+                words[i] = replace.get(words[i]);
+                
+            }
+        }
+
+        String new_query = "";
+
+        for (String word : words) {
+            new_query += word + " ";
+        }
+
+        return new_query;
 
     }
 
