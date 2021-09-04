@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import com.jtelaa.da2.lib.log.Log;
 
@@ -58,8 +59,13 @@ public class FileUtil {
         
         try {
             @SuppressWarnings ({"all"})
-            InputStream inputStream = ClassLoader.getSystemClassLoader().getSystemResourceAsStream(path);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+
+            //InputStream inputStream = ClassLoader.getSystemClassLoader().getSystemResourceAsStream(path);
+            //InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+
+            JarFile jarFile = new JarFile("QueryGen.jar");
+            JarEntry entry = jarFile.getJarEntry(path); //"TextFile/myTextFile.txt"
+            InputStreamReader inputStreamReader = new InputStreamReader(jarFile.getInputStream(entry));
 
             BufferedReader in = new BufferedReader(inputStreamReader);
 
