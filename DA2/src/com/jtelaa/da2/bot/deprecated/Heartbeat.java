@@ -26,12 +26,12 @@ public class Heartbeat extends Thread {
     
     public void run() {
         // Setup
-        heart = new ClientUDP(Main.me.getHearbeatIP(), SysPorts.HEARTBEAT);
+        heart = new ClientUDP(Main.me.config.getProperty("heart_beat_ip", "172.16.2.1"), SysPorts.HEARTBEAT);
         heart.startClient();
 
         // Send beats
         while (run) {
-            heart.sendMessage(MgmtMessages.BEAT.getMessage() + " " + Main.me.getID());
+            heart.sendMessage(MgmtMessages.BEAT.getMessage() + " " + Main.me.id);
             MiscUtil.waitamoment(HEARTBEAT_INTERVAL);
 
         }

@@ -70,7 +70,7 @@ public class QueryServer extends Thread {
      */
     
     public synchronized static void addBot(Bot bot) {
-        if (NetTools.isValid(bot.getIP())) {
+        if (NetTools.isValid(bot.ip)) {
             // If bot has valid ip, add it to the queue
             bot_queue.add(bot);
 
@@ -121,16 +121,16 @@ public class QueryServer extends Thread {
         Bot bot_to_serve = bot_queue.poll();
 
         // Notification
-        Log.sendMessage(log_prefix + "Serving " + bot_to_serve.getIP(), ConsoleColors.YELLOW);
+        Log.sendMessage(log_prefix + "Serving " + bot_to_serve.ip, ConsoleColors.YELLOW);
 
         // Setup client
-        cmd_tx = new ClientUDP(bot_to_serve.getIP(), BWPorts.QUERY_RECEIVE, log_prefix);
+        cmd_tx = new ClientUDP(bot_to_serve.ip, BWPorts.QUERY_RECEIVE, log_prefix);
 
         // Send and then close
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(query_to_send.getQuery());
             cmd_tx.closeClient();
-            Log.sendMessage(log_prefix + "Done serving " + bot_to_serve.getIP(), ConsoleColors.YELLOW);
+            Log.sendMessage(log_prefix + "Done serving " + bot_to_serve.ip, ConsoleColors.YELLOW);
 
         }
     }

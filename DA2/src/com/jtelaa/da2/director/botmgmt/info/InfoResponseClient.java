@@ -34,7 +34,7 @@ public class InfoResponseClient extends Thread {
 
     public synchronized static void addRequest(String message, Bot origin) {
         if (MiscUtil.notBlank(message) && origin.isReachable()) {
-            request_queue.add(new Command(message, NetTools.getLocalIP(), origin.getIP()));
+            request_queue.add(new Command(message, NetTools.getLocalIP(), origin.ip));
 
         }
     }
@@ -82,8 +82,8 @@ public class InfoResponseClient extends Thread {
             int max_id = 1;
 
             for (Bot bot : bots) {
-                if (bot.getID() > max_id) {
-                    max_id = bot.getID();
+                if (bot.id > max_id) {
+                    max_id = bot.id;
 
                 }
             }

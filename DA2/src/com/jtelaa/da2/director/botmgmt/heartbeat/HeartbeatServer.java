@@ -86,7 +86,7 @@ public class HeartbeatServer extends Thread {
                     // Check for life
                     for (Bot bot : Main.bt_mgmt.getAllBots()) {
                         if (bot.isReachable()) {
-                            markAlive(bot.getID());
+                            markAlive(bot.id);
 
                         } else {
                             active_bots.remove(bot);
@@ -99,7 +99,7 @@ public class HeartbeatServer extends Thread {
 
                     // Add ids to activity list
                     for (int i = 0; i < ids.length; i++) {
-                        ids[i] = active_bots.get(i).getID();
+                        ids[i] = active_bots.get(i).id;
 
                     }
 
@@ -183,7 +183,7 @@ public class HeartbeatServer extends Thread {
     public synchronized boolean isAlive(Bot bot) {
         // Iterate through all bots
         for (Bot bot_to_check : active_bots) {
-            if (bot.getID() == bot_to_check.getID()) {
+            if (bot.id == bot_to_check.id) {
                 return true;
 
             }
@@ -242,7 +242,7 @@ public class HeartbeatServer extends Thread {
     public int removeDuplicates() {
         // all ids to remove duplicates
         ArrayList<Integer> ids = new ArrayList<Integer>();
-        for (Bot bot : active_bots) { ids.add(bot.getID()); }
+        for (Bot bot : active_bots) { ids.add(bot.id); }
 
         int num_of_duplicates = 0;
 

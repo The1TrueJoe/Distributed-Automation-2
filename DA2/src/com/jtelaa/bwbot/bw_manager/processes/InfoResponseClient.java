@@ -36,7 +36,7 @@ public class InfoResponseClient extends Thread {
 
     public synchronized static void addRequest(String message, Bot origin) {
         if (MiscUtil.notBlank(message) && origin.isReachable()) {
-            request_queue.add(new Command(message, NetTools.getLocalIP(), origin.getIP()));
+            request_queue.add(new Command(message, NetTools.getLocalIP(), origin.ip));
 
         }
     }
@@ -82,8 +82,8 @@ public class InfoResponseClient extends Thread {
         if (message.contains(BWMessages.ACCOUNT_REQUEST_MESSAGE.getMessage())) {
             try {
                 command.forward();
-                sendCommand(command.changeCommand(BWMessages.ACCOUNT_REPONSE_MESSAGE.getMessage()));
                 sendCommand(command.changeCommand(ObjectUtils.objtoString(AccountGen.generateAccount())));
+                // TODO Add account into database
             
             } catch (IOException e) {
                 Log.sendMessage(e.getMessage());

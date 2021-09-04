@@ -38,6 +38,9 @@ public class Main {
     /** Default Query Generator */
     public static final String DEFAULT_QUERY_GENERATOR = "172.16.3.101";
 
+    /** Default Director IP */
+    public static final String DEFAULT_DIRECTOR_IP = "172.16.2.2";
+
     // Fields
 
     /** The remote cli local object */ 
@@ -93,7 +96,7 @@ public class Main {
 
         // Load Log config and start client
         Log.loadConfig(config);
-        Log.openClient("127.0.0.1");
+        Log.openClient("127.0.0.1"); // TODO Read Properties and use director as default
 
         // Startup
         Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/misc/Rewards.txt", ConsoleColors.CYAN_BOLD_BRIGHT));

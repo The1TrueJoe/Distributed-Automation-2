@@ -90,7 +90,7 @@ public class BotMgmt {
 
     public synchronized Bot getBot(int bot_id) {
         for (Bot bot : all_bots) {
-            if (bot_id == bot.getID()) {
+            if (bot_id == bot.id) {
                 return bot;
 
             }
@@ -119,7 +119,7 @@ public class BotMgmt {
             // Iterate all commands
             for (Command command : commands) {
                 // Send command to bots
-                sendCommand(command.changeDestination(bot.getIP()));
+                sendCommand(command.changeDestination(bot.ip));
 
             }
         }
@@ -132,7 +132,7 @@ public class BotMgmt {
      * @param command Command to send
      */
 
-    public synchronized void sendCommand(Bot bot, String command) { sendCommand(new Command(command, bot.getIP()));}
+    public synchronized void sendCommand(Bot bot, String command) { sendCommand(new Command(command, bot.ip));}
 
     /**
      * Add a command to the queue

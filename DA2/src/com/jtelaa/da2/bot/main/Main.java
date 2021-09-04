@@ -1,5 +1,7 @@
 package com.jtelaa.da2.bot.main;
 
+import java.util.Properties;
+
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.da2.bot.plugin.Plugins;
@@ -7,7 +9,7 @@ import com.jtelaa.da2.bot.util.LogRepeater;
 import com.jtelaa.da2.bot.util.RemoteCLI;
 import com.jtelaa.da2.bot.util.SysCLI;
 import com.jtelaa.da2.lib.bot.Bot;
-import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
@@ -34,14 +36,14 @@ public class Main {
         String config_file_location = "config.properties";
 
         // Config handler (use temp)
-        ConfigHandler config;
+        Properties config;
 
         // Check for first time setup
         boolean first_time = false;
         for (String arg : args) {
             if (arg.equalsIgnoreCase("setup")) {
                 config_file_location = "com/jtelaa/da2/bot/main/config.properties";
-                config = new ConfigHandler(config_file_location, true);
+                config = PropertiesUtils.importConfig(config_file_location);
                 first_time = true;
                 break;
 
@@ -50,12 +52,12 @@ public class Main {
 
         // Load normally if not first time
         if (!first_time) { 
-            me = new Bot(new ConfigHandler(config_file_location, false)); 
-            config = me.getConfig();
+            me = Bot.load(PropertiesUtils.importConfig(config_file_location)); 
+            config = me.config;
 
             // Load Log config and start client
             Log.loadConfig(config);
-            Log.openClient(config.getLogIP());
+            Log.openClient(config.getProperty("log_ip", "172.16.2.2"));
 
         } else {
             Log.log_verbose = true;
@@ -68,7 +70,7 @@ public class Main {
 
         // Send welcome message
         Log.sendSysMessage(ConsoleBanners.botBanner());
-        Log.sendMessage("Welcome to the DA2 Bot Client! I am bot " + me.getID());
+        Log.sendMessage("Welcome to the DA2 Bot Client! I am bot " + me.id);
 
         // TODO Add Enrollment
 
@@ -111,40 +113,41 @@ public class Main {
         }
 
         // Add plugins
-        Plugins.importPlugins(me.getConfig().getProperty("plugin_path", "plugins.txt"));
+        Plugins.importPlugins(me.config.getProperty("plugin_path", "plugins.txt"));
         Plugins.startAll();
         
         // Done
         Log.sendMessage("Main: Done", ConsoleColors.GREEN);
 
         // Remote CLI
-        if (me.getConfig().runRemoteCLI()) {
-            Log.sendMessage("Remote CLI Allowed");
+        if (me.config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) {
+            Log.sendMessage("CLI: Remote Cli Enabled");
             rem_cli = new RemoteCLI();
             rem_cli.start();
 
         } else {
-            Log.sendMessage("No Remote CLI");
+            Log.sendMessage("CLI: No Remote CLI");
 
         }
 
         // Local CLI
-        if (me.getConfig().runLocalCLI()) {
-            Log.sendMessage("Local CLI Allowed");
+        if (me.config.getProperty("local_cli", "true").equalsIgnoreCase("true")) {
+            Log.sendMessage("CLI: Local CLI Allowed");
             sys_cli = new SysCLI();
             sys_cli.start();
 
         } else {
-            Log.sendMessage("No Local CLI");
+            Log.sendMessage("CLI: No Local CLI");
 
         }
 
-        Log.sendMessage("Waiting 45s for CLI bootup");
+        Log.sendMessage("CLI: Waiting 45s for CLI bootup");
         MiscUtil.waitasec(45);
-        Log.sendMessage("Done waiting");
+        Log.sendMessage("CLI: Done waiting");
 
-        if (me.getConfig().runLocalCLI()) { sys_cli.runCLI(); }
-        if (me.getConfig().runRemoteCLI()) { rem_cli.runCLI(); }
+        if (me.config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) { rem_cli.runCLI(); }
+        if (me.config.getProperty("local_cli", "true").equalsIgnoreCase("true")) { sys_cli.runCLI(); }
+
 
         // Stop
         Log.closeLog();
