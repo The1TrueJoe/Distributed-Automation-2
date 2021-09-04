@@ -15,10 +15,12 @@ import com.jtelaa.da2.lib.net.NetTools;
  * 
  * @since 2
  * @author Joseph
+ * 
+ * @deprecated No longer needed (Makes things uncessessarily complicated)
+ * @see com.jtelaa.da2.lib.config.ConfigHandler
  */
 
- // TODO comment
-
+ @Deprecated
 public class ConfigHandler implements Serializable {
 
     public Properties config;
