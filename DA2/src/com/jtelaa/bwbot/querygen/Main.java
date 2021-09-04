@@ -21,6 +21,8 @@ import com.jtelaa.da2.lib.misc.MiscUtil;
  * @see com.jtelaa.bwbot.querygen.processes.QueryGenerator
  */
 
+ // TODO Find a way to include files in the jar
+
 public class Main {
 
     /** The remote cli local object */ 
@@ -42,8 +44,8 @@ public class Main {
         boolean first_time = false;
         for (String arg : args) {
             if (arg.equalsIgnoreCase("setup")) {
-                config_file_location = "rsc/config/querygen/config.properties";
-                System.out.println("Loaded internal config");
+                config_file_location = "sys/rsc/config/querygen/config.properties";
+                System.out.println("Pre-Load: Loaded internal config");
                 my_config = new ConfigHandler(config_file_location, true);
                 first_time = true;
 
@@ -61,8 +63,8 @@ public class Main {
 
         // Startup
         Log.sendSysMessage("Main: Starting.....\n");
-        Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/banners/Rewards.txt", ConsoleColors.CYAN_BOLD));
-        Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/banners/QueryGen.txt", ConsoleColors.YELLOW));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("sys/rsc/banners/Rewards.txt", ConsoleColors.CYAN_BOLD));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("sys/rsc/banners/QueryGen.txt", ConsoleColors.YELLOW));
         Log.sendSysMessage("\n\n\n");
 
         // Start logging client
