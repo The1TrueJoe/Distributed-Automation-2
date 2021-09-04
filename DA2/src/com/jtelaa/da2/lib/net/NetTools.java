@@ -133,7 +133,7 @@ public class NetTools {
     }
 
     /**
-     * Checks if address is valid
+     * Checks if address is valid (Assumes valid if exception thrown)
      * 
      * @param address IP address to check
      * 
@@ -141,9 +141,16 @@ public class NetTools {
      */
 
     public static boolean isValid(String address) {
-        // Validate address
-        InetAddressValidator valid = new InetAddressValidator();
-        return valid.isValid(address);
+        try {
+            // Validate address
+            InetAddressValidator valid = new InetAddressValidator();
+            return valid.isValid(address);
+
+        } catch (Exception e) {
+            Log.sendMessage(e);
+            return true;
+
+        }
         
     }
 
