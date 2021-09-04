@@ -42,7 +42,7 @@ public class Main {
         boolean first_time = false;
         for (String arg : args) {
             if (arg.equalsIgnoreCase("setup")) {
-                config_file_location = "com/jtelaa/bwbot/querygen/config.properties";
+                config_file_location = "rsc/config/querygen/config.properties";
                 System.out.println("Loaded internal config");
                 my_config = new ConfigHandler(config_file_location, true);
                 first_time = true;
@@ -61,8 +61,8 @@ public class Main {
 
         // Startup
         Log.sendSysMessage("Starting.....\n");
-        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/Rewards.txt", ConsoleColors.CYAN_BOLD));
-        Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/QueryGen.txt", ConsoleColors.YELLOW));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/bannners/Rewards.txt", ConsoleColors.CYAN_BOLD));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/bannners/QueryGen.txt", ConsoleColors.YELLOW));
         Log.sendSysMessage("\n\n\n");
 
         // Start logging client
