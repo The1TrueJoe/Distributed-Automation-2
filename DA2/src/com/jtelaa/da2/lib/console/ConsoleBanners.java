@@ -9,9 +9,17 @@ import com.jtelaa.da2.lib.files.FileUtil;
  * @author Joseph
  */
 
-public class ConsoleBanners {
+ // TODO Add ability to specify internal/external
 
-    private static final String BANNER_PATH = "com/jtelaa/da2/lib/console/banners/";
+public class ConsoleBanners {
+    /** Path is internal */
+    public static volatile int INTERNAL = 0;
+
+    /** Path is external */
+    public static volatile int EXTERNAL = 1;
+
+    /** Internal banner path */
+    private static final String BANNER_PATH = "rsc/banners/";
 
     /**
      * Test prints banners
@@ -107,7 +115,28 @@ public class ConsoleBanners {
      * @return The banner
      */
 
-    public static String otherBanner(String path) { return FileUtil.readInternalFile(path); }
+    public static String otherBanner(String path) { return otherBanner(path, INTERNAL); }
+
+    /**
+     * Prints the hypervisor banner
+     * 
+     * @param path Path of the banner
+     * @param type Internal or External
+     * 
+     * @return The banner
+     */
+
+    public static String otherBanner(String path, int type) { 
+
+        if (type == EXTERNAL) {
+            return FileUtil.readFile(path);
+
+        } else {
+            return FileUtil.readInternalFile(path); 
+
+        }
+        
+    }
 
     /**
      * Prints the hypervisor banner
@@ -120,6 +149,19 @@ public class ConsoleBanners {
      */
 
     public static String otherBanner(String path, ConsoleColors color) { return color.getColor() + otherBanner(path) + ConsoleColors.RESET.getEscape(); }
+
+    /**
+     * Prints the hypervisor banner
+     * 
+     * @param color 
+     * @param type Internal or External
+     * 
+     * @see com.jtelaa.da2.lib.console.ConsoleColors.java
+     * 
+     * @return The banner
+     */
+
+    public static String otherBanner(String path, int type, ConsoleColors color) { return color.getColor() + otherBanner(path, type) + ConsoleColors.RESET.getEscape(); }
 
 
 }
