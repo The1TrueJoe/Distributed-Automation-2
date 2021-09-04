@@ -91,10 +91,11 @@ public class SearchHandler {
     private synchronized static ArrayList<String> pickList() {
         // Get list
         Random rand = new Random();
-        String name = pickList(rand.nextInt(15));
+        String name = pickList(rand.nextInt(11));
 
         // Read file
-        ArrayList<String> lines = FileUtil.listLinesInternalFile(name);
+        //ArrayList<String> lines = FileUtil.listLinesInternalFile(name);
+        ArrayList<String> lines = FileUtil.listLinesFile(name);
 
         // Show file is empty
         if (lines.size() < 1) {
@@ -106,7 +107,8 @@ public class SearchHandler {
                 Log.sendMessage(log_prefix + "File " + name + " is empty");
 
                 i++;
-                lines = FileUtil.listLinesInternalFile(pickList(i));
+                //lines = FileUtil.listLinesInternalFile(pickList(i));
+                lines = FileUtil.listLinesFile(pickList(i));
 
                 if (i > 20) {
                     Log.sendMessage(log_prefix + " All files empty (Will use list of default)");
