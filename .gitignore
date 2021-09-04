@@ -7,6 +7,9 @@
 # Java
 *.class
 
+# Output
+DA2/src/output/
+
 # Eclipe
 .project
 .classpath
