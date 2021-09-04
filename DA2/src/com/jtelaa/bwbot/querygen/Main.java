@@ -56,7 +56,7 @@ public class Main {
         if (!first_time) { my_config = new ConfigHandler(config_file_location, false); }
 
         // Start Logging
-        Log.loadConfig(my_config);
+        Log.loadConfig(my_config, args);
 
         // Startup
         Log.sendSysMessage("Starting.....\n");
@@ -66,6 +66,7 @@ public class Main {
 
         // Start logging client
         Log.openClient(my_config.getLogIP());
+        Log.openConnector();
 
         // Request server setup
         RequestServer req_srv = new RequestServer();

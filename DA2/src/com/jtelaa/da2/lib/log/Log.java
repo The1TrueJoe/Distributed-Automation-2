@@ -1,5 +1,6 @@
 package com.jtelaa.da2.lib.log;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -15,8 +16,6 @@ import com.jtelaa.da2.lib.net.ports.SysPorts;
  * @author Joseph
  */
 
- // TODO comment
-
 public class Log {
 
     /** The vebosity of the local application output */
@@ -28,17 +27,65 @@ public class Log {
     /** Log Queue */
     public volatile static Queue<String> logging_queue;
 
+    /** Log history */
+    public static volatile ArrayList<String> history;
+
     /** Log Sender Process */
     private volatile static LogSender sender;
+
+    /** Local log connection */
+    private volatile static LocalLogConnector connector;
 
     /**
      * Load the config from the configuration file <p>
      * <b> Make sure to load config file first!! </b>
+     * 
+     * @param config Config handler
      */
 
     public synchronized static void loadConfig(ConfigHandler config) {
         app_verbose = config.runAppVerbose();
         log_verbose = config.runLogVerbose();
+
+    }
+
+    /**
+     * Load the config from the configuration file <p>
+     * <b> Make sure to load config file first!! </b>
+     * 
+     * @param config Handler
+     * @param args System args
+     */
+
+    public synchronized static void loadConfig(ConfigHandler config, String[] args) {
+        // Load config
+        loadConfig(config);
+
+        // Args trump config
+        for (String arg : args) {
+            if (arg.contains("no local")) {
+                app_verbose = false;
+
+            } else if (arg.contains("no remote")) {
+                log_verbose = false;
+
+            } else if (arg.contains("headless")) {
+                app_verbose = false;
+                log_verbose = false;
+
+            }
+        }
+
+    }
+
+    /**
+     * Opens the logging connector so admine can interface with the application if it running in the background
+     */
+
+    public synchronized static void openConnector() {
+        // Start the connector
+        connector = new LocalLogConnector();
+        connector.start();
 
     }
 
@@ -74,6 +121,18 @@ public class Log {
         // Start the log sender
         sender = new LogSender(logging_server_ip, logging_port);
         sender.start();
+
+    }
+
+    /**
+     * Adds a log message to the history (Max lines: 5000)
+     * 
+     * @param message Message to add
+     */
+
+    public synchronized static void addToHistory(String message) {
+        if (history.size() > 5000) { history.remove(0); } 
+        history.add(message);
 
     }
 
@@ -163,7 +222,9 @@ public class Log {
      */
 
     public synchronized static boolean sendManSysMessage(String message) {
+        addToHistory(message);
         System.out.println(message);
+
         return true;
 
     }
@@ -176,7 +237,11 @@ public class Log {
      */
 
     public synchronized static boolean sendManSysMessage(String message, ConsoleColors color) {
-        System.out.println(color.getColor() + message + ConsoleColors.RESET.getColor());
+        message = color.getColor() + message + ConsoleColors.RESET.getColor();
+        
+        addToHistory(message);
+        System.out.println(message);
+
         return true;
 
     }
@@ -188,7 +253,7 @@ public class Log {
      */
 
     public synchronized static boolean sendSysMessage(String message) {
-        if (app_verbose) { System.out.println(message); }
+        if (app_verbose) { addToHistory(message); System.out.println(message); }
         return app_verbose;
 
     }
@@ -201,7 +266,14 @@ public class Log {
      */
 
     public synchronized static boolean sendSysMessage(String message, ConsoleColors color) {
-        if (app_verbose) { System.out.println(color.getColor() + message + ConsoleColors.RESET.getColor()); }
+        if (app_verbose) { 
+            message = color.getColor() + message + ConsoleColors.RESET.getColor();
+        
+            addToHistory(message);
+            System.out.println(message);
+        
+        }
+
         return app_verbose;
 
     }
@@ -213,7 +285,7 @@ public class Log {
      */
 
     public synchronized static boolean sendSysMessageNoNewLine(String message) {
-        if (app_verbose) { System.out.print(message); }
+        if (app_verbose) { addToHistory(message); System.out.print(message); }
         return app_verbose;
 
     }
@@ -226,7 +298,14 @@ public class Log {
      */
 
     public synchronized static boolean sendSysMessageNoNewLine(String message, ConsoleColors color) {
-        if (app_verbose) { System.out.print(color.getColor() + message + ConsoleColors.RESET.getColor()); }
+        if (app_verbose) { 
+            message = (color.getColor() + message + ConsoleColors.RESET.getColor()); 
+
+            addToHistory(message);
+            System.out.print(message);
+        
+        }
+
         return app_verbose;
 
     }
@@ -306,6 +385,11 @@ public class Log {
             if (sender.log_established) { 
                 sender.stopSender();
 
+            }
+
+            if (connector.log_established) {
+                connector.stopServer();
+                
             }
 
         } catch (NullPointerException e) {

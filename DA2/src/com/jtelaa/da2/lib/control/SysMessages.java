@@ -2,6 +2,12 @@ package com.jtelaa.da2.lib.control;
 
 public enum SysMessages implements Messages {
 
+    /** Open local log */
+    ESTABLISH_LOCAL_LOG("I WANT TO CONNECT TO THE LOCAL LOG!"),
+
+    /** Close local log */
+    CLOSE_LOCAL_LOG("STOP THE LOCAL LOG")
+
     ;
 
     private volatile char[] message;

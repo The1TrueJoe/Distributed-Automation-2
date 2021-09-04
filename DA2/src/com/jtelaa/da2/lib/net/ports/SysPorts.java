@@ -33,7 +33,16 @@ public enum SysPorts implements Ports {
     LOG(8775),
 
     /** Additional port for logging */
-    LOG_2(8776);
+    @Deprecated 
+    LOG_2(8776),
+
+    /** Port for local logging */
+    LOCAL_LOG(8776),
+
+    /** Establish log */
+    ESTABLISH_LOCAL_LOG(8780)
+
+    ;
 
     /** Port number */
     private final int port;
