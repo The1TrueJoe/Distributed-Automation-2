@@ -84,6 +84,7 @@ public class Log {
 
     public synchronized static void openConnector() {
         // Start the connector
+        history = new ArrayList<String>();
         connector = new LocalLogConnector();
         connector.start();
 
