@@ -68,7 +68,7 @@ public class Main {
         Log.clearHistory();
 
         // List properties
-        for (String line : PropertiesUtils.listProperties(my_config)) { Log.sendMessage(line); }
+        for (String line : PropertiesUtils.listProperties(my_config)) { Log.sendSysMessage(line); }
 
         // Startup
         Log.sendSysMessage("Main: Starting.....\n");
