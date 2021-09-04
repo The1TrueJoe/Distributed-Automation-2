@@ -126,7 +126,7 @@ public class ClientUDP {
     public boolean startClient() {
         try {
             // Start
-            Log.sendMessage(log_prefix + "Starting server at port " + port);
+            Log.sendMessage(log_prefix + "Starting client at port " + port);
             
             // Reset buffer and create new socker
             buffer = null;
