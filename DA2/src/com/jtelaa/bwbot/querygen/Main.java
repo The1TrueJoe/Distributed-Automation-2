@@ -42,7 +42,8 @@ public class Main {
         boolean first_time = false;
         for (String arg : args) {
             if (arg.equalsIgnoreCase("setup")) {
-                config_file_location = "sys/rsc/config/querygen/config.properties";
+                System.out.println("Running in setup mode");
+                config_file_location = "/QueryGen/sys/rsc/config/querygen/config.properties";
                 System.out.println("Pre-Load: Loaded internal config");
                 my_config = new ConfigHandler(config_file_location, false);
                 first_time = true;
