@@ -3,6 +3,8 @@ package com.jtelaa.da2.lib.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Properties;
 
 import com.jtelaa.da2.lib.files.FileUtil;
@@ -99,5 +101,29 @@ public class PropertiesUtils {
             Log.sendMessage(e.getMessage());
 
         }
+    }
+
+    /**
+     * List the properties in the file
+     * 
+     * @param properties Properties file
+     * 
+     * @return List of properties
+     */
+
+    public synchronized static ArrayList<String> listProperties(Properties properties) {
+        ArrayList<String> lines = new ArrayList<String>();
+        lines.add("Properties");
+
+        Enumeration<Object> keys = properties.keys();
+
+        while (keys.hasMoreElements()) {
+            String key = (String) keys.nextElement();
+            String value = (String) properties.get(key);
+
+            lines.add(key + ": " + value);
+        }
+
+        return lines;
     }
 }
