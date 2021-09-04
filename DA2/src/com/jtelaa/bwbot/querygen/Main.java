@@ -61,8 +61,8 @@ public class Main {
 
         // Startup
         Log.sendSysMessage("Main: Starting.....\n");
-        Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/bannners/Rewards.txt", ConsoleColors.CYAN_BOLD));
-        Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/bannners/QueryGen.txt", ConsoleColors.YELLOW));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/banners/Rewards.txt", ConsoleColors.CYAN_BOLD));
+        Log.sendSysMessage(ConsoleBanners.otherBanner("rsc/banners/QueryGen.txt", ConsoleColors.YELLOW));
         Log.sendSysMessage("\n\n\n");
 
         // Start logging client
