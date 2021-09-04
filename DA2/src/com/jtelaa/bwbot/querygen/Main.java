@@ -35,8 +35,6 @@ public class Main {
     public static ConfigHandler my_config;
 
     public static void main(String[] args) {
-        args = new String[] {"setup"};
-
         // Default configuration file location
         String config_file_location = "config.properties";
 
