@@ -19,7 +19,7 @@ sudo git pull
 # Build code using the java compiler
 cd DA2/src/
 mkdir output
-sudo javac -d output -cp ".:lib/*:rsc/*" "com/jtelaa/bwbot/querygen/Main.java"
+sudo javac -d output -cp ".:lib/*:rsc/banners/QueryGen.txt" "com/jtelaa/bwbot/querygen/Main.java"
 
 # Done
 echo "Done with compilation"
