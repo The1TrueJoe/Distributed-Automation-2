@@ -12,8 +12,12 @@ echo ''
 echo ''
 echo "Building QueryGenerator Code."
 
+# Remove old jar
+cd /QueryGen/
+sudo rm QueryGen.jar
+
 # Change directory to to the code and update
-cd /QueryGen/dev/Distributed-Automation-2/
+cd dev/Distributed-Automation-2/
 sudo git pull
 
 # Build code using the java compiler
