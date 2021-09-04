@@ -51,7 +51,13 @@ public class Log {
 
     /**
      * Load the config from the configuration file <p>
-     * <b> Make sure to load config file first!! </b>
+     * <b> Make sure to load config file first!! </b> </p>
+     * 
+     * <p> 
+     * "no local": No local output,
+     * "no remote": No remote output,
+     * "headless": No output
+     * </p>
      * 
      * @param config Handler
      * @param args System args
