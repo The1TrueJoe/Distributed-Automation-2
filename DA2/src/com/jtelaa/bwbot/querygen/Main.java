@@ -67,6 +67,9 @@ public class Main {
         Log.loadConfig(my_config, args);
         Log.clearHistory();
 
+        // List properties
+        for (String line : PropertiesUtils.listProperties(my_config)) { Log.sendMessage(line); }
+
         // Startup
         Log.sendSysMessage("Main: Starting.....\n");
         Log.sendSysMessage(ConsoleBanners.otherBanner("/QueryGen/sys/rsc/banners/Rewards.txt", ConsoleBanners.EXTERNAL, ConsoleColors.CYAN_BOLD));
