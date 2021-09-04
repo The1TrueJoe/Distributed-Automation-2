@@ -1,3 +1,0 @@
-Main-Class: com.jtelaa.bwbot.querygen.Main
-Class-Path: lib\*
-
