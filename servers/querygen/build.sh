@@ -16,6 +16,11 @@ echo "Building QueryGenerator Code."
 cd /QueryGen/
 sudo rm QueryGen.jar
 
+# Make system directory (Temporary)
+sudo mkdir sys
+sudo mkdir sys/rsc
+sudo cp -r dev/Distributed-Automation-2/DA2/src/rsc/ sys/
+
 # Change directory to to the code and update
 cd dev/Distributed-Automation-2/
 sudo git pull
@@ -23,7 +28,7 @@ sudo git pull
 # Build code using the java compiler
 cd DA2/src/
 mkdir output
-sudo javac -d output -cp ".:lib/*:rsc/banners/QueryGen.txt" "com/jtelaa/bwbot/querygen/Main.java"
+sudo javac -d output -cp ".:lib/*" "com/jtelaa/bwbot/querygen/Main.java"
 
 # Done
 echo "Done with compilation"
