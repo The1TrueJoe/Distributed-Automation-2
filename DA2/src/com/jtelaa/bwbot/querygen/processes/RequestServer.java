@@ -31,17 +31,26 @@ public class RequestServer extends Thread {
         // If server is ready
         if (server.startServer()) {
             while (run) {
-    
-                // If a request message is receiver
-                String response = server.getMessage();
-                if (response != null && response.equals(BWMessages.QUERY_REQUEST_MESSAGE.getMessage())) {
-                    bot_address = server.getClientAddress();
+                try {
+                    // If a request message is receiver
+                    String response = server.getMessage();
 
-                    QueryServer.addBot(new Bot(bot_address));
-                    Log.sendSysMessage("Request Server: Request from " + bot_address, ConsoleColors.YELLOW);
+                    if (response != null && response.equals(BWMessages.QUERY_REQUEST_MESSAGE.getMessage())) {
+                        bot_address = server.getClientAddress();
+
+                        QueryServer.addBot(new Bot(bot_address));
+                        Log.sendSysMessage("Request Server: Request from " + bot_address, ConsoleColors.YELLOW);
                 
-                } else if (response == null) {
-                    MiscUtil.waitamoment(.1);
+                    } else if (response == null) {
+                        MiscUtil.waitamoment(.1);
+
+                    }
+
+                // Error handling
+                } catch (NullPointerException e) {
+                    Log.sendMessage("Message is null. Skipping....");
+                    Log.sendMessage(e);
+                    MiscUtil.waitasec(.1);
 
                 }
             }
