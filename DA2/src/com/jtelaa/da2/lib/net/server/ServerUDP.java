@@ -181,8 +181,16 @@ public class ServerUDP {
             // Store client
             clientAddress = socket.getInetAddress();
 
-            // Log reception
-            Log.sendMessage(log_prefix +"Received: " + message + " From: " + getClientAddress(), colors);
+            // Null inet handling
+            if (clientAddress == null) {
+                // Log reception
+                Log.sendMessage(log_prefix +"Received: " + message + " From: " + getClientAddress(), colors);
+
+            } else {
+                // Log reception
+                Log.sendMessage(log_prefix +"Received: " + message, colors);
+
+            }
 
         } catch (IOException e) {
             // Send error
