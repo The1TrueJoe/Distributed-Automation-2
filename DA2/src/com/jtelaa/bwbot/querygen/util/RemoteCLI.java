@@ -174,7 +174,7 @@ public class RemoteCLI extends LocalCLI {
                 + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "dump x" + ConsoleColors.RESET.getEscape() + " -> remove x queries from queue and print them (default 100)\n"
                 + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "clear x" + ConsoleColors.RESET.getEscape() + " -> clear x queries from the queue and clear bot queue (default all)\n"
                 + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "size x" + ConsoleColors.RESET.getEscape() + " -> change the size to x (default print the queue size)\n"
-                + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "add x" + ConsoleColors.RESET.getEscape() + " -> add ip x to the request queue\n"  
+                + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "add x y" + ConsoleColors.RESET.getEscape() + " -> add ip x to the request queue y times(s)\n"  
             );
 
             Log.sendMessage(help);
@@ -186,7 +186,14 @@ public class RemoteCLI extends LocalCLI {
                 
             } else if (commands.length == 2) {
                 Command ip = commands[1];
-                response += "Adding " + ip.command() + " to request queue";
+                response += "Adding 1 request from " + ip.command() + " to request queue";
+                QueryServer.bot_queue.add(new Bot(ip.command()));
+
+            } else if (commands.length == 3) {
+                Command ip = commands[1];
+                Command count = commands[2];
+
+                response += "Adding " + count.command() + "request(s) from " + ip.command() + " to request queue";
                 QueryServer.bot_queue.add(new Bot(ip.command()));
 
             } else {
