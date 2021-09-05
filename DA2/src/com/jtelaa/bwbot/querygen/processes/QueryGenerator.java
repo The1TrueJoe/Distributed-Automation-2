@@ -78,7 +78,7 @@ public class QueryGenerator extends Thread {
 
             } else {
                 // Wait if not ready
-                Log.sendMessage(log_prefix + "Generation Stopped", ConsoleColors.PURPLE_BOLD_BRIGHT);
+                Log.sendMessage(log_prefix + "Generation Stopped (" + query_queue.size() + ")", ConsoleColors.PURPLE_BOLD_BRIGHT);
                 MiscUtil.waitamoment(10000);
 
                 /*
