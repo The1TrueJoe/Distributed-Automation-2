@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import com.jtelaa.bwbot.querygen.Main;
 import com.jtelaa.bwbot.querygen.processes.QueryGenerator;
 import com.jtelaa.bwbot.querygen.processes.QueryServer;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.cli.LocalCLI;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
@@ -168,15 +169,30 @@ public class RemoteCLI extends LocalCLI {
             Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/QueryGen.txt", ConsoleColors.YELLOW));
 
             String help = (
-                "Query Generator CLI Help:\n" +
-                ConsoleColors.YELLOW_UNDERLINED.getEscape() + "cmd" + ConsoleColors.RESET.getEscape() + " -> pass through a command to the systems OS\n" +
-                ConsoleColors.YELLOW_UNDERLINED.getEscape() + "dump x" + ConsoleColors.RESET.getEscape() + " -> remove x queries from queue and print them (default 100)\n"+
-                ConsoleColors.YELLOW_UNDERLINED.getEscape() + "clear x" + ConsoleColors.RESET.getEscape() + " -> clear x queries from the queue and clear bot queue (default all)\n"+
-                ConsoleColors.YELLOW_UNDERLINED.getEscape() + "size x" + ConsoleColors.RESET.getEscape() + " -> change the size to x (default print the queue size)"  
+                "Query Generator CLI Help:\n"
+                + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "cmd" + ConsoleColors.RESET.getEscape() + " -> pass through a command to the systems OS\n"
+                + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "dump x" + ConsoleColors.RESET.getEscape() + " -> remove x queries from queue and print them (default 100)\n"
+                + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "clear x" + ConsoleColors.RESET.getEscape() + " -> clear x queries from the queue and clear bot queue (default all)\n"
+                + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "size x" + ConsoleColors.RESET.getEscape() + " -> change the size to x (default print the queue size)\n"
+                + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "add x" + ConsoleColors.RESET.getEscape() + " -> add ip x to the request queue\n"  
             );
 
             Log.sendMessage(help);
             Log.sendMessage(ConsoleColors.LINES_SHORT.getEscape());
+
+        } else if (Cases.checkCase(command, "add")) {
+            if (commands.length == 1) {
+                response += "Error: Add IP";
+                
+            } else if (commands.length == 2) {
+                Command ip = commands[1];
+                response += "Adding " + ip.command() + " to request queue";
+                QueryServer.bot_queue.add(new Bot(ip.command()));
+
+            } else {
+                response += "Error: To many args";
+
+            }
 
         }
 
