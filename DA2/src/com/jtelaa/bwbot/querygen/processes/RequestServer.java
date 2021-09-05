@@ -5,6 +5,7 @@ import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
+import com.jtelaa.da2.lib.misc.MiscUtil;
 import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 /**
@@ -31,14 +32,17 @@ public class RequestServer extends Thread {
         if (server.startServer()) {
             while (run) {
     
-                // If a request messahe is receiver
+                // If a request message is receiver
                 String response = server.getMessage();
-                if (response.equals(BWMessages.QUERY_REQUEST_MESSAGE.getMessage())) {
+                if (response != null && response.equals(BWMessages.QUERY_REQUEST_MESSAGE.getMessage())) {
                     bot_address = server.getClientAddress();
 
                     QueryServer.addBot(new Bot(bot_address));
                     Log.sendSysMessage("Request Server: Request from " + bot_address, ConsoleColors.YELLOW);
                 
+                } else if (response == null) {
+                    MiscUtil.waitamoment(.1);
+
                 }
             }
 
