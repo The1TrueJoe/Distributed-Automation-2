@@ -178,6 +178,12 @@ public class ServerUDP {
             socket.receive(packet);
             message = convertMessage(recieve_buffer);
 
+            if (message == null) {
+                Log.sendMessage(log_prefix + "Received null message");
+                return null;
+
+            }
+
             // Store client
             clientAddress = socket.getInetAddress();
 
