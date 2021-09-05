@@ -57,7 +57,7 @@ public class QueryGenerator extends Thread {
                 // Generate random case
                 rng = rand.nextInt(100);
 
-                if (rng <= 90) {
+                if (rng <= 50) {
                     // Add a single query
                     Log.sendMessage(log_prefix + "Generating (1) - " + query_queue.size() + "/" + MAX_QUERY_QUEUE_SIZE, ConsoleColors.PURPLE);
                     query_queue.add(generate());
