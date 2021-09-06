@@ -258,7 +258,14 @@ public class Log {
      */
 
     public synchronized static boolean sendManSysMessage(String message, ConsoleColors color) {
-        message = color.getColor() + message + ConsoleColors.RESET.getColor();
+        try {
+            message = color.getEscape() + message + ConsoleColors.RESET.getEscape();
+
+        } catch (NullPointerException e) {
+            message = message + " - (Color could not get displayed)";
+
+        }
+        
         
         addToHistory(message);
         System.out.println(message);

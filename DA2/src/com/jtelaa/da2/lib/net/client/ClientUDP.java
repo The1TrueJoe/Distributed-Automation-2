@@ -115,6 +115,9 @@ public class ClientUDP {
         // Log prefix
         this.log_prefix = logPrefix;
 
+        // Colors
+        this.colors = colors;
+
         // If the server ip is invalid
         if (NetTools.isValid(server_ip)) {     
             this.server_ip = server_ip; 
