@@ -33,7 +33,7 @@ public class LocalLogConnector extends Thread {
 
             } while (!SysMessages.ESTABLISH_LOCAL_LOG.equals(message));
 
-            logging_client = new ClientUDP("127.0.0.1", SysPorts.LOCAL_LOG);
+            logging_client = new ClientUDP("127.0.0.1", SysPorts.LOCAL_LOG, "Local Log Connector: ");
             logging_client.startClient();
             boolean open = true;
 

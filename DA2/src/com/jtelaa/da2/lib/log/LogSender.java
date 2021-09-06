@@ -32,6 +32,9 @@ public class LogSender extends Thread {
     /** Logging port */
     private Ports logging_port;
 
+    /** Logging prefix */
+    private static String logging_prefix = "Log Client: ";
+
     /**
      * Default Constructor
      * (Port = Default, IP = localhost)
@@ -75,11 +78,14 @@ public class LogSender extends Thread {
             
         }
 
+        // Log
+        Log.sendSysMessage(logging_prefix + "Starting log sender");
+
         // Store local ip
         local_ip = NetTools.getLocalIP();
 
         // Start logging client
-        logging_client = new ClientUDP(logging_server_ip, logging_port);
+        logging_client = new ClientUDP(logging_server_ip, logging_port, logging_prefix);
         log_established = logging_client.startClient();
 
         while (run) {
