@@ -63,7 +63,7 @@ public class RemoteCLI extends LocalCLI {
 
         // CMD
         } else if (Cases.command(cmd)) {
-            ComputerControl.sendCommand(command.modifyforSys());
+            ComputerControl.sendCommand(command.addBlankUser().addBlankControlID().modifyforSys());
 
         // Dump Query Queue
         } else if (Cases.checkCase(cmd, new String[] {"dump"})) {
@@ -180,7 +180,7 @@ public class RemoteCLI extends LocalCLI {
             Log.sendMessage(help);
             Log.sendMessage(ConsoleColors.LINES_SHORT.getEscape());
 
-        } else if (Cases.checkCase(command, "add")) {
+        } else if (Cases.checkCase(cmd, "add")) {
             if (commands.length == 1) {
                 response += "Error: Add IP";
                 
@@ -191,9 +191,9 @@ public class RemoteCLI extends LocalCLI {
 
             } else if (commands.length == 3) {
                 Command ip = commands[1];
-                Command count = commands[2];
+                int count = Integer.parseInt(commands[2].command());
 
-                response += "Adding " + count.command() + "request(s) from " + ip.command() + " to request queue";
+                response += "Adding " + count + "request(s) from " + ip.command() + " to request queue";
                 QueryServer.bot_queue.add(new Bot(ip.command()));
 
             } else {
