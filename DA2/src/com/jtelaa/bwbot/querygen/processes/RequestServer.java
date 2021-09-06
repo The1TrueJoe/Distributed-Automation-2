@@ -48,7 +48,7 @@ public class RequestServer extends Thread {
 
                 // Error handling
                 } catch (Exception e) {
-                    Log.sendMessage("Request Server: Could not resolve requesting bot's IP");
+                    Log.sendMessage("Request Server: Could not resolve requesting bot's IP", ConsoleColors.RED);
                     MiscUtil.waitasec(.1);
 
                 }
