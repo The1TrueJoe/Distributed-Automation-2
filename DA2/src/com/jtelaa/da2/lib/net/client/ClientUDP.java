@@ -6,6 +6,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.control.Messages;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.net.NetTools;
@@ -24,6 +25,9 @@ import org.junit.Test;
 public class ClientUDP {
 
     /* Client */
+
+    /** Console Color */
+    private ConsoleColors colors;
 
     /** Prefix to add to log messages (optional) */
     public String log_prefix;
@@ -52,7 +56,7 @@ public class ClientUDP {
 
     @Deprecated
     public ClientUDP(String server_ip, int port) { 
-        this(server_ip, port, "");
+        this(server_ip, port, "", ConsoleColors.WHITE);
         
     }
 
@@ -64,7 +68,7 @@ public class ClientUDP {
      */
 
     public ClientUDP(String server_ip, Ports port) { 
-        this(server_ip, port.getPort(), "");
+        this(server_ip, port.getPort(), "", ConsoleColors.WHITE);
 
     }
 
@@ -77,7 +81,20 @@ public class ClientUDP {
      */
 
     public ClientUDP(String server_ip, Ports port, String logPrefix) {
-        this(server_ip, port.getPort(), logPrefix);
+        this(server_ip, port.getPort(), logPrefix, ConsoleColors.WHITE);
+
+    }
+
+    /**
+     * Constructor
+     * 
+     * @param server_ip IP to contact
+     * @param port Port to contact
+     * @param logPrefix Prefix to add to log messages
+     */
+
+    public ClientUDP(String server_ip, Ports port, String logPrefix, ConsoleColors colors) {
+        this(server_ip, port.getPort(), logPrefix, colors);
 
     }
 
@@ -94,7 +111,7 @@ public class ClientUDP {
      */
 
     @Deprecated
-    public ClientUDP(String server_ip, int port, String logPrefix) { 
+    public ClientUDP(String server_ip, int port, String logPrefix, ConsoleColors colors) { 
         // Log prefix
         this.log_prefix = logPrefix;
 
@@ -105,7 +122,7 @@ public class ClientUDP {
             
         } else {
             // Use local ip if the server is invalid
-            Log.sendMessage(log_prefix + server_ip + " is invalid");
+            Log.sendMessage(log_prefix + server_ip + " is invalid", ConsoleColors.RED);
             server_ip = NetTools.getLocalIP();
 
         }
@@ -126,14 +143,14 @@ public class ClientUDP {
     public boolean startClient() {
         try {
             // Start
-            Log.sendMessage(log_prefix + "Starting client at port " + port);
+            Log.sendMessage(log_prefix + "Starting client at port " + port, colors);
             
             // Reset buffer and create new socker
             buffer = null;
             socket = new DatagramSocket();
 
             // Send success message
-            Log.sendMessage(log_prefix + "Client open. Will send messages to " + server_ip + ":" + port);
+            Log.sendMessage(log_prefix + "Client open. Will send messages to " + server_ip + ":" + port, colors);
             return true;
 
         } catch (IOException e) {
@@ -155,7 +172,7 @@ public class ClientUDP {
     public boolean sendMessage(String message) {
         try {
             // Log
-            Log.sendSysMessage(log_prefix + "Sending UDP: " + message + " to: " + server_ip + ":" + port);
+            Log.sendSysMessage(log_prefix + "Sending UDP: " + message + " to: " + server_ip + ":" + port, colors);
 
             // Set buffer and send
             buffer = message.getBytes();
@@ -168,7 +185,7 @@ public class ClientUDP {
         } catch (Exception e) {
             // Send error
             // TODO Add support for sysmessages exception pass through
-            Log.sendSysMessage(log_prefix + "\n" + e.getMessage());
+            Log.sendSysMessage(log_prefix + "\n" + e.getMessage(), ConsoleColors.RED);
             return false;
 
         }
@@ -198,7 +215,7 @@ public class ClientUDP {
     public boolean sendObject(Serializable object) {
         try {
             // Send log message
-            Log.sendSysMessage(log_prefix + "Sending UDP Object: " + object + " to: " + server_ip + ":" + port + "\n");
+            Log.sendSysMessage(log_prefix + "Sending UDP Object: " + object + " to: " + server_ip + ":" + port + "\n", colors);
 
             // Set buffer with serialized object and send
             buffer = SerializationUtils.serialize(object);
@@ -210,7 +227,7 @@ public class ClientUDP {
         
         } catch (Exception e) {
             // end error
-            Log.sendSysMessage(log_prefix + "Failed: \n" + e.getStackTrace());
+            Log.sendSysMessage(log_prefix + "Failed: \n" + e.getStackTrace(), ConsoleColors.RED);
             return false;
 
         }
@@ -229,12 +246,12 @@ public class ClientUDP {
             socket.close();
 
             // Send success
-            Log.sendMessage(log_prefix + "Closed");
+            Log.sendMessage(log_prefix + "Closed", colors);
             return true;
 
         } catch (Exception e) {
             // Send error
-            Log.sendMessage(log_prefix, e);
+            Log.sendMessage(log_prefix, e, colors);
             return false;
 
         }
