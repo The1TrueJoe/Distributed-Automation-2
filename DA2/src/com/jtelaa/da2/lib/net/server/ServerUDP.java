@@ -26,7 +26,7 @@ public class ServerUDP {
     private ConsoleColors colors;
 
     /** Prefix to add to log messages (optional) */
-    private String log_prefix;
+    public String log_prefix;
 
     /** Port opened by the server */
     private int port;

@@ -26,7 +26,7 @@ public class ClientUDP {
     /* Client */
 
     /** Prefix to add to log messages (optional) */
-    private String log_prefix;
+    public String log_prefix;
 
     /** Server ip */
     private String server_ip;
