@@ -43,7 +43,7 @@ public class SysCLI extends LocalCLI {
     public void run() {
         if (Main.my_config.getProperty("local_cli", "true").equalsIgnoreCase("true")) {
             // Setup
-            Log.sendMessage("Preparing Local CLI");
+            Log.sendSysMessage("Preparing Local CLI");
             String type;
 
             while (!run) {
@@ -51,14 +51,14 @@ public class SysCLI extends LocalCLI {
 
             }
 
-            Log.sendMessage("Starting Local CLI");
+            Log.sendSysMessage("Starting Local CLI");
         
             // While run
             while (run) {
                 Log.sendSysMessageNoNewLine(">");
                 type = keyboard.nextLine();
 
-                Log.sendMessage(terminal(new Command(type)));
+                Log.sendSysMessage(terminal(new Command(type)));
 
             }
         }
