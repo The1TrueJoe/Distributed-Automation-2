@@ -50,12 +50,6 @@ public class RemoteCLI extends LocalCLI {
 
         String response = "";
 
-        // Temp change verbosity
-        boolean prev_app_verbosity = Log.app_verbose;
-        boolean prev_log_verbosity = Log.log_verbose;
-        Log.app_verbose = !run_as_local;
-        Log.log_verbose = run_as_local;
-
         // Shutdown
         if (Cases.exit(cmd)) {
             run = false;
@@ -159,14 +153,14 @@ public class RemoteCLI extends LocalCLI {
             response += "Changed Queue Size to " + size;
 
         } else if (Cases.checkCase(cmd, new String[] {"title"})) {
-            Log.sendSysMessage(ConsoleColors.CLEAR.getEscape() + ConsoleColors.LINES.getEscape());
-            Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/Rewards.txt", ConsoleColors.CYAN_BOLD));
-            Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/QueryGen.txt", ConsoleColors.YELLOW));
+            response += ConsoleColors.CLEAR.getEscape() + ConsoleColors.LINES.getEscape();
+            response += ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/Rewards.txt", ConsoleColors.CYAN_BOLD) + "\n";
+            response += ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/QueryGen.txt", ConsoleColors.YELLOW) + "\n";
             
         } else if (Cases.help(cmd)) {
-            Log.sendMessage(ConsoleColors.CLEAR.getEscape() + ConsoleColors.LINES.getEscape());
-            Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/Rewards.txt", ConsoleColors.CYAN_BOLD));
-            Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/QueryGen.txt", ConsoleColors.YELLOW));
+            response += ConsoleColors.CLEAR.getEscape() + ConsoleColors.LINES.getEscape();
+            response += ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/Rewards.txt", ConsoleColors.CYAN_BOLD) + "\n";
+            response += ConsoleBanners.otherBanner("com/jtelaa/bwbot/querygen/misc/QueryGen.txt", ConsoleColors.YELLOW) + "\n";
 
             String help = (
                 "Query Generator CLI Help:\n"
@@ -177,8 +171,7 @@ public class RemoteCLI extends LocalCLI {
                 + ConsoleColors.YELLOW_UNDERLINED.getEscape() + "add x y" + ConsoleColors.RESET.getEscape() + " -> add ip x to the request queue y times(s)\n"  
             );
 
-            Log.sendMessage(help);
-            Log.sendMessage(ConsoleColors.LINES_SHORT.getEscape());
+            response += help + ConsoleColors.LINES_SHORT.getEscape();
 
         } else if (Cases.checkCase(cmd, "add")) {
             if (commands.length == 1) {
@@ -202,10 +195,6 @@ public class RemoteCLI extends LocalCLI {
             }
 
         }
-
-        // Reset
-        Log.app_verbose = prev_app_verbosity;
-        Log.log_verbose = prev_log_verbosity;
 
         return response;
         
