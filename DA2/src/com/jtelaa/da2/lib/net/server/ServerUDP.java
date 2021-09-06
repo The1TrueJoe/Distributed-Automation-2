@@ -155,7 +155,7 @@ public class ServerUDP {
 
         } catch (IOException e) {
             // Send error message
-            Log.sendMessage(log_prefix, e, colors);
+            Log.sendMessage(log_prefix, e, ConsoleColors.RED);
             return false;
 
         }
@@ -193,7 +193,7 @@ public class ServerUDP {
 
             } catch (NullPointerException e) {
                 // Log reception
-                Log.sendSysMessage(log_prefix +"Received: " + message, colors);
+                Log.sendSysMessage(log_prefix +"Received: " + message, ConsoleColors.RED);
 
             }
 
@@ -205,7 +205,7 @@ public class ServerUDP {
         } catch (IOException e) {
             // Send error
             // TODO Add support for sysmessages exception pass through
-            Log.sendSysMessage(log_prefix + "\n" + e.getMessage());
+            Log.sendSysMessage(log_prefix + "\n" + e.getMessage(), ConsoleColors.RED);
             message = "";
 
         }
@@ -231,15 +231,21 @@ public class ServerUDP {
             socket.receive(packet);
             object = SerializationUtils.deserialize(recieve_buffer);
 
-            // Store client
-            clientAddress = socket.getInetAddress();
+            try {
+                // Store client
+                clientAddress = socket.getInetAddress();
 
+            } catch (NullPointerException e) {
+                Log.sendMessage("Cannot resolve the client's address", ConsoleColors.RED);
+
+            }
+            
             // Log reception
             Log.sendMessage(log_prefix + "Received UDP Object: " + object + " From: " + getClientAddress(), colors);
 
         } catch (IOException e) {
             // Send error
-            Log.sendMessage(log_prefix, e, colors);
+            Log.sendMessage(log_prefix, e, ConsoleColors.RED);
             object = new String("");
 
         }
@@ -293,7 +299,7 @@ public class ServerUDP {
 
         } catch (Exception e) {
             // Send error
-            Log.sendMessage(log_prefix, e, colors);
+            Log.sendMessage(log_prefix, e, ConsoleColors.RED);
             return false;
 
         }
