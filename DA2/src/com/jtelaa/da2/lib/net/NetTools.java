@@ -34,7 +34,7 @@ public class NetTools {
     public static String getLocalIP() {
         try {
             // Get intenal ip
-            return InetAddress.getLocalHost().toString();
+            return InetAddress.getLocalHost().getHostAddress();
 
         } catch (Exception e) {
             // Send error to log
