@@ -162,7 +162,7 @@ public class ClientUDP {
             socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
 
             // Send success
-            Log.sendSysMessage(log_prefix + "Done");
+            //Log.sendSysMessage(log_prefix + "Done");
             return true;
         
         } catch (Exception e) {
@@ -205,7 +205,7 @@ public class ClientUDP {
             socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
 
             // Send success
-            Log.sendSysMessage(log_prefix + "Done");
+            //Log.sendSysMessage(log_prefix + "Done");
             return true;
         
         } catch (Exception e) {
