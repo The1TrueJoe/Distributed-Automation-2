@@ -105,16 +105,11 @@ public class QueryServer extends Thread {
      */
 
     private void fillRequest() {
-        // If no requests, wait
-        if (bot_queue.size() == 0) {
+        // If no requests or queries, wait
+        if (bot_queue.size() == 0 || QueryGenerator.query_queue.size() == 0) {
             MiscUtil.waitasec(.10);
             return;
         } 
-
-        // If no queries, make a default one
-        if (QueryGenerator.query_queue.size() == 0 && bot_queue.size() > 0) {
-            QueryGenerator.query_queue.add(new Query("google"));       // Default search query
-        }
 
         // Pick top off queue
         Query query_to_send = QueryGenerator.query_queue.poll();
