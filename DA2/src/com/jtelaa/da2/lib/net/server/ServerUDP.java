@@ -187,17 +187,21 @@ public class ServerUDP {
             // Store client
             clientAddress = socket.getInetAddress();
 
-            // Null inet handling
-            if (clientAddress == null) {
+            try {
                 // Log reception
                 Log.sendSysMessage(log_prefix +"Received: " + message + " From: " + getClientAddress(), colors);
 
-            } else {
+            } catch (NullPointerException e) {
                 // Log reception
                 Log.sendSysMessage(log_prefix +"Received: " + message, colors);
 
             }
 
+        } catch (NullPointerException e) {
+            // Send error
+            //Log.sendSysMessage(e.getMessage());
+            message = "null message";
+        
         } catch (IOException e) {
             // Send error
             // TODO Add support for sysmessages exception pass through
