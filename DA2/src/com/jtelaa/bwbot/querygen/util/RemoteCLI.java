@@ -186,8 +186,9 @@ public class RemoteCLI extends LocalCLI {
                 Command ip = commands[1];
                 int count = Integer.parseInt(commands[2].command());
 
-                response += "Adding " + count + "request(s) from " + ip.command() + " to request queue";
-                QueryServer.bot_queue.add(new Bot(ip.command()));
+                response += "Adding " + count + " request(s) from " + ip.command() + " to request queue";
+
+                for (int i = 0; i < count; i++) { QueryServer.bot_queue.add(new Bot(ip.command())); }
 
             } else {
                 response += "Error: To many args";
