@@ -35,7 +35,7 @@ public class RequestServer extends Thread {
                 String response = server.getMessage();
 
                 try {
-                    if (response.equals(BWMessages.QUERY_REQUEST_MESSAGE.getMessage())) {
+                    if (response.contains(BWMessages.QUERY_REQUEST_MESSAGE.getMessage())) {
                         bot_address = server.getClientAddress();
 
                         QueryServer.addBot(new Bot(bot_address));
@@ -48,7 +48,7 @@ public class RequestServer extends Thread {
 
                 // Error handling
                 } catch (Exception e) {
-                    Log.sendMessage(e);
+                    Log.sendMessage("Request Server: Could not resolve requesting bot's IP");
                     MiscUtil.waitasec(.1);
 
                 }
