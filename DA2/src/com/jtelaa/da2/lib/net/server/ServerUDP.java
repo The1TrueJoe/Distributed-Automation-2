@@ -193,7 +193,7 @@ public class ServerUDP {
 
             } catch (NullPointerException e) {
                 // Log reception
-                Log.sendSysMessage(log_prefix +"Received: " + message, ConsoleColors.RED);
+                Log.sendSysMessage(log_prefix +"Received: " + message, colors);
 
             }
 
