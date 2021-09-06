@@ -77,9 +77,15 @@ public class QueryGenerator extends Thread {
                 }
 
             } else {
-                // Wait if not ready
-                Log.sendMessage(log_prefix + "Generation Stopped (" + query_queue.size() + ")", ConsoleColors.PURPLE_BOLD_BRIGHT);
-                MiscUtil.waitamoment(10000);
+                if (Log.history.get(Log.history.size()-1).contains("Generation Stopped")) {
+                    MiscUtil.waitamoment(50000);
+
+                } else {
+                    // Wait if not ready
+                    Log.sendMessage(log_prefix + "Generation Stopped (" + query_queue.size() + ")", ConsoleColors.PURPLE_BOLD_BRIGHT);
+                    MiscUtil.waitamoment(10000);
+
+                }
 
                 /*
 
