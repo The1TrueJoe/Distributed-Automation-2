@@ -146,6 +146,11 @@ public class NetTools {
             InetAddressValidator valid = new InetAddressValidator();
             return valid.isValid(address);
 
+        } catch (NoClassDefFoundError x) {
+            Log.sendMessage("InetAddressValidator class not found");
+            return true;
+            // TODO Solve so this wont happen
+
         } catch (Exception e) {
             Log.sendMessage(e);
             return true;
