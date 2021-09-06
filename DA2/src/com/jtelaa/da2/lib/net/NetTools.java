@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.URL;
 
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 
@@ -38,7 +39,7 @@ public class NetTools {
 
         } catch (Exception e) {
             // Send error to log
-            Log.sendMessage(e);
+            Log.sendMessage(e, ConsoleColors.RED);
 
             // Return loopback address
             return "127.0.0.1";
@@ -73,7 +74,7 @@ public class NetTools {
 
         } catch (Exception e) {
             // Send error to log
-            Log.sendMessage(e);
+            Log.sendMessage(e, ConsoleColors.RED);
 
             // Return loopback address
             return "255.0.0.0";
@@ -98,7 +99,7 @@ public class NetTools {
 
         } catch (Exception e) {
             // Send error to log
-            Log.sendMessage(e);
+            Log.sendMessage(e, ConsoleColors.RED);
 
             // Return local ip
             return getLocalIP();
@@ -147,12 +148,12 @@ public class NetTools {
             return valid.isValid(address);
 
         } catch (NoClassDefFoundError x) {
-            Log.sendMessage("InetAddressValidator class not found");
+            Log.sendMessage("InetAddressValidator class not found", ConsoleColors.RED);
             return true;
             // TODO Solve so this wont happen
 
         } catch (Exception e) {
-            Log.sendMessage(e);
+            Log.sendMessage(e, ConsoleColors.RED);
             return true;
 
         }
@@ -177,7 +178,7 @@ public class NetTools {
 
         // Send error
         } catch (IOException e) {
-            Log.sendMessage(e);
+            Log.sendMessage(e, ConsoleColors.RED);
 
         }
 
