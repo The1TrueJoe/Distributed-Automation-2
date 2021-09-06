@@ -119,7 +119,7 @@ public class QueryServer extends Thread {
         Log.sendMessage(log_prefix + "Serving " + bot_to_serve.ip, ConsoleColors.YELLOW);
 
         // Setup client
-        cmd_tx = new ClientUDP(bot_to_serve.ip, BWPorts.QUERY_RECEIVE, log_prefix);
+        cmd_tx = new ClientUDP(bot_to_serve.ip, BWPorts.QUERY_RECEIVE, log_prefix, ConsoleColors.YELLOW);
 
         // Send and then close
         if (cmd_tx.startClient()) {
