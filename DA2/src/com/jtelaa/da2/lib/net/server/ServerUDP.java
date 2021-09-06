@@ -190,17 +190,18 @@ public class ServerUDP {
             // Null inet handling
             if (clientAddress == null) {
                 // Log reception
-                Log.sendMessage(log_prefix +"Received: " + message + " From: " + getClientAddress(), colors);
+                Log.sendSysMessage(log_prefix +"Received: " + message + " From: " + getClientAddress(), colors);
 
             } else {
                 // Log reception
-                Log.sendMessage(log_prefix +"Received: " + message, colors);
+                Log.sendSysMessage(log_prefix +"Received: " + message, colors);
 
             }
 
         } catch (IOException e) {
             // Send error
-            Log.sendMessage(log_prefix, e);
+            // TODO Add support for sysmessages exception pass through
+            Log.sendSysMessage(log_prefix + "\n" + e.getMessage());
             message = "";
 
         }

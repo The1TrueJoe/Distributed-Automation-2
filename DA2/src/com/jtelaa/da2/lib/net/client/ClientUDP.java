@@ -155,19 +155,20 @@ public class ClientUDP {
     public boolean sendMessage(String message) {
         try {
             // Log
-            Log.sendMessage(log_prefix + "Sending UDP: " + message + " to: " + server_ip + ":" + port + "\n");
+            Log.sendSysMessage(log_prefix + "Sending UDP: " + message + " to: " + server_ip + ":" + port);
 
             // Set buffer and send
             buffer = message.getBytes();
             socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
 
             // Send success
-            Log.sendMessage(log_prefix + "Done");
+            Log.sendSysMessage(log_prefix + "Done");
             return true;
         
         } catch (Exception e) {
             // Send error
-            Log.sendMessage(log_prefix, e);
+            // TODO Add support for sysmessages exception pass through
+            Log.sendSysMessage(log_prefix + "\n" + e.getMessage());
             return false;
 
         }
@@ -197,19 +198,19 @@ public class ClientUDP {
     public boolean sendObject(Serializable object) {
         try {
             // Send log message
-            Log.sendMessage(log_prefix + "Sending UDP Object: " + object + " to: " + server_ip + ":" + port + "\n");
+            Log.sendSysMessage(log_prefix + "Sending UDP Object: " + object + " to: " + server_ip + ":" + port + "\n");
 
             // Set buffer with serialized object and send
             buffer = SerializationUtils.serialize(object);
             socket.send(new DatagramPacket(buffer, buffer.length, InetAddress.getByName(server_ip), port));
 
             // Send success
-            Log.sendMessage(log_prefix + "Done");
+            Log.sendSysMessage(log_prefix + "Done");
             return true;
         
         } catch (Exception e) {
             // end error
-            Log.sendMessage(log_prefix + "Failed: \n" + e.getStackTrace());
+            Log.sendSysMessage(log_prefix + "Failed: \n" + e.getStackTrace());
             return false;
 
         }
