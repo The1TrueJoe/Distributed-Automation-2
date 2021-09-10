@@ -4,7 +4,7 @@
 # Written by Joseph Telaak
 
 # Display title
-cat /QueryGen/dev/Distributed-Automation-2/DA2/src/rsc/banners/Rewards.txt
+cat /QueryGen/dev/Distributed-Automation-2/DA2/src/rsc/banners/Redemption.txt
 
 # Display message
 echo ''
