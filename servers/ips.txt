@@ -1,5 +1,6 @@
 172.16.0.x: Network Infrastructure
     172.16.0.1: Gateway
+    172.16.0.10: Load Balancer
 
 172.16.1.x: Physical Infrastructure
     172.16.1.1: Mgmt ESXi
@@ -9,12 +10,12 @@
     172.16.1.101: Mgmt iDRAC
 
 172.16.2.x: DA2 Infrastructure
-    172.16.2.1: Director (Prospective)
+    172.16.2.1: Director
     172.16.2.2: Border Server
-    172.16.2.3: Database (Prosepective)
+    172.16.2.3: Database
 
 172.16.3.x: BW Infrastructure
-    172.16.3.1: Point Manager (Prosepective)
+    172.16.3.1: Point Manager
     172.16.3.101: QueryGen IP
 
 172.16.4.x: VPN Gateways
@@ -29,3 +30,5 @@ Ports
 Pass:
     c3l10nlF&bsli45
     c3l10nlF
+
+    D0N0TgIvEThiS@w@y69420
