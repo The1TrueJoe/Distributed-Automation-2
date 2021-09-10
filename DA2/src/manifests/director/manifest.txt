@@ -1,0 +1,3 @@
+Main-Class: com.jtelaa.da2.director.Main
+Class-Path: lib\*
+
