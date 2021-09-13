@@ -1,5 +1,8 @@
 package com.jtelaa.bwbot.bwlib;
 
+import java.util.Properties;
+
+import com.jtelaa.da2.lib.net.ports.ManualPort;
 import com.jtelaa.da2.lib.net.ports.Ports;
 
 /**
@@ -42,5 +45,11 @@ public enum BWPorts implements Ports {
 
     /** @return port */
     public int getPort() { return port; }
+
+    /** Checks against the properties for the correct port */
+    public Ports checkForPreset(Properties my_config, String key) {
+        return new ManualPort(Integer.parseInt(my_config.getProperty(key, this.getPort() + "")));
+
+    }
     
 }
