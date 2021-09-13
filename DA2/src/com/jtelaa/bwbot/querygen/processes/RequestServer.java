@@ -2,6 +2,7 @@ package com.jtelaa.bwbot.querygen.processes;
 
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
+import com.jtelaa.bwbot.querygen.Main;
 import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
@@ -23,7 +24,7 @@ public class RequestServer extends Thread {
 
     public void run() {
         // Setup server
-        ServerUDP server = new ServerUDP(BWPorts.QUERY_REQUEST, "Query Request Server: ", ConsoleColors.GREEN);
+        ServerUDP server = new ServerUDP(BWPorts.QUERY_REQUEST.checkForPreset(Main.my_config, "request_port"), "Query Request Server: ", ConsoleColors.GREEN);
         
         // Bot address var
         String bot_address;

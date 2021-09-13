@@ -5,6 +5,7 @@ import java.util.Queue;
 
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.bwbot.bwlib.Query;
+import com.jtelaa.bwbot.querygen.Main;
 import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
@@ -119,7 +120,7 @@ public class QueryServer extends Thread {
         Log.sendMessage(log_prefix + "Serving " + bot_to_serve.ip, ConsoleColors.YELLOW);
 
         // Setup client
-        cmd_tx = new ClientUDP(bot_to_serve.ip, BWPorts.QUERY_RECEIVE, log_prefix, ConsoleColors.YELLOW);
+        cmd_tx = new ClientUDP(bot_to_serve.ip, BWPorts.QUERY_RECEIVE.checkForPreset(Main.my_config, "receive_port"), log_prefix, ConsoleColors.YELLOW);
 
         // Send and then close
         if (cmd_tx.startClient()) {
