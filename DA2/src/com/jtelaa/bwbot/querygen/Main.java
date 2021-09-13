@@ -12,6 +12,8 @@ import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
+import com.jtelaa.da2.lib.net.NetTools;
+import com.jtelaa.da2.lib.sql.SQL;
 
 /**
  * Main for the query generation application
@@ -28,7 +30,7 @@ import com.jtelaa.da2.lib.misc.MiscUtil;
 public class Main {
 
     /** Default Director IP */
-    public static final String DEFAULT_DIRECTOR_IP = "172.16.2.2";
+    public static final String DEFAULT_DIRECTOR_IP = "172.16.2.1";
 
     /** The remote cli local object */ 
     public static RemoteCLI rem_cli;
@@ -40,20 +42,13 @@ public class Main {
     public static Properties my_config;
 
     public static void main(String[] args) {
-        // Default configuration file location
-        String config_file_location = "config.properties";
-
         // Check for first time setup
         boolean first_time = false;
         for (String arg : args) {
             if (arg.equalsIgnoreCase("setup")) {
                 System.out.println("Running in setup mode");
 
-                my_config = PropertiesUtils.importConfig(config_file_location);
-                config_file_location = "/QueryGen/sys/rsc/config/querygen/config.properties";
-                first_time = true;
-
-                System.out.println("Pre-Load: Loaded internal config");
+                my_config = querySettings();
 
                 break;
 
@@ -139,6 +134,66 @@ public class Main {
         qry_gen.stopGen();
 
         */
+    }
+
+    private static Properties querySettings() {
+        Properties my_config = new Properties();
+        String connectionURL = SQL.getConnectionURL("172.16.2.3", "BW_Main", "querygen", "Passw0rd!");
+
+        // TODO Implement other config        
+
+        // Get ID
+        int id =  
+            Integer.parseInt(
+                SQL.query(
+                    connectionURL,
+
+                    "SELECT ID " +
+                    "FROM QueryGenerators " +
+                    "WHERE LastKnownIP LIKE '" + NetTools.getLocalIP() + "';"
+
+                )
+                .get(0)
+            )
+        ;
+        my_config.setProperty("id", id + "");
+        
+        // Get Request Port
+        my_config.setProperty("request_port", 
+            Integer.parseInt(
+                SQL.query(
+                    connectionURL,
+
+                    "SELECT RequestPort " +
+                    "FROM QueryGenerators " +
+                    "WHERE ID = " + id
+
+                )
+                .get(0)
+            ) + ""
+        );
+
+        // Get Request Port
+        my_config.setProperty("receive_port", 
+        Integer.parseInt(
+            SQL.query(
+                connectionURL,
+
+                "SELECT ReceivePort " +
+                "FROM QueryGenerators " +
+                "WHERE ID = " + id
+
+            )
+            .get(0)
+        ) + ""
+     );
+
+
+
+        PropertiesUtils.exportConfig("config.properties", my_config);
+        return my_config;
+
+
     }
     
 }
