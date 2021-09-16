@@ -3,6 +3,7 @@ package com.jtelaa.da2.lib.config;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.util.Properties;
 
 import com.jtelaa.da2.lib.files.FileUtil;
@@ -14,13 +15,15 @@ import com.jtelaa.da2.lib.net.NetTools;
  * 
  * @since 2
  * @author Joseph
+ * 
+ * @deprecated No longer needed (Makes things uncessessarily complicated)
+ * @see com.jtelaa.da2.lib.config.ConfigHandler
  */
 
- // TODO comment
+ @Deprecated
+public class ConfigHandler implements Serializable {
 
-public class ConfigHandler {
-
-    private Properties config;
+    public Properties config;
 
     /**
      * Constructor

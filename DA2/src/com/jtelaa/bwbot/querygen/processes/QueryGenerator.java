@@ -57,7 +57,7 @@ public class QueryGenerator extends Thread {
                 // Generate random case
                 rng = rand.nextInt(100);
 
-                if (rng <= 90) {
+                if (rng <= 50) {
                     // Add a single query
                     Log.sendMessage(log_prefix + "Generating (1) - " + query_queue.size() + "/" + MAX_QUERY_QUEUE_SIZE, ConsoleColors.PURPLE);
                     query_queue.add(generate());
@@ -77,9 +77,15 @@ public class QueryGenerator extends Thread {
                 }
 
             } else {
-                // Wait if not ready
-                Log.sendMessage(log_prefix + "Generation Stopped", ConsoleColors.PURPLE_BOLD_BRIGHT);
-                MiscUtil.waitamoment(10000);
+                if (Log.history.get(Log.history.size()-1).contains("Generation Stopped")) {
+                    MiscUtil.waitamoment(50000);
+
+                } else {
+                    // Wait if not ready
+                    Log.sendMessage(log_prefix + "Generation Stopped (" + query_queue.size() + ")", ConsoleColors.PURPLE_BOLD_BRIGHT);
+                    MiscUtil.waitamoment(10000);
+
+                }
 
                 /*
 

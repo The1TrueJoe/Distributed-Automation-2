@@ -288,6 +288,29 @@ public class Command implements Serializable {
     }
 
     /**
+     * Add a blank user the the command
+     * 
+     * @return new command
+     */
+
+    public Command addBlankUser() {
+        return new Command("user" + this.command);
+
+    }
+
+    /**
+     * Add a blank control id to the command (Add user before hand if local cli)
+     * 
+     * @return new command
+     * 
+     * @see com.jtelaa.da2.lib.control.Command.addBlankUser();
+     */
+
+    public Command addBlankControlID() {
+        return new Command("local" + this.command);
+    }
+
+    /**
      * Modifies the command for execution by the local system
      * <p> (Removes cmd modifiers and modifiers before it)
      * 

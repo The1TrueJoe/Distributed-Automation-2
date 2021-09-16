@@ -26,7 +26,7 @@ public class ServerUDP {
     private ConsoleColors colors;
 
     /** Prefix to add to log messages (optional) */
-    private String log_prefix;
+    public String log_prefix;
 
     /** Port opened by the server */
     private int port;
@@ -147,7 +147,7 @@ public class ServerUDP {
 
             // Reset buffer and create new socker
             recieve_buffer = null;
-            socket = new DatagramSocket();
+            socket = new DatagramSocket(port);
 
             // Send success message
             Log.sendMessage(log_prefix + "Server Opened", colors);
@@ -155,7 +155,7 @@ public class ServerUDP {
 
         } catch (IOException e) {
             // Send error message
-            Log.sendMessage(log_prefix, e, colors);
+            Log.sendMessage(log_prefix, e, ConsoleColors.RED);
             return false;
 
         }
@@ -178,15 +178,34 @@ public class ServerUDP {
             socket.receive(packet);
             message = convertMessage(recieve_buffer);
 
+            if (message == null) {
+                Log.sendMessage(log_prefix + "Received null message");
+                return null;
+
+            }
+
             // Store client
             clientAddress = socket.getInetAddress();
 
-            // Log reception
-            Log.sendMessage(log_prefix +"Received: " + message + " From: " + getClientAddress(), colors);
+            try {
+                // Log reception
+                Log.sendSysMessage(log_prefix +"Received: " + message + " From: " + getClientAddress(), colors);
 
+            } catch (NullPointerException e) {
+                // Log reception
+                Log.sendSysMessage(log_prefix +"Received: " + message, colors);
+
+            }
+
+        } catch (NullPointerException e) {
+            // Send error
+            //Log.sendSysMessage(e.getMessage());
+            message = "null message";
+        
         } catch (IOException e) {
             // Send error
-            Log.sendMessage(log_prefix, e);
+            // TODO Add support for sysmessages exception pass through
+            Log.sendSysMessage(log_prefix + "\n" + e.getMessage(), ConsoleColors.RED);
             message = "";
 
         }
@@ -212,15 +231,21 @@ public class ServerUDP {
             socket.receive(packet);
             object = SerializationUtils.deserialize(recieve_buffer);
 
-            // Store client
-            clientAddress = socket.getInetAddress();
+            try {
+                // Store client
+                clientAddress = socket.getInetAddress();
 
+            } catch (NullPointerException e) {
+                Log.sendMessage("Cannot resolve the client's address", ConsoleColors.RED);
+
+            }
+            
             // Log reception
             Log.sendMessage(log_prefix + "Received UDP Object: " + object + " From: " + getClientAddress(), colors);
 
         } catch (IOException e) {
             // Send error
-            Log.sendMessage(log_prefix, e, colors);
+            Log.sendMessage(log_prefix, e, ConsoleColors.RED);
             object = new String("");
 
         }
@@ -274,7 +299,7 @@ public class ServerUDP {
 
         } catch (Exception e) {
             // Send error
-            Log.sendMessage(log_prefix, e, colors);
+            Log.sendMessage(log_prefix, e, ConsoleColors.RED);
             return false;
 
         }

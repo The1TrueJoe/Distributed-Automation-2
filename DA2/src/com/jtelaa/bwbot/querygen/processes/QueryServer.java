@@ -5,6 +5,7 @@ import java.util.Queue;
 
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.bwbot.bwlib.Query;
+import com.jtelaa.bwbot.querygen.Main;
 import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
@@ -70,7 +71,7 @@ public class QueryServer extends Thread {
      */
     
     public synchronized static void addBot(Bot bot) {
-        if (NetTools.isValid(bot.getIP())) {
+        if (NetTools.isValid(bot.ip)) {
             // If bot has valid ip, add it to the queue
             bot_queue.add(bot);
 
@@ -105,32 +106,27 @@ public class QueryServer extends Thread {
      */
 
     private void fillRequest() {
-        // If no requests, wait
-        if (bot_queue.size() == 0) {
+        // If no requests or queries, wait
+        if (bot_queue.size() == 0 || QueryGenerator.query_queue.size() == 0) {
             MiscUtil.waitasec(.10);
             return;
         } 
-
-        // If no queries, make a default one
-        if (QueryGenerator.query_queue.size() == 0 && bot_queue.size() > 0) {
-            QueryGenerator.query_queue.add(new Query("google"));       // Default search query
-        }
 
         // Pick top off queue
         Query query_to_send = QueryGenerator.query_queue.poll();
         Bot bot_to_serve = bot_queue.poll();
 
         // Notification
-        Log.sendMessage(log_prefix + "Serving " + bot_to_serve.getIP(), ConsoleColors.YELLOW);
+        Log.sendMessage(log_prefix + "Serving " + bot_to_serve.ip, ConsoleColors.YELLOW);
 
         // Setup client
-        cmd_tx = new ClientUDP(bot_to_serve.getIP(), BWPorts.QUERY_RECEIVE, log_prefix);
+        cmd_tx = new ClientUDP(bot_to_serve.ip, BWPorts.QUERY_RECEIVE.checkForPreset(Main.my_config, "receive_port"), log_prefix, ConsoleColors.YELLOW);
 
         // Send and then close
         if (cmd_tx.startClient()) {
             cmd_tx.sendMessage(query_to_send.getQuery());
             cmd_tx.closeClient();
-            Log.sendMessage(log_prefix + "Done serving " + bot_to_serve.getIP(), ConsoleColors.YELLOW);
+            Log.sendMessage(log_prefix + "Done serving " + bot_to_serve.ip, ConsoleColors.YELLOW);
 
         }
     }

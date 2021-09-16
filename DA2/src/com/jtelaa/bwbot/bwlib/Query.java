@@ -15,9 +15,10 @@ public class Query implements Serializable {
     public static final String BING_URL = "bing.com/search?q=";
     
     /** Unformatted query */
-    private String unformatted_query;
+    @Deprecated
+    public String unformatted_query;
     /** Formatted query */
-    private String formatted_query; 
+    public String formatted_query; 
 
     /**
      * Constructor
@@ -51,6 +52,7 @@ public class Query implements Serializable {
     public String toString() { return getQuery(); }
 
     /** Get unformatted query @return unformatted query */
+    @Deprecated
     public String getUnformattedQuery() { unformatted_query = unformatQuery(formatted_query); return unformatted_query; }
     /** Get formatted query @return formatted query */
     public String getFormattedQuery() { formatted_query = formatQuery(unformatted_query); return formatted_query; }

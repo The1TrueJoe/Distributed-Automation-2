@@ -115,7 +115,7 @@ public class HeartbeatServer extends Thread {
 
                     // Add ids to activity list
                     for (int i = 0; i < ids.length; i++) {
-                        ids[i] = active_bots.get(i).getID();
+                        ids[i] = active_bots.get(i).id;
 
                     }
 
@@ -159,7 +159,7 @@ public class HeartbeatServer extends Thread {
     public synchronized boolean isAlive(Bot bot) {
         // Iterate through all bots
         for (Bot bot_to_check : active_bots) {
-            if (bot.getID() == bot_to_check.getID()) {
+            if (bot.id == bot_to_check.id) {
                 return true;
 
             }

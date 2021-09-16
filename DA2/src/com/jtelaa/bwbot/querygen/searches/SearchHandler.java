@@ -20,7 +20,11 @@ import com.jtelaa.da2.lib.log.Log;
 public class SearchHandler {
 
     /** Path of lists */
-    private static final String PATH = "com/jtelaa/bwbot/querygen/searches/searchdata/";
+    //private static final String PATH = "com/jtelaa/bwbot/querygen/searches/searchdata/";
+    // TODO Make internal again
+
+    /** Path of lists */
+    private static final String PATH = "/QueryGen/sys/rsc/searches/";
 
     /** Logging prefix */
     private static String log_prefix = "Search Handler: ";
@@ -87,10 +91,11 @@ public class SearchHandler {
     private synchronized static ArrayList<String> pickList() {
         // Get list
         Random rand = new Random();
-        String name = pickList(rand.nextInt(15));
+        String name = pickList(rand.nextInt(11));
 
         // Read file
-        ArrayList<String> lines = FileUtil.listLinesInternalFile(name);
+        //ArrayList<String> lines = FileUtil.listLinesInternalFile(name);
+        ArrayList<String> lines = FileUtil.listLinesFile(name);
 
         // Show file is empty
         if (lines.size() < 1) {
@@ -102,7 +107,8 @@ public class SearchHandler {
                 Log.sendMessage(log_prefix + "File " + name + " is empty");
 
                 i++;
-                lines = FileUtil.listLinesInternalFile(pickList(i));
+                //lines = FileUtil.listLinesInternalFile(pickList(i));
+                lines = FileUtil.listLinesFile(pickList(i));
 
                 if (i > 20) {
                     Log.sendMessage(log_prefix + " All files empty (Will use list of default)");

@@ -7,6 +7,7 @@ import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.da2.bot.util.RemoteCLI;
 import com.jtelaa.da2.bot.util.SysCLI;
+import com.jtelaa.da2.lib.bot.Bot;
 import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
@@ -26,6 +27,22 @@ import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 public class Main {
 
+    // Defaults
+
+    /** Default VPN Gateway */
+    public static final String DEFAULT_GATEWAY = "172.16.4.1";
+
+    /** Default point manager (Should remain constant) */
+    public static final String DEFAULT_POINT_MANAGER = "172.16.3.1";
+
+    /** Default Query Generator */
+    public static final String DEFAULT_QUERY_GENERATOR = "172.16.3.101";
+
+    /** Default Director IP */
+    public static final String DEFAULT_DIRECTOR_IP = "172.16.2.2";
+
+    // Fields
+
     /** The remote cli local object */ 
     public static RemoteCLI rem_cli;
 
@@ -36,7 +53,7 @@ public class Main {
     public static ConfigHandler config;
 
     /** Main bot objcect */
-    publci staic
+    public static Bot me;
 
     /** First time run */
     public static boolean first_time;
@@ -79,11 +96,45 @@ public class Main {
 
         // Load Log config and start client
         Log.loadConfig(config);
-        Log.openClient("127.0.0.1");
+        Log.openClient("127.0.0.1"); // TODO Read Properties and use director as default
 
         // Startup
         Log.sendSysMessage(ConsoleBanners.otherBanner("com/jtelaa/bwbot/bw/misc/Rewards.txt", ConsoleColors.CYAN_BOLD_BRIGHT));
         Log.sendMessage("Bing Rewards Plugin Enabled");
+
+        // Request Bot (first time only)
+        if (first_time) {
+            // Server to receive bot info
+            ServerUDP msg_response = new ServerUDP(BWPorts.INFO_RECEIVE);
+            msg_response.startServer();
+
+            // Client to send request
+            ClientUDP msg_request = new ClientUDP("127.0.0.1", BWPorts.INFO_REQUEST);
+            msg_request.startClient();
+
+            // Set default
+            me = new Bot("127.0.0.1");
+
+            // Prep message
+            Object message;
+
+            do {
+                // Send message 
+                msg_request.sendMessage(BWMessages.BOT_REQUEST_MESSAGE);
+
+                // Wait
+                MiscUtil.waitasec(.1);
+
+                // Get message
+                message = msg_response.getObject();
+
+            // Check if can cast
+            } while (!Bot.class.isInstance(message));
+
+            // Cast and apply
+            me = (Bot) message;
+
+        }
 
         /* Obfuscate external ip  */
 
@@ -91,19 +142,35 @@ public class Main {
         String external_ip = NetTools.getExternalIP();
 
         // Set defualt gatway based on config file
-        NetTools.setDefaultGateway(config.getProperty("default_gateway"));
+        NetTools.setDefaultGateway(config.getProperty("default_gateway", DEFAULT_GATEWAY));
 
         // Do if the gateway did no obfuscate ip
-        if (!NetTools.getExternalIP().equals(external_ip)) {
-            do {
-                // Server to send account data
-                ServerUDP msg_response = new ServerUDP(BWPorts.INFO_RECEIVE);
-                msg_response.startServer();
+        if (!NetTools.getExternalIP().equals(external_ip) || config.getProperty("default_gateway", DEFAULT_GATEWAY).equals(DEFAULT_GATEWAY)) {
+            // Server to send account data
+            ServerUDP msg_response = new ServerUDP(BWPorts.INFO_RECEIVE);
+            msg_response.startServer();
 
-                // Client to accept response
-                // TODO Specify default bw mgr ip
-                ClientUDP msg_request = new ClientUDP(config.getProperty("bw_mgr_ip", "127.0.0.1"), BWPorts.INFO_REQUEST);
-                msg_request.startClient();
+            // Client to accept response
+            ClientUDP msg_request = new ClientUDP(config.getProperty("bw_mgr_ip", DEFAULT_POINT_MANAGER), BWPorts.INFO_REQUEST);
+            msg_request.startClient();
+
+            // Attempts
+            int counter = 1;
+            boolean has_been_obfuscated = false;
+
+            do {
+
+                // Default
+                if (counter >= 10) {
+                    Log.sendMessage("Using system default: " + DEFAULT_GATEWAY);
+                    NetTools.setDefaultGateway(DEFAULT_GATEWAY);
+
+                    // Basically just gives up if this failed
+                    has_been_obfuscated = true;
+                }
+
+                // Log obfuscation attempt
+                Log.sendMessage("Attempting to obfuscate: " + external_ip + "(" + counter + ")");
 
                 // Send a gateway request
                 msg_request.sendMessage(BWMessages.GATEWAY_REQUEST_MESSAGE);
@@ -117,10 +184,30 @@ public class Main {
                 // Validate and set default gateway
                 if (NetTools.isValid(message)) {
                     NetTools.setDefaultGateway(message);
+                    config.setProperty("default_gateway", message);
+
+                }
+
+                // Validate obfuscation
+                if (NetTools.getExternalIP().equals(external_ip)) {
+                    has_been_obfuscated = true;
+
+                } else {
+                    // Log and increment counter
+                    Log.sendMessage("Obfuscation has failed (" + counter + ")");
+                    counter++;
 
                 }
             
-            } while (!NetTools.getExternalIP().equals(external_ip));
+            } while (!has_been_obfuscated);
+
+            // Set and log new external ip
+            external_ip = NetTools.getExternalIP();
+            Log.sendMessage("The new external ip is " + external_ip);
+
+            msg_response.closeServer();
+            msg_request.closeClient();
+            
         }
 
         /* Setup account */

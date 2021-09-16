@@ -19,7 +19,7 @@ public class RemoteCLI extends LocalCLI {
 
     @Override
     public void run() {
-        if (!run_as_local && Main.me.getConfig().runRemoteCLI()) {
+        if (!run_as_local && Main.me.config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) {
             Log.sendMessage("Preparing Remote CLI");
 
             while (!run) {

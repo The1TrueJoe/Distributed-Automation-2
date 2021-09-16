@@ -22,7 +22,6 @@ public class UserHandler {
     public UserHandler() {
         users = new ArrayList<User>();
 
-        
     }
 
     /**
@@ -35,6 +34,7 @@ public class UserHandler {
 
     public User getUser(int index) {
         return users.get(index);
+
     }
 
     /**
@@ -45,6 +45,7 @@ public class UserHandler {
 
     public void addUser(User user) {
         users.add(user);
+
     }
 
     /**
@@ -55,6 +56,7 @@ public class UserHandler {
 
     public void exportusr(String file_path) {
         FileUtil.writeObjectToFile(users.toArray(), file_path);
+
     }
 
     /**
@@ -65,6 +67,7 @@ public class UserHandler {
 
     public void importusr(String path) {
         importusr(FileUtil.listLinesFile(path));
+
     }
 
     /**
@@ -75,6 +78,7 @@ public class UserHandler {
 
     public void importInternalusr(String path) {
         importusr(FileUtil.listLinesInternalFile(path));
+
     }
 
     /**
@@ -99,6 +103,7 @@ public class UserHandler {
     /**
      * Exports root user into file
      */
+    @SuppressWarnings("all")
     public static void main(String[] args) {
         UserHandler userHandler = new UserHandler();
         userHandler.addUser(new User("root", "password", true));

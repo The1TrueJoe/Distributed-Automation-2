@@ -9,7 +9,7 @@ import com.jtelaa.da2.lib.files.ObjectUtils;
 import com.jtelaa.da2.lib.log.Log;
 
 /**
- * Serializable object for storing account info
+ * Serializable object for storing BW Rewards account info
  * 
  * @since 1
  * @author Joseph
@@ -18,31 +18,31 @@ import com.jtelaa.da2.lib.log.Log;
 public class Account implements Serializable {
 
     /** Unique system id */
-    private int id;
+    public int id;
 
     /** Email domain */
     public static final String EMAIL_DOMAIN = "@hotmail.com";
 
     /** Is the account blank */
-    private boolean is_blank;
+    public boolean is_blank;
 
     /** Account username */
-    private String username;
+    public String username;
     /** Account email */
-    private String email;
+    public String email;
     /** Account password */
-    private String password;
+    public String password;
 
     /** Account first name */
-    private String first_name;
+    public String first_name;
     /** Account last name */
-    private String last_name;
+    public String last_name;
 
     /** Account birthday */
-    private GregorianCalendar birth_date;
+    public GregorianCalendar birth_date;
 
     /** Account points */
-    private int points;
+    public int points;
 
     /**
      * Default Constructor

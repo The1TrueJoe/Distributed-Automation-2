@@ -8,6 +8,8 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 /**
  * ENUM containing the gateway address for SMS
+ * 
+ * Does not include "@"
  */
 
  // TODO Comment
@@ -81,9 +83,9 @@ public enum MessageGateways {
 
     }
 
-    /** */
+    /** Return the carrier's Simple Message Service address */
     public String getSMSAddress() { return new String(sms_address); }
-    /** */
+    /** Return the carrier's Multimedia Message Service address */
     public String getMMSAddress() { return new String(mms_address); }
 
     /** */

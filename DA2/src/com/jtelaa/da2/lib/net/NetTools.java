@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.URL;
 
+import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.control.ComputerControl;
 import com.jtelaa.da2.lib.log.Log;
 
@@ -34,11 +35,11 @@ public class NetTools {
     public static String getLocalIP() {
         try {
             // Get intenal ip
-            return InetAddress.getLocalHost().toString();
+            return InetAddress.getLocalHost().getHostAddress();
 
         } catch (Exception e) {
             // Send error to log
-            Log.sendMessage(e);
+            Log.sendMessage(e, ConsoleColors.RED);
 
             // Return loopback address
             return "127.0.0.1";
@@ -73,7 +74,7 @@ public class NetTools {
 
         } catch (Exception e) {
             // Send error to log
-            Log.sendMessage(e);
+            Log.sendMessage(e, ConsoleColors.RED);
 
             // Return loopback address
             return "255.0.0.0";
@@ -98,7 +99,7 @@ public class NetTools {
 
         } catch (Exception e) {
             // Send error to log
-            Log.sendMessage(e);
+            Log.sendMessage(e, ConsoleColors.RED);
 
             // Return local ip
             return getLocalIP();
@@ -133,7 +134,7 @@ public class NetTools {
     }
 
     /**
-     * Checks if address is valid
+     * Checks if address is valid (Assumes valid if exception thrown)
      * 
      * @param address IP address to check
      * 
@@ -141,9 +142,21 @@ public class NetTools {
      */
 
     public static boolean isValid(String address) {
-        // Validate address
-        InetAddressValidator valid = new InetAddressValidator();
-        return valid.isValid(address);
+        try {
+            // Validate address
+            InetAddressValidator valid = new InetAddressValidator();
+            return valid.isValid(address);
+
+        } catch (NoClassDefFoundError x) {
+            Log.sendMessage("InetAddressValidator class not found", ConsoleColors.RED);
+            return true;
+            // TODO Solve so this wont happen
+
+        } catch (Exception e) {
+            Log.sendMessage(e, ConsoleColors.RED);
+            return true;
+
+        }
         
     }
 
@@ -165,7 +178,7 @@ public class NetTools {
 
         // Send error
         } catch (IOException e) {
-            Log.sendMessage(e);
+            Log.sendMessage(e, ConsoleColors.RED);
 
         }
 
