@@ -203,6 +203,8 @@ public class AccountGen {
         // Generate year
         int year = rng.nextInt(25) + 2000;
 
+	// Implement the "FirstNames.txt" i guess
+
         // Year limits
         if (year > 2018) { year = 2018; }
         if (year < 2000) { year = 2000; }
