@@ -8,7 +8,8 @@ package com.jtelaa.da2.lib.console;
 
 public enum ConsoleColors {
     /** Clear Console */
-    CLEAR("\033[H033[2J"), // Clear
+    CLEAR("\033[0;0H"), // Clear by overwrite
+    // Actual clear \033[H033[2J
 
     /** Resets color (Include after color)*/ 
     RESET("\033[0m"), // Text Reset
