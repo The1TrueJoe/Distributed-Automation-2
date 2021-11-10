@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Properties;
 
-import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.lib.log.Log;
 
@@ -60,7 +60,7 @@ public class SQL {
      * @return Return connection URL
      */
     
-    public static synchronized String getConnectionURL(ConfigHandler config) {
+    public static synchronized String getConnectionURL(Properties config) {
         // Setup variables
         String url, database, user, pass;
 
