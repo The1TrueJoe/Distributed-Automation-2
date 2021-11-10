@@ -11,7 +11,7 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 
-import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
 
@@ -82,8 +82,7 @@ public class MailSender extends Thread {
      */
 
     public synchronized void configure(File file) {
-        ConfigHandler configHandler = new ConfigHandler(file);
-        properties = configHandler.get();
+        properties = PropertiesUtils.importConfig(file);
 
         run = true;
 

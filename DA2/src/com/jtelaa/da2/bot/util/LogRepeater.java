@@ -19,7 +19,7 @@ public class LogRepeater extends Thread {
 
     public void run() {
         // Server
-        cmd_rx = new ServerUDP(SysPorts.LOG_2);
+        cmd_rx = new ServerUDP(SysPorts.LOCAL_LOG);
 
         // Start Server
         if (cmd_rx.startServer()) {
