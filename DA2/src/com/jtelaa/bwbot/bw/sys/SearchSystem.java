@@ -7,6 +7,7 @@ import com.jtelaa.bwbot.bw.util.BWControls;
 import com.jtelaa.bwbot.bwlib.BWMessages;
 import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.bwbot.bwlib.Query;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
@@ -77,7 +78,7 @@ public class SearchSystem {
         Log.sendMessage("Done..");
 
         // Do mobile searches 
-        if (Main.config.isTrue("do_mobile", "false")) {
+        if (PropertiesUtils.isTrue(Main.config, "do_mobile", false)) {
             // Enter mobile
             BWControls.openChrome();
             BWControls.enterMobile();

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.jtelaa.bwbot.bw.Main;
 import com.jtelaa.da2.lib.cli.LocalCLI;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
@@ -14,7 +15,7 @@ public class SysCLI extends LocalCLI {
     private Scanner keyboard;
 
     public SysCLI() {
-        if (Main.config.runLocalCLI()) {
+        if (PropertiesUtils.isTrue(Main.config, "local_cli", true)) {
             // Use remote cli instance
             cli = new RemoteCLI(false);
 
@@ -34,7 +35,7 @@ public class SysCLI extends LocalCLI {
 
     @Override
     public void run() {
-        if (Main.config.runLocalCLI()) {
+        if (PropertiesUtils.isTrue(Main.config, "local_cli", true)) {
             // Setup
             Log.sendMessage("Preparing Local CLI");
             String type;
