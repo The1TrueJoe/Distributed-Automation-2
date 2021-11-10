@@ -12,10 +12,13 @@ import com.jtelaa.da2.lib.log.Log;
 
 /**
  * User authentication against LDAP
+ * 
+ * @deprecated no longer going to be used in system
  */
 
  // TODO comment
 
+@Deprecated
 public class LDAP {
 
     private static DirContext directory;
