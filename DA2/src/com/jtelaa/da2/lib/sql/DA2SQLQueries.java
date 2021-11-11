@@ -36,5 +36,59 @@ public class DA2SQLQueries {
 
         return id;
     }
+
+    /**
+     * 
+     * @param id
+     * @param table_name
+     * @param connectionURL
+     * @return
+     */
+
+    public static int getReceivePort(int id, String table_name, String connectionURL) {
+        int port = 
+            Integer.parseInt(
+                SQL.query(
+                    connectionURL,
+
+                    "SELECT ReceivePort " +
+                    "FROM " + table_name + " " + 
+                    "WHERE ID = " + id
+
+                )
+                .get(0)
+            )
+        ;
+
+        return port;
+
+    }
+
+    /**
+     * 
+     * @param id
+     * @param table_name
+     * @param connectionURL
+     * @return
+     */
+
+    public static int getRequestPort(int id, String table_name, String connectionURL) {
+        int port = 
+            Integer.parseInt(
+                SQL.query(
+                    connectionURL,
+
+                    "SELECT RequestPort " +
+                    "FROM " + table_name + " " + 
+                    "WHERE ID = " + id
+
+                )
+                .get(0)
+            )
+        ;
+
+        return port;
+
+    }
     
 }
