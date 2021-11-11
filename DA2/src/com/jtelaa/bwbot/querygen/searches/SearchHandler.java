@@ -74,7 +74,11 @@ public class SearchHandler {
 
         // Populate lists
         for (int i = 0; i < searches.length; i++) {
-            searches[i] = new Query(search_list.get(rand.nextInt(search_list.size() - 1)).toLowerCase());
+            String query_string = search_list.get(rand.nextInt(search_list.size() - 1)).toLowerCase();
+            if (rand.nextInt(100) == 1) {
+                query_string = mangle(query_string);
+            }
+            searches[i] = new Query(query_string);
 
         }
 
@@ -168,6 +172,42 @@ public class SearchHandler {
 
         return PATH + name;
 
+    }
+
+    public static String mangle(String query) {
+        Random r = new Random(42);
+
+        num = r.nextInt(4);
+
+        switch (num) {
+
+            case 0:
+            query = query.substring(1);
+            break;
+            
+            case 1:
+            query = query.substring(0, query.length() - 2);
+            break;
+
+            case 3:
+            query = query.toUpperCase();
+
+            case 4:
+            String word;
+            for (int i = 0; i < query.length(); i++) {
+                if (i % 2 == 0) {
+                    word = word + query.substring(i, i + 1).toUpperCase();
+                } else {
+                    word = word + query.substring(i, i + 1).toLowerCase();
+                }
+            }
+            query = word;
+            break;
+
+        }
+        
+
+        return query;
     }
 
 }
