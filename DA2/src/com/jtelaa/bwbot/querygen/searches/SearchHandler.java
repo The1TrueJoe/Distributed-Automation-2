@@ -20,7 +20,8 @@ import com.jtelaa.da2.lib.log.Log;
 public class SearchHandler {
 
     /** Path of lists */
-    //private static final String PATH = "com/jtelaa/bwbot/querygen/searches/searchdata/";
+    // private static final String PATH =
+    // "com/jtelaa/bwbot/querygen/searches/searchdata/";
     // TODO Make internal again
 
     /** Path of lists */
@@ -33,7 +34,7 @@ public class SearchHandler {
      * Test that prints out searches
      * 
      * @param args Arguments
-     */ 
+     */
     public static void main(String[] args) {
         while (true) {
             System.out.println(Query.BING_URL + getRandomSearch());
@@ -47,12 +48,12 @@ public class SearchHandler {
      * @return new Query
      */
 
-    public synchronized static Query getRandomSearch() { 
+    public synchronized static Query getRandomSearch() {
         Random rand = new Random();
 
         // Generate an array and pick at a random index
         Query[] searches = getRandomSearches(100);
-        return searches[rand.nextInt(searches.length-1)]; 
+        return searches[rand.nextInt(searches.length - 1)];
 
     }
 
@@ -63,18 +64,18 @@ public class SearchHandler {
      * 
      * @return Array of random searches
      */
-    
+
     public synchronized static Query[] getRandomSearches(int count) {
         Random rand = new Random();
 
         // Setup lists
         Query[] searches = new Query[count];
-        ArrayList<String> search_list = pickList();
+        ArrayList<String> search_list = pickList(); // all lines of one file
 
         // Populate lists
         for (int i = 0; i < searches.length; i++) {
-            searches[i] = new Query(search_list.get(rand.nextInt(search_list.size()-1)).toLowerCase());
-        
+            searches[i] = new Query(search_list.get(rand.nextInt(search_list.size() - 1)).toLowerCase());
+
         }
 
         // Return
@@ -94,12 +95,11 @@ public class SearchHandler {
         String name = pickList(rand.nextInt(11));
 
         // Read file
-        //ArrayList<String> lines = FileUtil.listLinesInternalFile(name);
+        // ArrayList<String> lines = FileUtil.listLinesInternalFile(name);
         ArrayList<String> lines = FileUtil.listLinesFile(name);
 
         // Show file is empty
         if (lines.size() < 1) {
-            
 
             int i = -1;
 
@@ -107,7 +107,7 @@ public class SearchHandler {
                 Log.sendMessage(log_prefix + "File " + name + " is empty");
 
                 i++;
-                //lines = FileUtil.listLinesInternalFile(pickList(i));
+                // lines = FileUtil.listLinesInternalFile(pickList(i));
                 lines = FileUtil.listLinesFile(pickList(i));
 
                 if (i > 20) {
@@ -130,33 +130,44 @@ public class SearchHandler {
 
         // Find random list
         switch (num) {
-            case 1:
-                name = ("Searches2009.txt");
-            case 2:
-                name = ("Searches2011.txt");
-            case 3:
-                name = ("Searches2012.txt");
-            case 4:
-                name = ("Searches2013.txt");
-            case 5:
-                name = ("Searches2014.txt");
-            case 6:
-                name = ("Searches2015.txt");
-            case 7:
-                name = ("Searches2016.txt");
-            case 8:
-                name = ("Searches2017.txt");
-            case 9:
-                name = ("Searches2018.txt");
-            case 10:
-                name = ("Searches2019.txt");
-            default:
-                name = ("Searches2020.txt");
+        case 1:
+            name = ("Searches2009.txt");
+            break;
+        case 2:
+            name = ("Searches2011.txt");
+            break;
+        case 3:
+            name = ("Searches2012.txt");
+            break;
+        case 4:
+            name = ("Searches2013.txt");
+            break;
+        case 5:
+            name = ("Searches2014.txt");
+            break;
+        case 6:
+            name = ("Searches2015.txt");
+            break;
+        case 7:
+            name = ("Searches2016.txt");
+            break;
+        case 8:
+            name = ("Searches2017.txt");
+            break;
+        case 9:
+            name = ("Searches2018.txt");
+            break;
+        case 10:
+            name = ("Searches2019.txt");
+            break;
+        default:
+            name = ("Searches2020.txt");
+            break;
 
         }
 
         return PATH + name;
 
     }
-    
+
 }
