@@ -13,9 +13,9 @@ This contains the libraries and the basic framework.
 > - <b>Plugin:</b> The applications that run on top of the bots in the botnet
 ## Folder Structure
 
-- [Source Code](DA2\) Source code for the project
-- [Server Config](servers\) The configuration scripts for the servers
-- [Project Info](info\) Misc information on the project
+- [Source Code](DA2/) Source code for the project
+- [Server Config](servers/) The configuration scripts for the servers
+- [Project Info](info/) Misc information on the project
 
 
 ## Misc
