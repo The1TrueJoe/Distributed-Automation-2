@@ -70,7 +70,7 @@ public class SearchHandler {
 
         // Setup lists
         Query[] searches = new Query[count];
-        ArrayList<String> search_list = pickList();
+        ArrayList<String> search_list = pickList(); // all lines of one file
 
         // Populate lists
         for (int i = 0; i < searches.length; i++) {
