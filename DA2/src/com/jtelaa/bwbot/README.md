@@ -16,7 +16,7 @@ This set of applications builds on top of the bot framework to add new functiona
 
 ### Folder Structure
 
-- [Bot Plugin](bw\) Individual bot plugin
-- [Bing Rewards Manager](bw_manager\) Manager for the Bing Rewards system
-- [Query Generator](querygen\) Query Generator for the bots
-- [Libraries](bwlib\) Bing Rewards Libraries
+- [Bot Plugin](bw/) Individual bot plugin
+- [Bing Rewards Manager](bw_manager/) Manager for the Bing Rewards system
+- [Query Generator](querygen/) Query Generator for the bots
+- [Libraries](bwlib/) Bing Rewards Libraries
