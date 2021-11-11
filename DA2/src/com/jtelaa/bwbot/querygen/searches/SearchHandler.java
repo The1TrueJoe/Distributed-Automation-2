@@ -37,7 +37,8 @@ public class SearchHandler {
      */
     public static void main(String[] args) {
         while (true) {
-            System.out.println(Query.BING_URL + getRandomSearch());
+            //System.out.println(Query.BING_URL + getRandomSearch());
+            System.out.println(mangle("testme"));
 
         }
     }
@@ -74,10 +75,13 @@ public class SearchHandler {
 
         // Populate lists
         for (int i = 0; i < searches.length; i++) {
+            // Get query
             String query_string = search_list.get(rand.nextInt(search_list.size() - 1)).toLowerCase();
-            if (rand.nextInt(100) == 1) {
-                query_string = mangle(query_string);
-            }
+            
+            // Mangle
+            if (rand.nextInt(100) == 1) { query_string = mangle(query_string); }
+            
+            // Add search
             searches[i] = new Query(query_string);
 
         }
@@ -174,40 +178,46 @@ public class SearchHandler {
 
     }
 
-    public static String mangle(String query) {
-        Random r = new Random(42);
+    /**
+     * Mangle the search query
+     * 
+     * @param query query to mangle
+     * 
+     * @return mangled query
+     */
 
-        int num = r.nextInt(4);
+    public static String mangle(String query) {
+        Random random = new Random(42);
+        int num = random.nextInt(4);
 
         switch (num) {
-
             case 0:
-            query = query.substring(1);
-            break;
-            
+                query = query.substring(1);
+                break;
             case 1:
-            query = query.substring(0, query.length() - 2);
-            break;
-
+                query = query.substring(0, query.length() - 2);
+                break;
             case 3:
-            query = query.toUpperCase();
-
+                query = query.toUpperCase();
+                break;
             case 4:
-            String word;
-            for (int i = 0; i < query.length(); i++) {
-                if (i % 2 == 0) {
-                    word = word + query.substring(i, i + 1).toUpperCase();
-                } else {
-                    word = word + query.substring(i, i + 1).toLowerCase();
+                String word = "";
+
+                for (int i = 0; i < query.length(); i++) {
+                    if (i % 2 == 0) {
+                        word = word + query.substring(i, i + 1).toUpperCase();
+                    } else {
+                        word = word + query.substring(i, i + 1).toLowerCase();
+                    }
                 }
-            }
-            query = word;
-            break;
+
+                query = word;
+                break;
 
         }
-        
 
         return query;
+
     }
 
 }
