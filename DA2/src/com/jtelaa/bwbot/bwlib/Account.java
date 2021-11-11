@@ -2,9 +2,10 @@ package com.jtelaa.bwbot.bwlib;
 
 import java.io.Serializable;
 import java.util.GregorianCalendar;
+import java.util.Properties;
 import java.util.Random;
 
-import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.files.ObjectUtils;
 import com.jtelaa.da2.lib.log.Log;
 
@@ -59,9 +60,10 @@ public class Account implements Serializable {
      * @param user_path
      */
 
+    // TODO Add SQL Version
     public Account(String user_path) {
         // Config 
-        ConfigHandler config = new ConfigHandler(user_path);
+        Properties config = PropertiesUtils.importConfig(user_path);
 
         // Set info
         setFirstName(config.getProperty("first_name"));
@@ -102,9 +104,10 @@ public class Account implements Serializable {
      * @param path
      */
 
+    // TODO Add SQL Version
     public void exportAccount(String path) {
         // Config
-        ConfigHandler config = new ConfigHandler(path);
+        Properties config = PropertiesUtils.importConfig(path);
 
         // Load info
         config.setProperty("first_name", first_name);

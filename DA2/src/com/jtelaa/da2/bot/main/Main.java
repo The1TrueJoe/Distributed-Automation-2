@@ -2,8 +2,6 @@ package com.jtelaa.da2.bot.main;
 
 import java.util.Properties;
 
-import com.jtelaa.bwbot.bwlib.BWMessages;
-import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.da2.bot.plugin.Plugins;
 import com.jtelaa.da2.bot.util.LogRepeater;
 import com.jtelaa.da2.bot.util.RemoteCLI;
@@ -14,8 +12,6 @@ import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.client.ClientUDP;
-import com.jtelaa.da2.lib.net.server.ServerUDP;
 
 // TODO comment
 // TODO update to current
@@ -78,6 +74,9 @@ public class Main {
         if (first_time) {
             Log.sendMessage("Requesting bot");
 
+            // TODO Replace with SQL
+
+            /*
             // Server to receive bot info
             ServerUDP msg_response = new ServerUDP(BWPorts.INFO_RECEIVE);
             msg_response.startServer();
@@ -108,6 +107,8 @@ public class Main {
             // Cast and apply
             me = (Bot) message;
 
+            */
+
             Log.sendMessage("Bot request done");
 
         }
@@ -119,6 +120,16 @@ public class Main {
         // Done
         Log.sendMessage("Main: Done", ConsoleColors.GREEN);
 
+        // Config
+        configBootup();
+
+        // Stop
+        Log.closeLog();
+        repeater.stopRepeater();
+
+    }
+
+    private static void configBootup() {
         // Remote CLI
         if (me.config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) {
             Log.sendMessage("CLI: Remote Cli Enabled");
@@ -147,11 +158,6 @@ public class Main {
 
         if (me.config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) { rem_cli.runCLI(); }
         if (me.config.getProperty("local_cli", "true").equalsIgnoreCase("true")) { sys_cli.runCLI(); }
-
-
-        // Stop
-        Log.closeLog();
-        repeater.stopRepeater();
 
     }
 }

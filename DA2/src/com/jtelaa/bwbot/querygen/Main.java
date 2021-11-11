@@ -2,6 +2,7 @@ package com.jtelaa.bwbot.querygen;
 
 import java.util.Properties;
 
+import com.jtelaa.bwbot.bwlib.BWSQLQueries;
 import com.jtelaa.bwbot.querygen.processes.QueryGenerator;
 import com.jtelaa.bwbot.querygen.processes.QueryServer;
 import com.jtelaa.bwbot.querygen.processes.RequestServer;
@@ -12,7 +13,7 @@ import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.NetTools;
+import com.jtelaa.da2.lib.sql.DA2SQLQueries;
 import com.jtelaa.da2.lib.sql.SQL;
 
 /**
@@ -143,51 +144,14 @@ public class Main {
         // TODO Implement other config        
 
         // Get ID
-        int id =  
-            Integer.parseInt(
-                SQL.query(
-                    connectionURL,
-
-                    "SELECT ID " +
-                    "FROM QueryGenerators " +
-                    "WHERE LastKnownIP LIKE '" + NetTools.getLocalIP() + "';"
-
-                )
-                .get(0)
-            )
-        ;
+        int id = DA2SQLQueries.getID("QueryGenerators", connectionURL);
         my_config.setProperty("id", id + "");
         
         // Get Request Port
-        my_config.setProperty("request_port", 
-            Integer.parseInt(
-                SQL.query(
-                    connectionURL,
-
-                    "SELECT RequestPort " +
-                    "FROM QueryGenerators " +
-                    "WHERE ID = " + id
-
-                )
-                .get(0)
-            ) + ""
-        );
+        my_config.setProperty("request_port", BWSQLQueries.getRequestPort(id, "QueryGenerators", connectionURL) + "");
 
         // Get Request Port
-        my_config.setProperty("receive_port", 
-        Integer.parseInt(
-            SQL.query(
-                connectionURL,
-
-                "SELECT ReceivePort " +
-                "FROM QueryGenerators " +
-                "WHERE ID = " + id
-
-            )
-            .get(0)
-        ) + ""
-     );
-
+        my_config.setProperty("receive_port", BWSQLQueries.getReceivePort(id, "QueryGenerators", connectionURL) + "");
 
 
         PropertiesUtils.exportConfig("config.properties", my_config);

@@ -6,6 +6,7 @@ import com.jtelaa.bwbot.bw.sys.Redeem;
 import com.jtelaa.bwbot.bwlib.Card;
 import com.jtelaa.da2.lib.cli.Cases;
 import com.jtelaa.da2.lib.cli.LocalCLI;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.control.Command;
@@ -22,7 +23,7 @@ public class RemoteCLI extends LocalCLI {
 
     @Override
     public void run() {
-        if (!run_as_local && Main.config.runRemoteCLI()) {
+        if (!run_as_local && PropertiesUtils.isTrue(Main.config, "remote_cli", false)) {
             Log.sendMessage("Preparing Remote CLI");
 
             while (!run) {

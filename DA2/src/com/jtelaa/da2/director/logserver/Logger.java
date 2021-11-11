@@ -32,14 +32,6 @@ public class Logger extends Thread {
     }
 
 
-
-
-
-    
-
-
-
-
     /** Boolean to control the receiver */
     private volatile boolean run = false;
 

@@ -121,10 +121,22 @@ public class AcctInfo {
     }
 
     /**
-     * Send a request message for an account
+     * Request account using SQL
      */
 
+    // TODO Create SQL Request
     public static void requestAccount() {
+
+    }
+
+    /**
+     * Send a request message for an account
+     * 
+     * @deprecated replaced with SQL
+     */
+
+    @Deprecated
+    public static void requestAccountUDP() {
 
         // Server to send account data
         ServerUDP acct_response = new ServerUDP(BWPorts.ACCOUNT_ANNOUNCE);

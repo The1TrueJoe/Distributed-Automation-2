@@ -1,5 +1,7 @@
 package com.jtelaa.bwbot.bw;
 
+import java.util.Properties;
+
 import com.jtelaa.bwbot.bw.sys.AcctInfo;
 import com.jtelaa.bwbot.bw.sys.Redeem;
 import com.jtelaa.bwbot.bw.sys.SearchSystem;
@@ -8,7 +10,7 @@ import com.jtelaa.bwbot.bwlib.BWPorts;
 import com.jtelaa.da2.bot.util.RemoteCLI;
 import com.jtelaa.da2.bot.util.SysCLI;
 import com.jtelaa.da2.lib.bot.Bot;
-import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.control.ComputerControl;
@@ -50,7 +52,7 @@ public class Main {
     public static SysCLI sys_cli;
 
     /** Local config handler */
-    public static ConfigHandler config;
+    public static Properties config;
 
     /** Main bot objcect */
     public static Bot me;
@@ -74,7 +76,7 @@ public class Main {
             // Check for first time setup
             if (arg.equalsIgnoreCase("setup")) {
                 config_file_location = "com/jtelaa/bwbot/bw/bwconfig.properties";
-                config = new ConfigHandler(config_file_location, true);
+                config = PropertiesUtils.importConfig(config_file_location);
                 first_time = true;
                 break;
 
@@ -90,7 +92,7 @@ public class Main {
         }
 
         // Load normally if not first time
-        if (!first_time) { config = new ConfigHandler(config_file_location, false); }
+        if (!first_time) { config = PropertiesUtils.importConfig(config_file_location); }
 
         /* Log  */
 
@@ -225,25 +227,7 @@ public class Main {
         // Done
         Log.sendMessage("Main: Done", ConsoleColors.GREEN);
 
-        // Remote CLI
-        if (config.runRemoteCLI()) {
-            Log.sendMessage("Remote CLI Allowed");
-            rem_cli = new RemoteCLI();
-            rem_cli.start();
-
-        } else {
-            Log.sendMessage("No Remote CLI");
-
-        }
-
-        Log.sendMessage("Local CLI disabled due to running as plugin");
-
-        Log.sendMessage("Waiting 45s for CLI bootup");
-        MiscUtil.waitasec(45);
-        Log.sendMessage("Done waiting");
-
-        if (config.runLocalCLI()) { sys_cli.runCLI(); }
-        if (config.runRemoteCLI()) { rem_cli.runCLI(); }
+        configBootup();
 
         // Start the searches
         SearchSystem.start();
@@ -261,6 +245,38 @@ public class Main {
         }
 
         
+    }
+
+    private static void configBootup() {
+        // Remote CLI
+        if (me.config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) {
+            Log.sendMessage("CLI: Remote Cli Enabled");
+            rem_cli = new RemoteCLI();
+            rem_cli.start();
+
+        } else {
+            Log.sendMessage("CLI: No Remote CLI");
+
+        }
+
+        // Local CLI
+        if (me.config.getProperty("local_cli", "true").equalsIgnoreCase("true")) {
+            Log.sendMessage("CLI: Local CLI Allowed");
+            sys_cli = new SysCLI();
+            sys_cli.start();
+
+        } else {
+            Log.sendMessage("CLI: No Local CLI");
+
+        }
+
+        Log.sendMessage("CLI: Waiting 45s for CLI bootup");
+        MiscUtil.waitasec(45);
+        Log.sendMessage("CLI: Done waiting");
+
+        if (me.config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) { rem_cli.runCLI(); }
+        if (me.config.getProperty("local_cli", "true").equalsIgnoreCase("true")) { sys_cli.runCLI(); }
+
     }
 
     

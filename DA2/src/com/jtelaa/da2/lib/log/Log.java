@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Queue;
 
-import com.jtelaa.da2.lib.config.ConfigHandler;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.net.ports.Ports;
 import com.jtelaa.da2.lib.net.ports.SysPorts;
@@ -36,10 +35,6 @@ public class Log {
 
     /** Local log connection */
     private volatile static LocalLogConnector connector;
-
-
-    @Deprecated
-    public synchronized static void loadConfig(ConfigHandler config) {}
 
     /**
      * Load the config from the configuration file <p>

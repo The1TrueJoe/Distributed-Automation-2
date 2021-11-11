@@ -4,8 +4,9 @@ import java.net.http.HttpClient;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Properties;
 
-import com.jtelaa.da2.lib.config.ConfigHandler;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.log.Log;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -141,8 +142,7 @@ public class Accounts {
         Log.sendMessage("checking agaist rapidapi email-checker");
 
         // Config
-        ConfigHandler config = new ConfigHandler();
-        config.importInternalConfig("com/jtelaa/bwbot/bw_manager/apis.properties");
+        Properties config = PropertiesUtils.importInternalConfig("com/jtelaa/bwbot/bw_manager/apis.properties");
 
         // Reformat Email
         email = email.replace("@", "%40");
