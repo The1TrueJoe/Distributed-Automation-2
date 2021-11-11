@@ -4,7 +4,10 @@ Source code for Distributed Automation 2 (May contain plugins)
 
 ## Folder Structure
 
-- [Source](src\)
+- [Source](com\jtelaa\) Source code folder
+- [Libraries](lib\) *.jar library folder
+- [Manifests](manifests\)
+- [Resource](rsc\) Resources folder
 
 ## Misc
 
