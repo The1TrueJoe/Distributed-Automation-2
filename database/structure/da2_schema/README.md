@@ -1,0 +1,1 @@
+# Distributed Automation 2's Schema
