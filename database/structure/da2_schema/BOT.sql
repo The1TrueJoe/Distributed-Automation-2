@@ -1,0 +1,3 @@
+CREATE TABLE BOT (
+    ID  int(5)  NOT NULL
+)
