@@ -16,6 +16,9 @@ This contains the libraries and the basic framework.
 - [Source Code](DA2/) Source code for the project
 - [Server Config](servers/) The configuration scripts for the servers
 - [Project Info](info/) Misc information on the project
+- [DA2 Tools](da2_tools/) Misc tools and programs to assist the botnet
+- [Bing Rewards Tools](bw_tools/) Misc tools and programs to assist the Bing Rewards system
+- [Database](database/) Structure for the database
 
 
 ## Misc
