@@ -16,8 +16,8 @@ This set of applications builds on top of the bot framework to add new functiona
 
 ### Folder Structure
 
-- [Bot](bot\) Individual bot
-- [Director](director\) Manager for the DA2 system
-- [Director Interface](director_interface\) CLI application to access the botnet
-- [Query Generator](querygen\) Query Generator for the bots
-- [Libraries](bwlib\) Bing Rewards Libraries
+- [Bot](bot/) Individual bot
+- [Director](director/) Manager for the DA2 system
+- [Director Interface](director_interface/) CLI application to access the botnet
+- [Query Generator](querygen/) Query Generator for the bots
+- [Libraries](bwlib/) Bing Rewards Libraries

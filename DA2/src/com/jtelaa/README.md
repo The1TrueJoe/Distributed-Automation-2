@@ -7,11 +7,11 @@ Code for Distributed Automation 2 (May contain plugins)
 
 ### Main
 
-- [Distributed Automation 2](da2\)
+- [Distributed Automation 2](da2/)
 
 ### Plugins
 
-- [Bing Rewards](bwbot\)
+- [Bing Rewards](bwbot/)
 
 ## Misc
 
