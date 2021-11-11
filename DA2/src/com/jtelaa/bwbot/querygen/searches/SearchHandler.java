@@ -177,7 +177,7 @@ public class SearchHandler {
     public static String mangle(String query) {
         Random r = new Random(42);
 
-        num = r.nextInt(4);
+        int num = r.nextInt(4);
 
         switch (num) {
 
