@@ -188,7 +188,7 @@ public class SearchHandler {
 
     public static String mangle(String query) {
         Random random = new Random(42);
-        int num = random.nextInt(4);
+        int num = random.nextInt(6);
 
         switch (num) {
             case 0:
@@ -200,20 +200,27 @@ public class SearchHandler {
             case 3:
                 query = query.toUpperCase();
                 break;
-            case 4:
+            case 4: // toggle case
                 String word = "";
-
                 for (int i = 0; i < query.length(); i++) {
                     if (i % 2 == 0) {
-                        word = word + query.substring(i, i + 1).toUpperCase();
+                        word.concat(query.substring(i, i + 1).toUpperCase());
                     } else {
-                        word = word + query.substring(i, i + 1).toLowerCase();
+                        word.concat(query.substring(i, i + 1).toLowerCase());
                     }
                 }
-
                 query = word;
                 break;
-
+            case 5: // random uppercase letter
+            String up = "";
+            for (int i = 0; i < query.length(); i++) {
+                if (i % 2 == 0) {
+                    up.concat(query.substring(i, i + 1).toUpperCase());
+                } else {
+                    up.concat(query.substring(i, i + 1).toLowerCase());
+                }
+            }
+            query = up;
         }
 
         return query;
