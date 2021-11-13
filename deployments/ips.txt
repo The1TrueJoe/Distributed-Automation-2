@@ -13,6 +13,7 @@
     172.16.2.1: Director
     172.16.2.2: Border Server
     172.16.2.3: Database
+    172.16.2.12: Windows Border Server
 
 172.16.3.x: BW Infrastructure
     172.16.3.1: Point Manager
