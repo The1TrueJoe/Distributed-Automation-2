@@ -112,6 +112,21 @@ public class BotQueries extends DA2SQLQueries {
     }
 
     /**
+     * Get the assoicated franchise id
+     * 
+     * @param ID id of the bot
+     * 
+     * @return associated franchise
+     * 
+     * @throws EmptySQLURLException
+     */
+
+    public synchronized static int getFranchiseID(int ID) throws EmptySQLURLException {
+        return Integer.parseInt(queryByID(ID, "FranchiseID"));
+
+    }
+
+    /**
      * Check if local cli is enabled
      * 
      * @param ID id
@@ -196,7 +211,7 @@ public class BotQueries extends DA2SQLQueries {
     public synchronized static String getPlugins(int ID) {
         ArrayList<String> plugins = SQL.query(
             connectionURL,
-            "USE DA2; " +
+            "USE " + database + "; " +
             "SELECT PluginPath " +
             "FROM PLUGINS " +
             "WHERE BotID == '" + ID + "';"
@@ -224,6 +239,24 @@ public class BotQueries extends DA2SQLQueries {
             "USE " + database + "; " +
             "UPDATE " + table_name + " " +
             "SET LastRunTime = " + System.currentTimeMillis() + " " +
+            "WHERE " + id_type + " = " + ID + ";"
+        
+        );
+
+    }
+
+    /**
+     * Update franchise
+     * 
+     * @param ID Id of bot to update
+     * @param franchise Franchise to update
+     */
+
+    public synchronized static void updateLastKnownTime(int ID, int franchise) {
+        SQL.query(connectionURL, 
+            "USE " + database + "; " +
+            "UPDATE " + table_name + " " +
+            "SET FranchiseID = " + franchise + " " +
             "WHERE " + id_type + " = " + ID + ";"
         
         );
