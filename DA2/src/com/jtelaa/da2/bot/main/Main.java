@@ -1,17 +1,16 @@
 package com.jtelaa.da2.bot.main;
 
-import java.util.Properties;
-
-import com.jtelaa.da2.bot.plugin.Plugins;
 import com.jtelaa.da2.bot.util.LogRepeater;
 import com.jtelaa.da2.bot.util.RemoteCLI;
 import com.jtelaa.da2.bot.util.SysCLI;
 import com.jtelaa.da2.lib.bot.Bot;
-import com.jtelaa.da2.lib.config.PropertiesUtils;
+import com.jtelaa.da2.lib.bot.plugin.Plugins;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
 import com.jtelaa.da2.lib.misc.MiscUtil;
+import com.jtelaa.da2.lib.net.NetTools;
+import com.jtelaa.da2.lib.sql.EmptySQLURLException;
 
 // TODO comment
 // TODO update to current
@@ -20,7 +19,6 @@ public class Main {
 
     /** The remote cli local object */ 
     public static RemoteCLI rem_cli;
-
     /** The system cli local object */ 
     public static SysCLI sys_cli;
 
@@ -28,37 +26,23 @@ public class Main {
     public static Bot me;
 
     public static void main(String[] args) {
-        // Default configuration file location
-        String config_file_location = "config.properties";
+        // Configuration
+        String connectionURL = "";
 
-        // Config handler (use temp)
-        Properties config;
+        // Set config
+        try {
+            me = Bot.loadfromDatabase(connectionURL, NetTools.getLocalIP());
 
-        // Check for first time setup
-        boolean first_time = false;
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase("setup")) {
-                config_file_location = "com/jtelaa/da2/bot/main/config.properties";
-                config = PropertiesUtils.importConfig(config_file_location);
-                first_time = true;
-                break;
-
-            }
+        } catch (EmptySQLURLException e) {
+            // TODO Add default
+            
         }
 
-        // Load normally if not first time
-        if (!first_time) { 
-            me = Bot.load(PropertiesUtils.importConfig(config_file_location)); 
-            config = me.config;
+        me.config = me.exporttoProperties();
 
-            // Load Log config and start client
-            Log.loadConfig(config);
-            Log.openClient(config.getProperty("log_ip", "172.16.2.2"));
-
-        } else {
-            Log.log_verbose = true;
-
-        }
+        // Load Log config and start client
+        Log.loadConfig(me.config);
+        Log.openClient(me.logger_IP);
 
         // Start Log Repeater
         LogRepeater repeater = new LogRepeater();
@@ -68,68 +52,20 @@ public class Main {
         Log.sendSysMessage(ConsoleBanners.botBanner());
         Log.sendMessage("Welcome to the DA2 Bot Client! I am bot " + me.id);
 
-        // TODO Add Enrollment
-
-        // Request Bot (first time only)
-        if (first_time) {
-            Log.sendMessage("Requesting bot");
-
-            // TODO Replace with SQL
-
-            /*
-            // Server to receive bot info
-            ServerUDP msg_response = new ServerUDP(BWPorts.INFO_RECEIVE);
-            msg_response.startServer();
-
-            // Client to send request
-            ClientUDP msg_request = new ClientUDP("127.0.0.1", BWPorts.INFO_REQUEST);
-            msg_request.startClient();
-
-            // Set default
-            me = new Bot("127.0.0.1");
-
-            // Prep message
-            Object message;
-
-            do {
-                // Send message 
-                msg_request.sendMessage(BWMessages.BOT_REQUEST_MESSAGE);
-
-                // Wait
-                MiscUtil.waitasec(.1);
-
-                // Get message
-                message = msg_response.getObject();
-
-            // Check if can cast
-            } while (!Bot.class.isInstance(message));
-
-            // Cast and apply
-            me = (Bot) message;
-
-            */
-
-            Log.sendMessage("Bot request done");
-
-        }
 
         // Add plugins
-        Plugins.importPlugins(me.config.getProperty("plugin_path", "plugins.txt"));
+        Plugins.importPlugins(me.plugins);
         Plugins.startAll();
         
         // Done
         Log.sendMessage("Main: Done", ConsoleColors.GREEN);
 
-        // Config
-        configBootup();
-
-        // Stop
-        Log.closeLog();
-        repeater.stopRepeater();
+        // CLI
+        cliBootup();
 
     }
 
-    private static void configBootup() {
+    private static void cliBootup() {
         // Remote CLI
         if (me.config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) {
             Log.sendMessage("CLI: Remote Cli Enabled");
@@ -158,6 +94,7 @@ public class Main {
 
         if (me.config.getProperty("remote_cli", "false").equalsIgnoreCase("true")) { rem_cli.runCLI(); }
         if (me.config.getProperty("local_cli", "true").equalsIgnoreCase("true")) { sys_cli.runCLI(); }
+
 
     }
 }
