@@ -1,7 +1,6 @@
 package com.jtelaa.da2.lib.sql;
 
 import com.jtelaa.da2.lib.misc.MiscUtil;
-import com.jtelaa.da2.lib.net.NetTools;
 
 /**
  * Utilies class containing methods to query the database for server configs
@@ -56,7 +55,7 @@ public class DA2SQLQueries {
         String query = (
             SQL.query(
                 connectionURL,
-                "USE " + database + ";" +
+                "USE " + database + "; " +
                 "SELECT " + column + " " +
                 "FROM " + table_name + " " +
                 "WHERE " + id_type + " == '" + id + "';"
@@ -128,13 +127,15 @@ public class DA2SQLQueries {
      * @param database Database to connect to
      * @param table_name Table to access
      * @param id_type ID column name
+     * @param ip_type IP column name
+     * @param ip IP address to use
      * 
      * @return id
      * 
      * @throws EmptySQLURLException
      */
 
-    public synchronized static int getID(String database, String table_name, String id_type) throws EmptySQLURLException {
+    public synchronized static int getID(String database, String table_name, String id_type, String ip_type, String ip) throws EmptySQLURLException {
         checkURL();
 
         // Get ID
@@ -142,10 +143,10 @@ public class DA2SQLQueries {
             Integer.parseInt(
                 SQL.query(
                     connectionURL,
-                    "USE " + database + ";" +
+                    "USE " + database + "; " +
                     "SELECT " + id_type + " " +
                     "FROM " + table_name + " " +
-                    "WHERE LastIP LIKE '" + NetTools.getLocalIP() + "';"
+                    "WHERE " + ip_type + " LIKE '" + ip + "';"
 
                 )
                 .get(0)

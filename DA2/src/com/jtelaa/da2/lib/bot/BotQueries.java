@@ -1,7 +1,12 @@
 package com.jtelaa.da2.lib.bot;
 
+import java.util.ArrayList;
+
+import com.jtelaa.da2.lib.log.Log;
+import com.jtelaa.da2.lib.net.NetTools;
 import com.jtelaa.da2.lib.sql.DA2SQLQueries;
 import com.jtelaa.da2.lib.sql.EmptySQLURLException;
+import com.jtelaa.da2.lib.sql.SQL;
 
 /**
  * Utilities class to query the central database for bot info
@@ -28,7 +33,7 @@ public class BotQueries extends DA2SQLQueries {
      */
 
     public synchronized static int getID() throws EmptySQLURLException {
-        return DA2SQLQueries.getID(database, table_name, id_type);
+        return DA2SQLQueries.getID(database, table_name, id_type, "LastIP", NetTools.getLocalIP());
 
     }
 
@@ -137,6 +142,36 @@ public class BotQueries extends DA2SQLQueries {
     }
 
     /**
+     * Check logger server ip
+     * 
+     * @param ID id 
+     * 
+     * @return logging server ip
+     * 
+     * @throws EmptySQLURLException
+     */
+
+    public synchronized static String loggerIP(int ID) throws EmptySQLURLException {
+        return queryByID(database, table_name, id_type, ID, "LoggerIP");
+
+    }
+
+    /**
+     * Check logger server ip
+     * 
+     * @param ID id 
+     * 
+     * @return logging server ip
+     * 
+     * @throws EmptySQLURLException
+     */
+
+    public synchronized static String directorIP(int ID) throws EmptySQLURLException {
+        return queryByID(database, table_name, id_type, ID, "DirectorIP");
+
+    }
+
+    /**
      * Check the last known activity timestamp
      * 
      * @param ID id
@@ -146,8 +181,52 @@ public class BotQueries extends DA2SQLQueries {
      * @throws EmptySQLURLException
      */
 
-    public synchronized static String lastknownactivity(int ID) throws EmptySQLURLException {
-        return queryByID(ID, "LastRunTime");
+    public synchronized static long lastknownactivity(int ID) throws EmptySQLURLException {
+        try {
+            return Long.parseLong(queryByID(ID, "LastRunTime"));
+
+        } catch (NumberFormatException e) {
+            Log.sendMessage("Attempt to parse last known activity time failed");
+            return System.currentTimeMillis();
+
+        }
+
+    }
+
+    public synchronized static String getPlugins(int ID) {
+        ArrayList<String> plugins = SQL.query(
+            connectionURL,
+            "USE DA2; " +
+            "SELECT PluginPath " +
+            "FROM PLUGINS " +
+            "WHERE BotID == '" + ID + "';"
+
+        );
+
+        String pluginlist = "";
+
+        for (String plugin : plugins) {
+            pluginlist += plugin + ",";
+        }
+
+        return pluginlist.substring(0, pluginlist.length()-2);
+        
+    }
+
+    /**
+     * Update last known alive time
+     * 
+     * @param ID Id of bot to update
+     */
+
+    public synchronized static void updateLastKnownTime(int ID) {
+        SQL.query(connectionURL, 
+            "USE " + database + "; " +
+            "UPDATE " + table_name + " " +
+            "SET LastRunTime = " + System.currentTimeMillis() + " " +
+            "WHERE " + id_type + " = " + ID + ";"
+        
+        );
 
     }
 
