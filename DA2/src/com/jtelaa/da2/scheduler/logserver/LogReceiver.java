@@ -1,4 +1,4 @@
-package com.jtelaa.da2.director.logserver;
+package com.jtelaa.da2.scheduler.logserver;
 
 // TODO comment
 // TODO start
