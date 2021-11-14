@@ -48,6 +48,8 @@ public class Bot implements Serializable {
     public String director_IP;
     /** Plugins */
     public ArrayList<Plugin> plugins;
+    /** Database URL */
+    public String db_url;
 
 
     /** Config */
@@ -91,6 +93,7 @@ public class Bot implements Serializable {
         this.logger_IP = bot.logger_IP;
         this.director_IP = bot.director_IP;
         this.plugins = bot.plugins;
+        this.db_url = bot.db_url;
 
     }
 
@@ -116,6 +119,7 @@ public class Bot implements Serializable {
         bot.last_time_seen = Long.parseLong(config.getProperty("last_time_seen"));
         bot.logger_IP = config.getProperty("logger_ip");
         bot.director_IP = config.getProperty("director_ip");
+        bot.db_url = config.getProperty("db_url");
 
         try {
             bot.plugins = Plugins.importPlugins(config.getProperty("plugins"));
@@ -151,6 +155,7 @@ public class Bot implements Serializable {
         exp_config.setProperty("logger_ip", logger_IP);
         exp_config.setProperty("director_ip", director_IP);
         exp_config.setProperty("plugins", plugins.toString());
+        exp_config.setProperty("db_url", db_url);
 
         return exp_config;
 
@@ -160,18 +165,20 @@ public class Bot implements Serializable {
      * Load bot configuration from the database
      * 
      * @param connectionURL Url to connect to
+     * @param ip IP of the bot (used to determine id)
+     * @param franchise franchise number
      * 
-     * @return
+     * @return Bot config
      * 
      * @throws EmptySQLURLException
      */
 
-    public static synchronized Bot loadfromDatabase(String connectionURL, String ip) throws EmptySQLURLException {
+    public static synchronized Bot loadfromDatabase(String connectionURL, String ip, int franchise) throws EmptySQLURLException {
         BotQueries.connectionURL = connectionURL;
         
         Bot bot = new Bot();
 
-        bot.id = BotQueries.getID();
+        bot.id = BotQueries.getID(ip, franchise);
         bot.ip = BotQueries.getLastIP(bot.id);
         bot.hypervisor_id = BotQueries.getHypervisorID(bot.id);
         bot.franchise_id = BotQueries.getFranchiseID(bot.id);
@@ -181,6 +188,7 @@ public class Bot implements Serializable {
         bot.last_time_seen = BotQueries.lastknownactivity(bot.id);
         bot.logger_IP = BotQueries.loggerIP(bot.id);
         bot.director_IP = BotQueries.directorIP(bot.id);
+        bot.db_url = BotQueries.mirrordatabaseURL(bot.id);
         
         try {
             bot.plugins = Plugins.importPlugins(BotQueries.getPlugins(bot.id));

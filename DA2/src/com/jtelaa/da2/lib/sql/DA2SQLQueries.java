@@ -135,7 +135,7 @@ public class DA2SQLQueries {
      * @throws EmptySQLURLException
      */
 
-    public synchronized static int getID(String database, String table_name, String id_type, String ip_type, String ip) throws EmptySQLURLException {
+    public synchronized static int getID(String database, String table_name, String id_type, String ip_type, String ip, String franchise_column, int franchise) throws EmptySQLURLException {
         checkURL();
 
         // Get ID
@@ -146,7 +146,11 @@ public class DA2SQLQueries {
                     "USE " + database + "; " +
                     "SELECT " + id_type + " " +
                     "FROM " + table_name + " " +
-                    "WHERE " + ip_type + " LIKE '" + ip + "';"
+                    "WHERE " + 
+                        ip_type  + " LIKE " + ip + 
+                        " AND " +
+                        franchise_column + " == " + franchise + 
+                    ";"
 
                 )
                 .get(0)

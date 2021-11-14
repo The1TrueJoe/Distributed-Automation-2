@@ -108,6 +108,33 @@ public class NetTools {
     }
 
     /**
+     * Check external ip address
+     * 
+     * @param url Url of franchise server
+     * 
+     * @return external ip address
+     */
+
+    public static int getFranchise(String url) {
+        try {
+            // Use Amazon AWS
+            URL franchise_server = new URL(url);
+
+            // Read results
+            BufferedReader in = new BufferedReader(new InputStreamReader(franchise_server.openStream()));
+            return Integer.parseInt(in.readLine());
+
+        } catch (Exception e) {
+            // Send error to log
+            Log.sendManSysMessage(e.getMessage(), ConsoleColors.RED);
+
+            // Return local ip
+            return 0;
+
+        }
+    }
+
+    /**
      * Set a new default gateway
      * 
      * @param default_gateway New default gateway

@@ -3,7 +3,6 @@ package com.jtelaa.da2.lib.bot;
 import java.util.ArrayList;
 
 import com.jtelaa.da2.lib.log.Log;
-import com.jtelaa.da2.lib.net.NetTools;
 import com.jtelaa.da2.lib.sql.DA2SQLQueries;
 import com.jtelaa.da2.lib.sql.EmptySQLURLException;
 import com.jtelaa.da2.lib.sql.SQL;
@@ -20,6 +19,8 @@ public class BotQueries extends DA2SQLQueries {
     private static volatile String table_name = "BOT";
     /** ID column name */
     private static volatile String id_type = "ID";
+    /** Franchise Column */
+    private static volatile String franchise_column = "FranchiseID";
 
     /** Log prefix */
     //private static volatile String sql_log_prefix = "BotSQL";
@@ -32,8 +33,8 @@ public class BotQueries extends DA2SQLQueries {
      * @throws EmptySQLURLException
      */
 
-    public synchronized static int getID() throws EmptySQLURLException {
-        return DA2SQLQueries.getID(database, table_name, id_type, "LastIP", NetTools.getLocalIP());
+    public synchronized static int getID(String ip, int franchise) throws EmptySQLURLException {
+        return DA2SQLQueries.getID(database, table_name, id_type, "LastIP", ip, franchise_column, franchise);
 
     }
 
@@ -187,6 +188,21 @@ public class BotQueries extends DA2SQLQueries {
     }
 
     /**
+     * Check database mirror url (Can also be primary database)
+     * 
+     * @param ID id 
+     * 
+     * @return logging server ip
+     * 
+     * @throws EmptySQLURLException
+     */
+
+    public synchronized static String mirrordatabaseURL(int ID) throws EmptySQLURLException {
+        return queryByID(database, table_name, id_type, ID, "MirrorDatabase");
+
+    }
+
+    /**
      * Check the last known activity timestamp
      * 
      * @param ID id
@@ -252,7 +268,7 @@ public class BotQueries extends DA2SQLQueries {
      * @param franchise Franchise to update
      */
 
-    public synchronized static void updateLastKnownTime(int ID, int franchise) {
+    public synchronized static void setFranchise(int ID, int franchise) {
         SQL.query(connectionURL, 
             "USE " + database + "; " +
             "UPDATE " + table_name + " " +
@@ -261,6 +277,27 @@ public class BotQueries extends DA2SQLQueries {
         
         );
 
+    }
+
+    /**
+     * Updates the ip address of the bot
+     * 
+     * @param ID ID of the bot
+     * @param franchise Franchise number of the hot
+     * @param new_ip New ip address
+     */
+
+    public synchronized static void updateIP(int ID, int franchise, String new_ip) {
+        SQL.query(connectionURL,
+            "USE " + database + "; " +
+            "UPDATE " + table_name + " " +
+            "SET LastIP = " + new_ip + " " +
+            "WHERE " + 
+                id_type + " = " + ID + " " +
+                "AND " +
+                franchise_column + " = " + franchise + 
+            ";"
+        );
     }
 
     

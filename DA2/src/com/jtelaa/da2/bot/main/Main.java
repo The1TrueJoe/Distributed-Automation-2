@@ -1,10 +1,14 @@
 package com.jtelaa.da2.bot.main;
 
+import java.io.File;
+
 import com.jtelaa.da2.bot.util.LogRepeater;
 import com.jtelaa.da2.bot.util.RemoteCLI;
 import com.jtelaa.da2.bot.util.SysCLI;
 import com.jtelaa.da2.lib.bot.Bot;
+import com.jtelaa.da2.lib.bot.BotQueries;
 import com.jtelaa.da2.lib.bot.plugin.Plugins;
+import com.jtelaa.da2.lib.config.PropertiesUtils;
 import com.jtelaa.da2.lib.console.ConsoleBanners;
 import com.jtelaa.da2.lib.console.ConsoleColors;
 import com.jtelaa.da2.lib.log.Log;
@@ -26,20 +30,40 @@ public class Main {
     public static Bot me;
 
     public static void main(String[] args) {
-        // Configuration
-        String connectionURL = "";
+        // Get IP
+        String ip = NetTools.getLocalIP();
 
-        // Set config
+        // Configuration
+        BotQueries.connectionURL = ""; // TODO Use Main Database Server
+        String franchise_server_ip = ip.substring(0, ip.lastIndexOf(".")) + ".1";
+        int franchise_number = NetTools.getFranchise(franchise_server_ip + "/franchise.txt");
+
         try {
-            me = Bot.loadfromDatabase(connectionURL, NetTools.getLocalIP());
+            me = Bot.loadfromDatabase(BotQueries.connectionURL, ip, franchise_number);
 
         } catch (EmptySQLURLException e) {
-            // TODO Add default
-            
+            e.printStackTrace();
+
         }
 
-        me.config = me.exporttoProperties();
+        if (new File("config.properties").exists()) {
+            me.config = PropertiesUtils.importConfig("config.properties");
 
+            int id = Integer.parseInt(me.config.getProperty("ID"));
+            BotQueries.connectionURL = me.config.getProperty("db_url");
+
+            if (me.id != id) {
+                BotQueries.updateIP(id, franchise_number, ip);
+    
+            }
+        }
+
+        // Update live time
+        BotQueries.updateLastKnownTime(me.id);
+
+        // Set config
+        me.config = me.exporttoProperties();
+    
         // Load Log config and start client
         Log.loadConfig(me.config);
         Log.openClient(me.logger_IP);
