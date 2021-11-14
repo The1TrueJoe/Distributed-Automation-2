@@ -8,6 +8,10 @@ CREATE TABLE BOT (
     AppVerbose  int(1)          NOT NULL    DEFAULT(0),
     RemoteCLI   int(1)          NOT NULL    DEFAULT(1),
     LocalCLI    int(1)          NOT NULL    DEFAULT(0),
-    LastRunTime TIMESTAMP       
+    LastRunTime TIMESTAMP       NOT NULL,
+    LoggerIP    varchar(10)     NOT NULL,
+    DirectorIP  varchar(10)     NOT NULL,
+    NeedsSetup  int(1)          NOT NULL    DEFAULT(1)
+
 
 );
