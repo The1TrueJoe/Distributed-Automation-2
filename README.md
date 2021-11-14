@@ -21,7 +21,7 @@ This botnet is not designed to be hidden on a computer. Disguising the traffic r
 
 > - <b>Framework:</b> Structure for the botnet and the base plugins run on top
 > - <b>Plugin:</b> The applications that run on top of the bots in the botnet
-> - <b>Franchise:></b> A subsystem node that can be functionally independent. 
+> - <b>Franchise:</b> A subsystem node that can be functionally independent. 
 ## Folder Structure
 
 ### Source
