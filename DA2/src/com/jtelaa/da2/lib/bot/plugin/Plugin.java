@@ -1,4 +1,7 @@
-package com.jtelaa.da2.bot.plugin;
+package com.jtelaa.da2.lib.bot.plugin;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import com.jtelaa.da2.lib.control.Command;
 import com.jtelaa.da2.lib.control.ComputerControl;
@@ -15,6 +18,21 @@ public class Plugin {
 
     /** Plugin path */
     private String name;
+
+    public synchronized static Plugin importPlugin(String line) throws FileNotFoundException {
+        String command = "java -jar ";
+        line = line.substring(command.length());
+
+        String name = line.substring(line.lastIndexOf("/"), line.length() - ".jar".length() - 1);
+        String path = line.substring(0, line.lastIndexOf("/"));
+    
+        if (!new File(line).exists()) {
+            throw new FileNotFoundException("Cannot find file " + line);
+        }
+
+        return new Plugin(path, name);
+
+    }
 
     /**
      * Constructor for plugin object

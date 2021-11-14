@@ -1,9 +1,8 @@
-package com.jtelaa.da2.bot.plugin;
+package com.jtelaa.da2.lib.bot.plugin;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import com.jtelaa.da2.lib.files.FileUtil;
 import com.jtelaa.da2.lib.log.Log;
 
 /**
@@ -20,32 +19,35 @@ public class Plugins {
     private static ArrayList<Plugin> plugins;
 
     /**
-     * Imports plugins from a file
+     * Imports plugins
      * 
-     * @param path File path
+     * @param plugins List of plugins
      */
 
-    public static void importPlugins(String path) {
-        importPlugins(new File(path));
+    public static void importPlugins(ArrayList<Plugin> plugins) {
+        Plugins.plugins = plugins;
 
     }
 
     /**
-     * Imports plugins from a file
+     * Imports plugins
      * 
-     * @param file File object
+     * @param plugins List of plugins in CSV
+     * 
+     * @throws FileNotFoundException
      */
 
-    public static void importPlugins(File file) {
-        if (!file.exists()) { 
-            Log.sendMessage("Plugin File Does Not Exist");
-            return;
+    public static ArrayList<Plugin> importPlugins(String plugin_list) throws FileNotFoundException {
+        ArrayList<Plugin> new_plugins = new ArrayList<Plugin>();
+        String[] plugins = plugin_list.split(".");
+
+        for (String plugin : plugins) {
+            new_plugins.add(Plugin.importPlugin(plugin));
 
         }
 
-        ArrayList<String> lines = FileUtil.listLinesFile(file);
-        for (String line : lines) { plugins.add(new Plugin(line)); }
-        
+        return new_plugins;
+         
     }
 
     /**
@@ -115,5 +117,15 @@ public class Plugins {
 
     }
     
+    public String toString() {
+        String out = "";
+
+        for (Plugin plugin : plugins) {
+            out += plugin + ",";
+
+        }
+
+        return out.substring(0, out.length()-2);
+    }
     
 }
