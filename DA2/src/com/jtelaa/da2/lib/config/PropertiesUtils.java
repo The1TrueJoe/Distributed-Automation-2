@@ -80,6 +80,28 @@ public class PropertiesUtils {
 
     public synchronized static boolean isTrue(Properties config, String key) { return config.getProperty(key, true+"").equalsIgnoreCase("true"); }
 
+    /**
+     * Get the key as an integer
+     * 
+     * @param config properties file
+     * @param key key
+     * 
+     * @return key result
+     */
+
+    public synchronized static int getKey(Properties config, String key) { return Integer.parseInt(config.getProperty(key)); }
+
+    /**
+     * Get the key as an integer
+     * 
+     * @param config properties file
+     * @param key key
+     * @param default default value
+     * 
+     * @return key result
+     */
+
+    public synchronized static int getKey(Properties config, String key, int defualt) { return Integer.parseInt(config.getProperty(key, defualt+"")); }
 
     /**
      * Imports the internal properties file & creates a temp file
