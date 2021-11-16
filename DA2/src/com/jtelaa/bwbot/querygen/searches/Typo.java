@@ -93,5 +93,21 @@ public class Typo {
 
         return typo;
     }
+
+    private static String bitFlip(String query) {
+        Random r = new Random();
+        String typo;
+        String allowed_regex = "/[a-zA-Z0-9_\\-\\.]/";
+
+        int index = r.nextInt(query.length());
+        
+        
+
+        Integer.toHexString(query.charAt(index));
+
+        typo = 
+
+        return typo;
+    }
     
 }
