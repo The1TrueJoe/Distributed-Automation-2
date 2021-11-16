@@ -78,7 +78,18 @@ public class Typo {
 
         int index = r.nextInt(query.length());
 
-        typo = query.substring(0, index) + query.substring(index + 1) + query.substring(index) + query.substring(index + 2);
+        typo = query.substring(0, index) + query.substring(index + 1, index + 2) + query.substring(index, index + 1) + query.substring(index + 2);
+
+        return typo;
+    }
+
+    private static String doubleChar(String query) {
+        Random r = new Random();
+        String typo;
+
+        int index = r.nextInt(query.length());
+
+        typo = query.substring(0, index) + query.substring(index - 1);
 
         return typo;
     }
