@@ -19,7 +19,7 @@ public class Typo {
                 typo = missedChar(query);
                 break;
             case 2:
-                typo = transposedChars(query);
+                typo = transposedChar(query);
                 break;
             case 3:
                 typo = doubleChar(query);
@@ -72,6 +72,15 @@ public class Typo {
         return typo;
     }
 
-    
+    private static String transposedChar(String query) {
+        String typo;
+        Random r = new Random();
+
+        int index = r.nextInt(query.length());
+
+        typo = query.substring(0, index) + query.substring(index + 1) + query.substring(index) + query.substring(index + 2);
+
+        return typo;
+    }
     
 }
