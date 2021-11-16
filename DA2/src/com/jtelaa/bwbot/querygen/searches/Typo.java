@@ -62,7 +62,16 @@ public class Typo {
     }
 
     private static String missedChar(String query) {
+        Random r = new Random();
+        String typo;
         
+        int index = r.nextInt(query.length());
+
+        typo = query.substring(0, index) + query.substring(index + 1);
+
+        return typo;
     }
+
+    
     
 }
