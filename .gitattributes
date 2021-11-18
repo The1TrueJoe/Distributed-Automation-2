@@ -1,0 +1,2 @@
+*.sql linguist-language=sqlpl
+*.sql linguist-detectable=true
