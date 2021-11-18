@@ -10,36 +10,7 @@ import org.apache.xerces.impl.xpath.regex.Match;
 
 public class Typo {
 
-    public static String getTypo(String query) {
-        Random r = new Random();
-        String typo;
-        int mistake = r.nextInt(5);
-
-        switch (mistake) {
-            case 0:
-                typo = wrongKey(query);
-                break;
-            case 1:
-                typo = missedChar(query);
-                break;
-            case 2:
-                typo = transposedChar(query);
-                break;
-            case 3:
-                typo = doubleChar(query);
-                break;
-            case 4:
-                typo = bitFlip(query);
-                break;
-            default:
-                typo = query;
-                break;
-        }
-
-        return typo;
-    }
-
-    private static String wrongKey(String query) {
+    public static String wrongKey(String query) {
         String typo;
         Random r = new Random();
         // Dictionary of close keys
@@ -65,7 +36,7 @@ public class Typo {
         
     }
 
-    private static String missedChar(String query) {
+    public static String missedChar(String query) {
         Random r = new Random();
         String typo;
         
@@ -76,7 +47,7 @@ public class Typo {
         return typo;
     }
 
-    private static String transposedChar(String query) {
+    public static String transposedChar(String query) {
         String typo;
         Random r = new Random();
 
@@ -87,7 +58,7 @@ public class Typo {
         return typo;
     }
 
-    private static String doubleChar(String query) {
+    public static String doubleChar(String query) {
         Random r = new Random();
         String typo;
 
@@ -98,7 +69,7 @@ public class Typo {
         return typo;
     }
 
-    private static String bitFlip(String query) {
+    public static String bitFlip(String query) {
         Random r = new Random();
         String typo;
         String allowed_regex = "[a-zA-Z0-9_\\-\\.]";
