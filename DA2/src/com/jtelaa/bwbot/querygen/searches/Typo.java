@@ -4,6 +4,10 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Random;
 
+import com.google.i18n.phonenumbers.internal.RegexBasedMatcher;
+
+import org.apache.xerces.impl.xpath.regex.Match;
+
 public class Typo {
 
     public static String getTypo(String query) {
@@ -97,16 +101,27 @@ public class Typo {
     private static String bitFlip(String query) {
         Random r = new Random();
         String typo;
-        String allowed_regex = "/[a-zA-Z0-9_\\-\\.]/";
+        String allowed_regex = "[a-zA-Z0-9_\\-\\.]";
+        int[] masks = {128,64,32,16,8,4,2,1};
+
 
         int index = r.nextInt(query.length());
+        String new_letter;
         
+        do {
+            new_letter = Character.toString(
+                (Character.toChars
+                (Integer.parseInt
+                (Integer.toHexString
+                (query.charAt(index))) ^ masks
+                            [r.nextInt(masks.length)]
+                            ))
+                            [0]
+                            ).toLowerCase();
+        } while (!new_letter.matches(allowed_regex));
         
 
-        Integer.toHexString(query.charAt(index));
-
-        typo = 
-
+        typo = query.substring(0, index) + String.valueOf(new_letter) + query.substring(index + 1);
         return typo;
     }
     
