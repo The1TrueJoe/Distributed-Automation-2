@@ -191,16 +191,10 @@ public class SearchHandler {
         int num = random.nextInt(11);
 
         switch (num) {
-            case 0:
-                query = query.substring(1);
-                break;
-            case 1:
-                query = query.substring(0, query.length() - 2);
-                break;
-            case 3:
+            case 8:
                 query = query.toUpperCase();
                 break;
-            case 4: // toggle case
+            case 1: // toggle case
                 String word = "";
                 for (int i = 0; i < query.length(); i++) {
                     if (i % 2 == 0) {
@@ -211,7 +205,7 @@ public class SearchHandler {
                 }
                 query = word;
                 break;
-            case 5: // random uppercase letter
+            case 2: // random uppercase letter
                 String up = "";
                 for (int i = 0; i < query.length(); i++) {
                     if (i % 2 == 0) {
@@ -222,19 +216,19 @@ public class SearchHandler {
                 }
                 query = up;
                 break;
-            case 6:
+            case 3:
                 query = Typo.wrongKey(query);
                 break;
-            case 7:
+            case 4:
                 query = Typo.missedChar(query);
                 break;
-            case 8:
+            case 5:
                 query = Typo.transposedChar(query);
                 break;
-            case 9:
+            case 6:
                 query = Typo.doubleChar(query);
                 break;
-            case 10:
+            case 7:
                 query = Typo.bitFlip(query);
                 break;
 

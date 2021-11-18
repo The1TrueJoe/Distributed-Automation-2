@@ -4,12 +4,21 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Random;
 
-import com.google.i18n.phonenumbers.internal.RegexBasedMatcher;
-
-import org.apache.xerces.impl.xpath.regex.Match;
-
+/**
+ * Generates a variety of typos
+ * Thanks so much https://github.com/KeywordDomains/TypoGenerator
+ * 
+ * @param String query
+ * @return Query string with a typo
+ */
 public class Typo {
 
+
+    /**
+     * Generates a wrong key typo by matching one random letter in the query string to a letter adjacent to it on the QWERTY keyboard
+     * @param query
+     * @return query string with one char wrong
+     */
     public static String wrongKey(String query) {
         String typo;
         Random r = new Random();
@@ -36,6 +45,11 @@ public class Typo {
         
     }
 
+    /**
+     * Generates a missed character typo - removes one character from a string
+     * @param query
+     * @return query string, with one character missing
+     */
     public static String missedChar(String query) {
         Random r = new Random();
         String typo;
@@ -47,6 +61,11 @@ public class Typo {
         return typo;
     }
 
+    /**
+     * Generates a transposed character typo by swapping two characters
+     * @param query
+     * @return query string, with two letters swapped
+     */
     public static String transposedChar(String query) {
         String typo;
         Random r = new Random();
@@ -58,6 +77,11 @@ public class Typo {
         return typo;
     }
 
+    /**
+     * Generates a double character typo
+     * @param query
+     * @return query string, with one character duplicated
+     */
     public static String doubleChar(String query) {
         Random r = new Random();
         String typo;
@@ -69,6 +93,12 @@ public class Typo {
         return typo;
     }
 
+    /**
+     * Mimics a bit flipping typo, chooses one character and replaces it with one of the possibilites of a bit flip
+     * Checks regex to make sure the character is in the alphabet or set of known numbers
+     * @param query
+     * @return query string, with one character replaced with a bit flipped version of itself
+     */
     public static String bitFlip(String query) {
         Random r = new Random();
         String typo;
