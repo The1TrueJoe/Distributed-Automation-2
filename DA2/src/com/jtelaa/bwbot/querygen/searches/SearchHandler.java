@@ -38,7 +38,7 @@ public class SearchHandler {
     public static void main(String[] args) {
         while (true) {
             //System.out.println(Query.BING_URL + getRandomSearch());
-            System.out.println(mangle("testme"));
+            System.out.println(getTypo("testme"));
 
         }
     }
@@ -78,8 +78,8 @@ public class SearchHandler {
             // Get query
             String query_string = search_list.get(rand.nextInt(search_list.size() - 1)).toLowerCase();
             
-            // Mangle
-            if (rand.nextInt(100) == 1) { query_string = mangle(query_string); }
+            // get typo
+            if (rand.nextInt(100) == 1) { query_string = getTypo(query_string); }
             
             // Add search
             searches[i] = new Query(query_string);
@@ -186,7 +186,7 @@ public class SearchHandler {
      * @return mangled query
      */
 
-    public static String mangle(String query) {
+    public static String getTypo(String query) {
         Random random = new Random(42);
         int num = random.nextInt(11);
 
