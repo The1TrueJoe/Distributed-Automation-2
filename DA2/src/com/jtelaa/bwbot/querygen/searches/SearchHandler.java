@@ -188,7 +188,7 @@ public class SearchHandler {
 
     public static String mangle(String query) {
         Random random = new Random(42);
-        int num = random.nextInt(6);
+        int num = random.nextInt(11);
 
         switch (num) {
             case 0:
@@ -212,15 +212,32 @@ public class SearchHandler {
                 query = word;
                 break;
             case 5: // random uppercase letter
-            String up = "";
-            for (int i = 0; i < query.length(); i++) {
-                if (i % 2 == 0) {
-                    up.concat(query.substring(i, i + 1).toUpperCase());
-                } else {
-                    up.concat(query.substring(i, i + 1).toLowerCase());
+                String up = "";
+                for (int i = 0; i < query.length(); i++) {
+                    if (i % 2 == 0) {
+                        up.concat(query.substring(i, i + 1).toUpperCase());
+                    } else {
+                        up.concat(query.substring(i, i + 1).toLowerCase());
+                    }
                 }
-            }
-            query = up;
+                query = up;
+                break;
+            case 6:
+                query = Typo.wrongKey(query);
+                break;
+            case 7:
+                query = Typo.missedChar(query);
+                break;
+            case 8:
+                query = Typo.transposedChar(query);
+                break;
+            case 9:
+                query = Typo.doubleChar(query);
+                break;
+            case 10:
+                query = Typo.bitFlip(query);
+                break;
+
         }
 
         return query;
