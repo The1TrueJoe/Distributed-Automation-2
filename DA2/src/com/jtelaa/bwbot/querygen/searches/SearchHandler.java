@@ -187,7 +187,7 @@ public class SearchHandler {
      */
 
     public static String getTypo(String query) {
-        Random random = new Random(42);
+        Random random = new Random();
         int num = random.nextInt(11);
 
         switch (num) {
