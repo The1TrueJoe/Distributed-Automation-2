@@ -13,7 +13,7 @@ public class Typo {
     public static String getTypo(String query) {
         Random r = new Random();
         String typo;
-        int mistake = r.nextInt(6);
+        int mistake = r.nextInt(5);
 
         switch (mistake) {
             case 0:
@@ -31,8 +31,8 @@ public class Typo {
             case 4:
                 typo = bitFlip(query);
                 break;
-            case 5:
-                typo = homophone(query);
+            default:
+                typo = query;
                 break;
         }
 
@@ -122,6 +122,7 @@ public class Typo {
         
 
         typo = query.substring(0, index) + String.valueOf(new_letter) + query.substring(index + 1);
+
         return typo;
     }
     
