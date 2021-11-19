@@ -45,3 +45,6 @@ build
 /gradlew
 /gradlew.bat
 .gitmodules
+
+# Logs
+*.log
