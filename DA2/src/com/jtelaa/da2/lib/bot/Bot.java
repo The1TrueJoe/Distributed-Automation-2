@@ -30,6 +30,8 @@ public class Bot implements Serializable {
     public String ip;
     /** Hypervisor ID */
     public int hypervisor_id;
+    /** Hypervisor VM ID */
+    public int hypervisor_vm_id;
     /** Franchise ID */
     public int franchise_id;
     /** App verbosity */
@@ -85,6 +87,7 @@ public class Bot implements Serializable {
         this.id = bot.id;
         this.ip = bot.ip;
         this.hypervisor_id = bot.hypervisor_id;
+        this.hypervisor_vm_id = bot.hypervisor_vm_id;
         this.log_verbose = bot.log_verbose;
         this.app_verbose = bot.app_verbose;
         this.remote_cli = bot.remote_cli;
@@ -120,6 +123,7 @@ public class Bot implements Serializable {
         bot.logger_IP = config.getProperty("logger_ip");
         bot.director_IP = config.getProperty("director_ip");
         bot.db_url = config.getProperty("db_url");
+        bot.hypervisor_vm_id = PropertiesUtils.getKey(config, "hypervisor_vm_id");
 
         try {
             bot.plugins = Plugins.importPlugins(config.getProperty("plugins"));
@@ -156,6 +160,7 @@ public class Bot implements Serializable {
         exp_config.setProperty("director_ip", director_IP);
         exp_config.setProperty("plugins", plugins.toString());
         exp_config.setProperty("db_url", db_url);
+        exp_config.setProperty("hypervisor_vm_id", hypervisor_vm_id+"");
 
         return exp_config;
 
@@ -181,6 +186,7 @@ public class Bot implements Serializable {
         bot.id = BotQueries.getID(ip, franchise);
         bot.ip = BotQueries.getLastIP(bot.id);
         bot.hypervisor_id = BotQueries.getHypervisorID(bot.id);
+        bot.hypervisor_vm_id = BotQueries.getHypVMID(bot.id);
         bot.franchise_id = BotQueries.getFranchiseID(bot.id);
         bot.app_verbose = BotQueries.appVerbose(bot.id);
         bot.local_cli = BotQueries.localCLI(bot.id);

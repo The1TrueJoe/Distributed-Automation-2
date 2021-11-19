@@ -113,6 +113,21 @@ public class BotQueries extends DA2SQLQueries {
     }
 
     /**
+     * Get vm id on the hypervisor
+     * 
+     * @param ID id of the bot
+     * 
+     * @return associated hypervisor
+     * 
+     * @throws EmptySQLURLException
+     */
+
+    public synchronized static int getHypVMID(int ID) throws EmptySQLURLException {
+        return Integer.parseInt(queryByID(ID, "HypVMID"));
+
+    }
+
+    /**
      * Get the assoicated franchise id
      * 
      * @param ID id of the bot
